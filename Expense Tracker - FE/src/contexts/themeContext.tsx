@@ -8,8 +8,12 @@ import { Theme } from '../values/enums/theme';
 
 
 
-export const ThemeContext = createContext({
-  toggleColorMode: () => {},
+export const ThemeContext = createContext<{
+  toggleColorMode: () => void,
+  mode: Theme
+}>({
+  toggleColorMode: () => { },
+  mode: Theme.Dark
 });
 
 export default function MyThemeProvider({ children }: { children: ReactNode }) {
@@ -25,8 +29,9 @@ export default function MyThemeProvider({ children }: { children: ReactNode }) {
       toggleColorMode: () => {
         setMode((prevMode) => (prevMode === Theme.Light ? Theme.Dark : Theme.Light));
       },
+      mode: mode
     }),
-    []
+    [mode]
   );
 
   const _theme = useMemo(() => createTheme(theme[mode] as ThemeOptions), [mode]);

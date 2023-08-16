@@ -20,12 +20,12 @@ enum LightTheme {
     Secondary = '#30dac6',
     SecondaryVariant = '#018786',
     Background = '#ffffff',
-    Surface = '#ffffff',
+    Surface = '#6200ee',
     Error = '#b00020',
     OnPrimary = '#ffffff',
-    OnSecondary = '#000000',
+    OnSecondary = '#ffffff',
     OnBackground = '#000000',
-    OnSurface = '#000000',
+    OnSurface = '#ffffff',
     OnError = '#ffffff'
 
 }

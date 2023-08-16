@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   AppBar,
   Box,
@@ -8,12 +8,14 @@ import {
   Menu,
   Container,
   MenuItem,
+  Tabs,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Logo } from './logo';
 import { Toggler } from './toggler';
 import { ProfileMenu } from './profile-menu';
 import { MENU_ITEMS } from '../values/constants/profileMenu';
+import { NavTabs } from './nav-tabs';
 
 function NavigationBar() {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -69,14 +71,7 @@ function NavigationBar() {
           </Box>
           <Logo />
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'center' }}>
-            {MENU_ITEMS.map((page) => (
-              <Typography key={page} onClick={handleCloseNavMenu}
-                sx={{
-                  my: 2, mx: 2, display: 'block', cursor: 'pointer', fontWeight: 500, "&:hover": { color: 'secondary.main' }
-                }}>
-                {page}
-              </Typography>
-            ))}
+            <NavTabs items={MENU_ITEMS} />
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Toggler />
