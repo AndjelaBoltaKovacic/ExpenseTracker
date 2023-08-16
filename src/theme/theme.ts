@@ -1,6 +1,7 @@
 import { createTheme } from "@mui/material/styles";
-import { DarkTheme, LightTheme } from '../enums/colors';
-import { AppTheme } from "./index";
+import { DarkTheme, LightTheme } from '../values/enums/colors';
+import { AppTheme } from "../models/theme";
+
 
 const { palette } = createTheme();
 

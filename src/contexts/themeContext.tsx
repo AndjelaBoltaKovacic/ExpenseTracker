@@ -1,26 +1,23 @@
+import { ReactNode, createContext, useEffect, useMemo, useState } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import { ThemeProvider, createTheme, ThemeOptions } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import React from 'react';
-import { useEffect } from 'react';
-// 1. import our newly fresh yum exported theme
-import { color as ThemeColors } from '../values/theme/index';
+import { theme } from '../theme/theme';
 
-export const ThemeContext = React.createContext({
+
+export const ThemeContext = createContext({
   toggleColorMode: () => {},
 });
-type MyThemeProviderProps = {
-  children?: React.ReactNode;
-};
-export default function MyThemeProvider(props: MyThemeProviderProps) {
+
+export default function MyThemeProvider({ children }: { children: ReactNode }) {
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  const [mode, setMode] = React.useState<'light' | 'dark'>(prefersDarkMode ? 'dark' : 'light');
-  const [theme] = React.useState<0>(0);
+  const [mode, setMode] = useState<'light' | 'dark'>(prefersDarkMode ? 'dark' : 'light');
+
   useEffect(() => {
     setMode(prefersDarkMode ? 'dark' : 'light');
   }, [prefersDarkMode]);
-  const colorMode = React.useMemo(
+  const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {
         setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
@@ -28,16 +25,15 @@ export default function MyThemeProvider(props: MyThemeProviderProps) {
     }),
     []
   );
-  // 2. create theme object, pick theme from the mega theme object we exported earlier
-  // based on our theme and mode values
-  const _theme = React.useMemo(() => createTheme(ThemeColors[theme][mode] as ThemeOptions), [mode, theme]);
+
+  const _theme = useMemo(() => createTheme(theme[mode] as ThemeOptions), [mode, theme]);
   return (
     <ThemeContext.Provider value={colorMode}>
       {/* 3. supply it to MUI ThemeProvider */}
       <ThemeProvider theme={_theme}>
         <GlobalStyles styles={{}} />
         <CssBaseline enableColorScheme />
-        {props.children}
+        {children}
       </ThemeProvider>
     </ThemeContext.Provider>
   );
