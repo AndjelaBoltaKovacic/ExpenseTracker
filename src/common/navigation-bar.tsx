@@ -12,6 +12,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import { Logo } from './logo';
 import { Toggler } from './toggler';
+import { ProfileMenu } from './profile-menu';
 
 
 const pages = ['PRODUCTS', 'PRICING', 'BLOG'];
@@ -81,6 +82,9 @@ function NavigationBar() {
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Toggler />
+          </Box>
+          <Box sx={{ flexGrow: 0 }}>
+            <ProfileMenu />
           </Box>
         </Toolbar>
       </Container>
