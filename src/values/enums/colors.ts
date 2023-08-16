@@ -5,7 +5,7 @@ enum DarkTheme {
     Secondary = '#04dac6',
     SecondaryVariant = '#018786',
     Background = 'black',
-    Surface = '##2a2a2a',
+    Surface = '#2a2a2a',
     Error = '#cf6679',
     OnPrimary = '#000000',
     OnSecondary = '#000000',
@@ -17,7 +17,7 @@ enum DarkTheme {
 enum LightTheme {
     Primary = '#6200ee',
     PrimaryVariant = '#3700b3',
-    Secondary = '#303dac6',
+    Secondary = '#30dac6',
     SecondaryVariant = '#018786',
     Background = '#ffffff',
     Surface = '#ffffff',
@@ -30,12 +30,9 @@ enum LightTheme {
 
 }
 
-enum ThemeColors {
-    dark = 'dark',
-    light = 'light'
-}
 
-export { DarkTheme, LightTheme, ThemeColors };
+
+export { DarkTheme, LightTheme };
 
 
 

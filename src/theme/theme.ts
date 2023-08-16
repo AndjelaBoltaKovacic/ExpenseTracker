@@ -2,7 +2,6 @@ import { createTheme } from "@mui/material/styles";
 import { DarkTheme, LightTheme } from '../values/enums/colors';
 import { AppTheme } from "../models/theme";
 
-
 const { palette } = createTheme();
 
 export const theme: AppTheme = {
@@ -17,7 +16,6 @@ export const theme: AppTheme = {
             }),
             secondary: palette.augmentColor({
                 color: {
-
                     main: LightTheme.Secondary,
                     contrastText: LightTheme.OnSecondary,
                 },
@@ -50,7 +48,7 @@ export const theme: AppTheme = {
             }),
             info: palette.augmentColor({
                 color: {
-                    main: "#99cbff",
+                    main: LightTheme.PrimaryVariant,
                     contrastText: "#003257",
                 },
             }),
