@@ -13,9 +13,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Logo } from './logo';
 import { Toggler } from './toggler';
 import { ProfileMenu } from './profile-menu';
-
-
-const pages = ['PRODUCTS', 'PRICING', 'BLOG'];
+import { MENU_ITEMS } from '../values/constants/profileMenu';
 
 function NavigationBar() {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -62,7 +60,7 @@ function NavigationBar() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
+              {MENU_ITEMS.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign='center'>{page}</Typography>
                 </MenuItem>
@@ -71,7 +69,7 @@ function NavigationBar() {
           </Box>
           <Logo />
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'center' }}>
-            {pages.map((page) => (
+            {MENU_ITEMS.map((page) => (
               <Typography key={page} onClick={handleCloseNavMenu}
                 sx={{
                   my: 2, mx: 2, display: 'block', cursor: 'pointer', fontWeight: 500, "&:hover": { color: 'secondary.main' }
