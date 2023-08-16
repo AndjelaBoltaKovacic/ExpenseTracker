@@ -7,6 +7,7 @@ import { theme } from '../theme/theme';
 import { Theme } from '../values/enums/theme';
 
 
+
 export const ThemeContext = createContext({
   toggleColorMode: () => {},
 });

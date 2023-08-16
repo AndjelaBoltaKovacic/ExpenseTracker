@@ -7,13 +7,11 @@ import {
   Typography,
   Menu,
   Container,
-  Button,
-  Tooltip,
   MenuItem,
-  Switch,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Logo } from './logo';
+import { Toggler } from './toggler';
 
 
 const pages = ['PRODUCTS', 'PRICING', 'BLOG'];
@@ -82,9 +80,7 @@ function NavigationBar() {
             ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title='Change theme'>
-              <Switch color='secondary' sx={{}} checked={true} onChange={() => { }} />
-            </Tooltip>
+            <Toggler />
           </Box>
         </Toolbar>
       </Container>
