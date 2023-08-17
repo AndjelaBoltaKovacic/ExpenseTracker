@@ -1,10 +1,21 @@
-import NavigationBar from './common/navigation-bar';
+import { Route, Routes } from 'react-router-dom';
+import Login from './pages/auth/login';
+import Blog from './pages/layout/blog/blog';
+import Dashboard from './pages/layout/dashboard/dashboard';
+import Transactions from './pages/layout/transactions/transactions';
+import NavigationBar from './common/navigation/navigation-bar';
 
 function App() {
   return (
     <>
       <NavigationBar />
-      <div>BLdfdfdA</div>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Login />} />
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/transactions" element={<Transactions />} />
+        <Route path="/blog" element={<Blog />} />
+      </Routes>
     </>
   );
 }
