@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { Tooltip, Switch } from '@mui/material';
 import { ThemeContext } from '../contexts/themeContext';
+import { Theme } from '../values/enums/theme';
 
 
 export const Toggler = () => {
@@ -8,7 +9,7 @@ export const Toggler = () => {
 
     return (
         <Tooltip title="Change theme">
-            <Switch color="secondary" onChange={colorMode.toggleColorMode} />
+            <Switch color="secondary" checked={colorMode.mode === Theme.Dark} onChange={colorMode.toggleColorMode} />
         </Tooltip>
     );
 };
