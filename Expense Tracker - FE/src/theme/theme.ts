@@ -21,22 +21,16 @@ export const theme: AppTheme = {
                 },
             }),
             text: {
-                // pick the onBackground colour OF DARK and paste it here
                 primary: LightTheme.OnBackground,
-                // pick the onSurface colour OF DARK and paste it here
                 secondary: LightTheme.OnSurface,
             },
             background: {
-                // pick the background colour OF DARK and paste it here
                 default: LightTheme.Background,
-                // pick the surface colour and OF DARK paste it here
                 paper: LightTheme.Surface,
             },
             error: palette.augmentColor({
                 color: {
-                    // pick the error colour OF DARK and paste it here
                     main: LightTheme.Error,
-                    // pick the onError colour OF DARK and paste it here
                     contrastText: LightTheme.OnError,
                 },
             }),

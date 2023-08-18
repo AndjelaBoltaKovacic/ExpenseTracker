@@ -19,7 +19,7 @@ enum LightTheme {
     PrimaryVariant = '#3700b3',
     Secondary = '#30dac6',
     SecondaryVariant = '#018786',
-    Background = '#ffffff',
+    Background = '#F2F2F2',
     Surface = '#6200ee',
     Error = '#b00020',
     OnPrimary = '#ffffff',

@@ -1,6 +1,6 @@
 import { ReactNode, useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { TextField, Button, Grid, Container, Typography, IconButton, InputAdornment, InputLabel } from '@mui/material';
+import { TextField, Button, Grid, Container, Typography, IconButton, InputAdornment, InputLabel, FormControlLabel, Checkbox } from '@mui/material';
 import { ThemeContext } from '@emotion/react';
 import { getInputLabelColor } from '../../theme/overrides';
 import { emailValidation, passwordValidation } from './form/validation-patterns';
@@ -90,6 +90,12 @@ function RegistrationForm() {
                                     <PasswordVisibility showPass={showConfirmPassword} onClick={setShowConfirmPassword} />
                                 ),
                             }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <FormControlLabel
+                            control={<Checkbox {...register('premiumUser')} />}
+                            label="Sign Up As A Premium User"
                         />
                     </Grid>
                 </Grid>
