@@ -25,7 +25,7 @@ enum LightTheme {
     OnPrimary = '#ffffff',
     OnSecondary = '#ffffff',
     OnBackground = '#3700b3',
-    OnSurface = '#3700b3',
+    OnSurface = '#ffffff',
     OnError = '#ffffff'
 
 }

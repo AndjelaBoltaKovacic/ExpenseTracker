@@ -1,10 +1,16 @@
-import React, { ReactNode, useState } from 'react';
+import { ReactNode, useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { TextField, Button, Typography, Container, InputAdornment, IconButton } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { TextField, Button, Typography, Container } from '@mui/material';
+import { emailValidation, passwordValidation } from './form/validation-patterns';
+import PasswordVisibility from './form/passwordVisibility';
+import { ThemeContext } from '@emotion/react';
+import { getInputLabelColor } from '../../theme/overrides';
 
 const LoginForm = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const { palette }: any = useContext(ThemeContext);
+    const inputLabelColorOverride = getInputLabelColor(palette.mode);
+
 
     const {
         register,
@@ -16,10 +22,6 @@ const LoginForm = () => {
         console.log(data); // You can replace this with your login logic
     };
 
-    const handlePasswordVisibilityToggle = () => {
-        setShowPassword((prevShowPassword) => !prevShowPassword);
-    };
-
     return (
         <Container maxWidth="xs" sx={{ marginTop: 8 }}>
             <Typography variant="h4" align="center" gutterBottom>
@@ -27,46 +29,28 @@ const LoginForm = () => {
             </Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <TextField
+                    InputLabelProps={inputLabelColorOverride}
                     label="Email"
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    {...register('email', {
-                        required: 'Email is required',
-                        pattern: {
-                            value: /^\S+@\S+$/i,
-                            message: 'Invalid email format',
-                        },
-                    })}
+                    {...register('email', emailValidation)}
                     error={!!errors.email}
                     helperText={errors?.email?.message as ReactNode}
                 />
                 <TextField
+                    InputLabelProps={inputLabelColorOverride}
                     label="Password"
                     type={showPassword ? 'text' : 'password'}
                     variant="outlined"
                     fullWidth
                     margin="normal"
-                    {...register('password', {
-                        required: 'Password is required',
-                        minLength: {
-                            value: 8,
-                            message: 'Password must have at least 8 characters',
-                        },
-                        pattern: {
-                            value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*])[A-Za-z0-9!@#$%^&*]*$/,
-                            message: 'Password must include at least one capital letter and one special character',
-                        },
-                    })}
+                    {...register('password', passwordValidation)}
                     error={!!errors.password}
                     helperText={errors?.password?.message as ReactNode}
                     InputProps={{
                         endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton onClick={handlePasswordVisibilityToggle} edge="end">
-                                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
+                            <PasswordVisibility showPass={showPassword} onClick={setShowPassword} />
                         ),
                     }}
                 />

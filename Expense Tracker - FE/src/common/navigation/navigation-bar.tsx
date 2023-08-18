@@ -6,10 +6,10 @@ import {
 } from '@mui/material';
 import { Logo } from '../logo';
 import { Toggler } from '../toggler';
-import { ProfileMenu } from '../menus/profile-menu';
+import { ProfileMenu } from '../menu/profile-menu';
 import { MENU_ITEMS } from '../../values/constants/profileMenu';
 import { NavTabs } from './nav-tabs';
-import BurgerMenu from '../menus/burger-menu';
+import BurgerMenu from '../menu/burger-menu';
 
 function NavigationBar() {
 
