@@ -80,7 +80,7 @@ function RegistrationForm() {
                             fullWidth
                             label="Confirm Password"
                             type={showConfirmPassword ? 'text' : 'password'}
-                            {...register('confirmPassword', {
+                            {...register('passwordConfirmation', {
                                 validate: (value) => !value ? 'Confirm Password is required' : value === password || 'Passwords do not match',
                             })}
                             error={!!errors.confirmPassword}

@@ -15,6 +15,7 @@ app.use(
 );
 
 app.listen(PORT, async () => {
+    console.log(PORT)
     logger.info(
         `${NODE_ENV.toUpperCase()} Api is running at http://localhost:${PORT}`
     );
