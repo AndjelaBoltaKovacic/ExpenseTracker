@@ -14,7 +14,7 @@ import BurgerMenu from '../menu/burger-menu';
 function NavigationBar() {
 
   return (
-    <AppBar position='static'>
+    <AppBar position='static' color='inherit'>
       <Container maxWidth='xl'>
         <Toolbar disableGutters>
           <Logo isLargeScreen />

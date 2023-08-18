@@ -5,7 +5,9 @@ export const Logo = ({ isLargeScreen }: { isLargeScreen?: boolean }) => {
     const display = isLargeScreen ? { xs: 'none', md: 'flex' } : { xs: 'flex', md: 'none' };
     return (
         <>
-            <SavingsIcon sx={{
+            <SavingsIcon
+                color='secondary'
+                sx={{
                 display, mr: 1, fontSize: {
                     md: 40,
                     sm: 30,
@@ -13,6 +15,7 @@ export const Logo = ({ isLargeScreen }: { isLargeScreen?: boolean }) => {
                 }
             }} />
             <Typography
+                color='white'
                 variant="h6"
                 noWrap
                 sx={{
