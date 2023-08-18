@@ -81,8 +81,7 @@ function RegistrationForm() {
                             label="Confirm Password"
                             type={showConfirmPassword ? 'text' : 'password'}
                             {...register('confirmPassword', {
-                                required: 'Confirm Password is required',
-                                validate: (value) => value === password || 'Passwords do not match',
+                                validate: (value) => !value ? 'Confirm Password is required' : value === password || 'Passwords do not match',
                             })}
                             error={!!errors.confirmPassword}
                             helperText={errors?.confirmPassword?.message as ReactNode}
