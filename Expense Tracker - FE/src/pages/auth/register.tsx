@@ -33,7 +33,7 @@ function RegistrationForm() {
 
   return (
     <Loader isLoading={loading}>
-      {!data ? (
+      {data ? (
         <NoticeCard
           title="Your account has been created successfuly"
           buttonText="Login"
