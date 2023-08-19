@@ -22,10 +22,7 @@ const useFetch = <T>(url: string, method: HttpMethod): FetchState<T> => {
             const response: AxiosResponse<T> = await axios({
                 method,
                 url,
-                data: body,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                data: body
             });
 
             setData(response.data);
