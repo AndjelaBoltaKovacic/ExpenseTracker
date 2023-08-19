@@ -7,7 +7,7 @@ export interface UserInput {
     firstName: string;
     lastName: string;
     password: string;
-    isPremium: boolean;
+    premiumUser: boolean;
 }
 
 export interface UserDocument extends UserInput, mongoose.Document {
@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema(
         firstName: { type: String, required: true },
         lastName: { type: String, required: true },
         password: { type: String, required: true },
-        isPremium: { type: Boolean, required: true }
+        premiumUser: { type: Boolean, required: true }
     },
     { timestamps: true }
 );
