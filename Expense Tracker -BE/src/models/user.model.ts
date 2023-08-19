@@ -5,7 +5,9 @@ import { SALT_WORK_FACTOR } from "../../config/index";
 export interface UserInput {
     email: string;
     firstName: string;
+    lastName: string;
     password: string;
+    isPremium: boolean;
 }
 
 export interface UserDocument extends UserInput, mongoose.Document {
@@ -19,7 +21,9 @@ const userSchema = new mongoose.Schema(
     {
         email: { type: String, required: true, unique: true },
         firstName: { type: String, required: true },
+        lastName: { type: String, required: true },
         password: { type: String, required: true },
+        isPremium: { type: Boolean, required: true }
     },
     { timestamps: true }
 );
