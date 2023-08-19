@@ -5,11 +5,12 @@ import { ThemeProvider, createTheme, ThemeOptions } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { theme } from '../theme/theme';
 import { Theme } from '../values/enums/theme';
+import { VoidFn } from '../models/common';
 
 
 
 export const ThemeContext = createContext<{
-  toggleColorMode: () => void,
+  toggleColorMode: VoidFn,
   mode: Theme
 }>({
   toggleColorMode: () => { },
