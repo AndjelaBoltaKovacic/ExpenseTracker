@@ -1,3 +1,3 @@
 export const getLocationValue = (pathname: string) => {
-    return pathname === '/' ? 0 : pathname === '/transactions' ? 1 : 2;
+    return pathname === '/dashboard' ? 0 : pathname === '/transactions' ? 1 : 2;
 }
