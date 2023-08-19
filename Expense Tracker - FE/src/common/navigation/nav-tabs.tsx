@@ -26,8 +26,9 @@ export const NavTabs = ({ items }: { items: MenuItem[] }) => {
             aria-label="nav tabs"
             textColor={themeOverride}
             indicatorColor={themeOverride}>
-            {items.map(({ title, page }) => (
+            {items.map(({ title, page }, i) => (
                 <Tab
+                    key={`${title}_${i}`}
                     onClick={(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
                         event.preventDefault();
                         navigate(`${page}`)

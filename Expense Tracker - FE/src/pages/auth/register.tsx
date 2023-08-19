@@ -1,10 +1,12 @@
-import { ReactNode, useContext, useState } from 'react';
+import { ReactNode, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { TextField, Button, Grid, Container, Typography, IconButton, InputAdornment, InputLabel, FormControlLabel, Checkbox } from '@mui/material';
+import { TextField, Button, Grid, Container, Typography, FormControlLabel, Checkbox } from '@mui/material';
 import { ThemeContext } from '@emotion/react';
 import { getInputLabelColor } from '../../theme/overrides';
 import { emailValidation, passwordValidation } from './form/validation-patterns';
 import PasswordVisibility from './form/passwordVisibility';
+import { baseUrl } from '../../services/urls';
+import useFetch from '../../hooks/useFetch';
 
 function RegistrationForm() {
     const [showPassword, setShowPassword] = useState(false);
@@ -16,11 +18,21 @@ function RegistrationForm() {
         formState: { errors },
         watch,
     } = useForm();
+
+    const { data, loading, error, fetchData } = useFetch(`${baseUrl}/users`, 'POST');
     const password = watch('password', '');
     const inputLabelColorOverride = getInputLabelColor(palette.mode);
+
     const onSubmit = (data: any) => {
         console.log(data);
+        fetchData(data)
     };
+
+    useEffect(() => {
+        if (data) {
+            console.log(data)
+        }
+    }, [data])
 
     return (
         <Container component="main" maxWidth="xs" sx={{ marginTop: 8, marginBottom: 2 }}>
