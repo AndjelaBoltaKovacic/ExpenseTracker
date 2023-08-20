@@ -1,6 +1,6 @@
 import { ReactNode, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { TextField, Button, Typography, Container } from '@mui/material';
+import { TextField, Button, Typography, Container, Box } from '@mui/material';
 import { emailValidation, passwordValidation } from './form/validation-patterns';
 import PasswordVisibility from './form/passwordVisibility';
 import { ThemeContext } from '@emotion/react';
@@ -9,7 +9,7 @@ import { baseUrl } from '../../services/urls';
 import useFetch from '../../hooks/useFetch';
 import { useUserContext } from '../../contexts/userContext';
 import Loader from '../../common/loader';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserToken } from '../../models/user';
 
 const LoginForm = () => {
@@ -76,6 +76,9 @@ const LoginForm = () => {
           <Button type="submit" variant="contained" color="primary" fullWidth sx={{ marginTop: 2 }}>
             Login
           </Button>
+          <Box display="flex" justifyContent="center" mt={3}>
+            <Link to="/">Forgot password?</Link>
+          </Box>
         </form>
       </Container>
     </Loader>
