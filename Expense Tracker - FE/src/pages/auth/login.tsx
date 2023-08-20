@@ -27,7 +27,6 @@ const LoginForm = () => {
   } = useForm();
 
   const onSubmit = (data: any) => {
-    console.log(data);
     fetchData(data);
   };
 

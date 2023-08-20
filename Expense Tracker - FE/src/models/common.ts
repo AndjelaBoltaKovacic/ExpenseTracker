@@ -4,4 +4,6 @@ export type MenuItem = {
     isPremium?: boolean;
 }
 
-export type VoidFn = () => void;
+export type VoidFn = (arg?: any) => void;
+
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
