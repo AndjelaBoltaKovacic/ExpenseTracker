@@ -1,41 +1,31 @@
-
 enum DarkTheme {
-    Primary = '#bb86fc',
-    PrimaryVariant = '#3712b3',
-    Secondary = '#04dac6',
-    SecondaryVariant = '#018786',
-    Background = 'black',
-    Surface = '#2a2a2a',
-    Error = '#cf6679',
-    OnPrimary = '#000000',
-    OnSecondary = '#000000',
-    OnBackground = '#ffffff',
-    OnSurface = '#ffffff',
-    OnError = '#000000'
+  Primary = '#FF6B6B',
+  PrimaryVariant = '#D64545',
+  Secondary = '#66A182',
+  SecondaryVariant = '#4B805E',
+  Background = '#2C3E50',
+  Surface = '#34495E',
+  Error = '#E74C3C',
+  OnPrimary = '#FFFFFF',
+  OnSecondary = '#FFFFFF',
+  OnBackground = '#FFFFFF',
+  OnSurface = '#FFFFFF',
+  OnError = '#FFFFFF',
 }
 
 enum LightTheme {
-  Primary = '#6200EA',
-  PrimaryVariant = '#B388FF',
-  Secondary = '#00BFA5',
-  SecondaryVariant = '#1DE9B6',
-  Background = '#FFFFFF',
-  Surface = '#F5F5F5',
-  Error = '#FF1744',
+  Primary = '#3498DB',
+  PrimaryVariant = '#2980B9',
+  Secondary = '#F39C12',
+  SecondaryVariant = '#E67E22',
+  Background = '#ECF0F1',
+  Surface = '#FFFFFF',
+  Error = '#FF5733',
   OnPrimary = '#FFFFFF',
-  OnSecondary = '#000000',
+  OnSecondary = '#FFFFFF',
   OnBackground = '#000000',
   OnSurface = '#000000',
   OnError = '#FFFFFF',
 }
-  
-  export default LightTheme;
-  
-  
-
-
 
 export { DarkTheme, LightTheme };
-
-
-

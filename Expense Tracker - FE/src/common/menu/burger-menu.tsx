@@ -20,43 +20,44 @@ function BurgerMenu({ items }: { items: Item[] }) {
         handleCloseNavMenu()
         navigate(page)
     }
-    return (<>
+    return (
+      <>
         <IconButton
-            size='large'
-            aria-label='account of current user'
-            aria-controls='menu-appbar'
-            aria-haspopup='true'
-            onClick={handleOpenNavMenu}
-            color='inherit'
+          size="large"
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={handleOpenNavMenu}
+          color="inherit"
         >
-            <MenuIcon />
+          <MenuIcon />
         </IconButton>
         <Menu
-            id='menu-appbar'
-            anchorEl={anchorElNav}
-            anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-            }}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-            }}
-            open={Boolean(anchorElNav)}
-            onClose={handleCloseNavMenu}
-            sx={{
-                display: { xs: 'block', md: 'none' },
-            }}
+          id="menu-appbar"
+          anchorEl={anchorElNav}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'left',
+          }}
+          open={Boolean(anchorElNav)}
+          onClose={handleCloseNavMenu}
+          sx={{
+            display: { xs: 'block', md: 'none' },
+          }}
         >
-            {items.map(({ title, page }, i) => (
-                <MenuItem key={title + i} onClick={() => handleMenuItemClick(page)}>
-                    <Typography color='white' textAlign='center'>{title}</Typography>
-                </MenuItem>
-            ))}
+          {items.map(({ title, page }, i) => (
+            <MenuItem key={title + i} onClick={() => handleMenuItemClick(page)}>
+              <Typography textAlign="center">{title}</Typography>
+            </MenuItem>
+          ))}
         </Menu>
-    </>
-    )
+      </>
+    );
 }
 
 export default BurgerMenu;

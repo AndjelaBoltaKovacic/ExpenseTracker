@@ -36,17 +36,13 @@ export const ProfileMenu = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        <Typography sx={{ textAlign: 'center', pb: 1 }} color="white">
-          {user?.firstName}
-        </Typography>
+        <Typography sx={{ textAlign: 'center', pb: 1 }}>{user?.firstName}</Typography>
         <Divider />
         <MenuItem>
-          <Typography color="white" textAlign="center">
-            Set Reminder
-          </Typography>
+          <Typography textAlign="center">Set Reminder</Typography>
         </MenuItem>
         <MenuItem>
-          <Typography color="white" textAlign="center" onClick={() => logout()}>
+          <Typography textAlign="center" onClick={() => logout()}>
             Logout
           </Typography>
         </MenuItem>
