@@ -1,4 +1,4 @@
-import { VoidFn } from './common';
+import { _void } from './common';
 
 export type DecodedToken = {
   _id: string;
@@ -18,14 +18,14 @@ export type User = {
   email: string;
   firstName: string;
   lastName: string;
-  role: 'PREMIUM' | 'STANDARD'
+  role: 'PREMIUM' | 'STANDARD';
 };
 
 export type UserContextType = {
   user: User | null;
   isPremium: boolean;
   login: (data: any) => void;
-  logout: VoidFn;
+  logout: _void;
 };
 
 export type UserToken = { accessToken: string; refreshToken: string };

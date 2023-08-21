@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Table, TableBody, TableContainer, TableHead, TableRow, Button, Paper } from '@mui/material';
 import { Expense } from '../../models/expenses';
-import { DataEntry, VoidFn } from '../../models/common';
+import { DataEntry, _void } from '../../models/common';
 import SortLabel from './sort-label';
 import SmallTableCell from './SmallTableCell';
 import { TABLE_HEADERS } from '../../values/constants/table';
@@ -16,8 +16,8 @@ const DataTable = ({
   disableSort?: boolean;
   hideButtons?: boolean;
   data: Expense[];
-  onEditClick?: VoidFn;
-  onDeleteClick?: VoidFn;
+  onEditClick?: _void;
+  onDeleteClick?: _void;
 }) => {
   const [orderBy, setOrderBy] = useState<keyof DataEntry>('creationTime');
   const [order, setOrder] = useState<'asc' | 'desc'>('desc');
@@ -69,7 +69,7 @@ const DataTable = ({
               <TableRow key={row.id}>
                 <SmallTableCell>{i + 1}</SmallTableCell>
                 <SmallTableCell>{row.category}</SmallTableCell>
-                <SmallTableCell>{row.amount}</SmallTableCell>
+                <SmallTableCell>$ {row.amount}</SmallTableCell>
                 <SmallTableCell>{row.description}</SmallTableCell>
                 <SmallTableCell>{row.creationTime}</SmallTableCell>
                 {!hideButtons && (

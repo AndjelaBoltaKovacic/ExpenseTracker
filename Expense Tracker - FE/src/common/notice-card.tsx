@@ -1,5 +1,5 @@
 import { Typography, Button, Box } from '@mui/material';
-import { VoidFn } from '../models/common';
+import { _void } from '../models/common';
 
 const NoticeCard = ({
   title,
@@ -10,31 +10,31 @@ const NoticeCard = ({
   title?: string;
   text?: string;
   buttonText?: string;
-  onButtonClick?: VoidFn;
+  onButtonClick?: _void;
 }) => {
   return (
     <Box
       border={1}
-      borderColor='primary.main'
-      borderRadius='7px'
+      borderColor="primary.main"
+      borderRadius="7px"
       boxShadow={2}
       p={3}
-      margin='auto'
-      marginTop='10vw'
-      textAlign='center'
+      margin="auto"
+      marginTop="10vw"
+      textAlign="center"
       sx={{ width: { xs: '85%', md: '60%' } }}
     >
-      <Typography variant='h4' component='div'>
+      <Typography variant="h4" component="div">
         {title}
       </Typography>
-      <Typography variant='body2' color='text.secondary'>
+      <Typography variant="body2" color="text.secondary">
         {text}
       </Typography>
       {buttonText && (
         <Button
           onClick={onButtonClick}
-          variant='contained'
-          color='secondary'
+          variant="contained"
+          color="secondary"
           style={{
             marginTop: 10,
             borderRadius: '7px',

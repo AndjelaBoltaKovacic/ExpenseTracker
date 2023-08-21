@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import apiService from '../services/api-service';
-import { HttpMethod, VoidFn } from '../models/common';
+import { HttpMethod, _void } from '../models/common';
 
 interface FetchState<T> {
   data: T | null;
   loading: boolean;
   error: any;
-  fetchData: VoidFn;
+  fetchData: _void;
 }
 
 const useFetch = <T>(url: string, method: HttpMethod): FetchState<T> => {

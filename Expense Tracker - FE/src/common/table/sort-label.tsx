@@ -1,5 +1,5 @@
 import { TableSortLabel } from '@mui/material';
-import { VoidFn } from '../../models/common';
+import { _void } from '../../models/common';
 
 function SortLabel({
   disabled,
@@ -14,7 +14,7 @@ function SortLabel({
   propertyName: string;
   orderBy: string;
   order: 'asc' | 'desc';
-  handleSort: VoidFn;
+  handleSort: _void;
 }) {
   return (
     <>

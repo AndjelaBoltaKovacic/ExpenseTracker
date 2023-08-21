@@ -5,16 +5,16 @@ import { ThemeProvider, createTheme, ThemeOptions } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { theme } from '../theme/theme';
 import { Theme } from '../values/enums/theme';
-import { VoidFn } from '../models/common';
+import { _void } from '../models/common';
 
 
 
 export const ThemeContext = createContext<{
-  toggleColorMode: VoidFn,
-  mode: Theme
+  toggleColorMode: _void;
+  mode: Theme;
 }>({
-  toggleColorMode: () => { },
-  mode: Theme.Dark
+  toggleColorMode: () => {},
+  mode: Theme.Dark,
 });
 
 export default function MyThemeProvider({ children }: { children: ReactNode }) {
