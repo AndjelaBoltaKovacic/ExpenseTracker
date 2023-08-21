@@ -8,7 +8,7 @@ export const createUserSchema = object({
         lastName: string({
             required_error: "Last Name is required",
         }),
-        premiumUser: boolean({
+        role: string({
             required_error: "Premium status is required",
         }),
         password: string({

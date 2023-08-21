@@ -4,7 +4,7 @@ import { useUserContext } from '../../contexts/userContext';
 
 export const ProfileMenu = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const { user, logout } = useUserContext();
+  const { user, isPremium, logout } = useUserContext();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -38,7 +38,7 @@ export const ProfileMenu = () => {
       >
         <Typography sx={{ textAlign: 'center', pb: 1 }}>{user?.firstName}</Typography>
         <Divider />
-        {user?.premiumUser && (
+        {isPremium && (
           <MenuItem>
             <Typography textAlign='center'>Set Reminder</Typography>
           </MenuItem>

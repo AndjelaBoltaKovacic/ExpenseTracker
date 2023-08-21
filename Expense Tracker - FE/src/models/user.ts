@@ -5,7 +5,7 @@ export type DecodedToken = {
   email: string;
   firstName: string;
   lastName: string;
-  premiumUser: boolean;
+  role: 'PREMIUM' | 'STANDARD';
   createdAt: string;
   updatedAt: string;
   __v: number;
@@ -18,11 +18,12 @@ export type User = {
   email: string;
   firstName: string;
   lastName: string;
-  premiumUser: boolean;
+  role: 'PREMIUM' | 'STANDARD'
 };
 
 export type UserContextType = {
   user: User | null;
+  isPremium: boolean;
   login: (data: any) => void;
   logout: VoidFn;
 };

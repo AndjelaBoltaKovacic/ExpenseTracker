@@ -7,7 +7,7 @@ import NoticeCard from '../../../common/notice-card';
 import { useUserContext } from '../../../contexts/userContext';
 
 function Dashboard() {
-  const { user } = useUserContext();
+  const { isPremium } = useUserContext();
   return (
     <Container>
       <AmountDisplay />
@@ -29,7 +29,7 @@ function Dashboard() {
         </Typography>
         <DataTable />
       </Box>
-      {user?.premiumUser && <NoticeCard title='Weekly reminder' text='some text' />}
+      {isPremium && <NoticeCard title='Weekly reminder' text='some text' />}
     </Container>
   );
 }

@@ -14,6 +14,7 @@ export const useUserContext = () => {
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const isPremium = user?.role === 'PREMIUM';
 
   const login = ({ accessToken }: UserToken) => {
     const decodedToken = decodeToken(accessToken);
@@ -34,5 +35,5 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  return <UserContext.Provider value={{ user, login, logout }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ user, isPremium, login, logout }}>{children}</UserContext.Provider>;
 };

@@ -10,6 +10,7 @@ import useFetch from '../../hooks/useFetch';
 import { useNavigate } from 'react-router-dom';
 import NoticeCard from '../../common/notice-card';
 import Loader from '../../common/loader';
+import { User } from '../../models/user';
 
 function RegistrationForm() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -28,20 +29,21 @@ function RegistrationForm() {
   const inputLabelColorOverride = getInputLabelColor(palette.mode);
 
   const onSubmit = (data: any) => {
-    fetchData(data);
+    const { premiumUser, ...rest } = data;
+    fetchData({ ...rest, role: premiumUser ? 'PREMIUM' : 'STANDARD' } as User);
   };
 
   return (
     <Loader isLoading={loading}>
       {data ? (
         <NoticeCard
-          title="Your account has been created successfuly"
-          buttonText="Login"
+          title='Your account has been created successfuly'
+          buttonText='Login'
           onButtonClick={() => navigate('/login')}
         />
       ) : (
-        <Container component="main" maxWidth="xs" sx={{ marginTop: 8, marginBottom: 2 }}>
-          <Typography variant="h4" align="center" gutterBottom>
+        <Container component='main' maxWidth='xs' sx={{ marginTop: 8, marginBottom: 2 }}>
+          <Typography variant='h4' align='center' gutterBottom>
             Register
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -50,7 +52,7 @@ function RegistrationForm() {
                 <TextField
                   InputLabelProps={inputLabelColorOverride}
                   fullWidth
-                  label="First Name"
+                  label='First Name'
                   {...register('firstName', { required: 'First Name is required' })}
                   error={!!errors.firstName}
                   helperText={errors.firstName?.message as ReactNode}
@@ -60,7 +62,7 @@ function RegistrationForm() {
                 <TextField
                   InputLabelProps={inputLabelColorOverride}
                   fullWidth
-                  label="Last Name"
+                  label='Last Name'
                   {...register('lastName', { required: 'Last Name is required' })}
                   error={!!errors.lastName}
                   helperText={errors.lastName?.message as ReactNode}
@@ -70,8 +72,8 @@ function RegistrationForm() {
                 <TextField
                   InputLabelProps={inputLabelColorOverride}
                   fullWidth
-                  label="Email"
-                  type="email"
+                  label='Email'
+                  type='email'
                   {...register('email', emailValidation)}
                   error={!!errors.email}
                   helperText={errors?.email?.message as ReactNode}
@@ -81,7 +83,7 @@ function RegistrationForm() {
                 <TextField
                   InputLabelProps={inputLabelColorOverride}
                   fullWidth
-                  label="Password"
+                  label='Password'
                   type={showPassword ? 'text' : 'password'}
                   {...register('password', passwordValidation)}
                   error={!!errors.password}
@@ -95,7 +97,7 @@ function RegistrationForm() {
                 <TextField
                   InputLabelProps={inputLabelColorOverride}
                   fullWidth
-                  label="Confirm Password"
+                  label='Confirm Password'
                   type={showConfirmPassword ? 'text' : 'password'}
                   {...register('passwordConfirmation', {
                     validate: (value) =>
@@ -113,16 +115,16 @@ function RegistrationForm() {
               <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
                 <FormControlLabel
                   control={<Checkbox {...register('premiumUser')} />}
-                  label="Sign Up As A Premium User"
+                  label='Sign Up As A Premium User'
                 />
               </Grid>
             </Grid>
             {error && (
-              <Typography color="error" mt={2} mb={2} textAlign="center">
+              <Typography color='error' mt={2} mb={2} textAlign='center'>
                 {error.response.data}
               </Typography>
             )}
-            <Button sx={{ marginTop: 2 }} type="submit" fullWidth variant="contained" color="primary">
+            <Button sx={{ marginTop: 2 }} type='submit' fullWidth variant='contained' color='primary'>
               Register
             </Button>
           </form>
