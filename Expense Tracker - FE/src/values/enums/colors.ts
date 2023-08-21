@@ -7,7 +7,7 @@ enum DarkTheme {
   Surface = '#34495E',
   Error = '#E74C3C',
   OnPrimary = '#FFFFFF',
-  OnSecondary = '#FFFFFF',
+  OnSecondary = '#34495E',
   OnBackground = '#FFFFFF',
   OnSurface = '#FFFFFF',
   OnError = '#FFFFFF',

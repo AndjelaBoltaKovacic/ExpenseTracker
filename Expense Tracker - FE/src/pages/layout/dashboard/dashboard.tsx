@@ -4,8 +4,10 @@ import DataTable from '../../../common/table/table';
 import Box from '@mui/material/Box';
 import { Button, Typography } from '@mui/material';
 import NoticeCard from '../../../common/notice-card';
+import { useUserContext } from '../../../contexts/userContext';
 
 function Dashboard() {
+  const { user } = useUserContext();
   return (
     <Container>
       <AmountDisplay />
@@ -27,7 +29,7 @@ function Dashboard() {
         </Typography>
         <DataTable />
       </Box>
-      <NoticeCard title='Weekly reminder' text='some text' />
+      {user?.premiumUser && <NoticeCard title='Weekly reminder' text='some text' />}
     </Container>
   );
 }

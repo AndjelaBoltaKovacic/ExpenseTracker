@@ -15,14 +15,14 @@ export const ProfileMenu = () => {
   };
   return (
     <>
-      <Tooltip title="Open settings">
+      <Tooltip title='Open settings'>
         <IconButton onClick={handleOpenUserMenu} sx={{ pl: 1 }}>
           <Avatar />
         </IconButton>
       </Tooltip>
       <Menu
         sx={{ mt: '45px' }}
-        id="menu-appbar"
+        id='menu-appbar'
         anchorEl={anchorElUser}
         anchorOrigin={{
           vertical: 'top',
@@ -38,11 +38,13 @@ export const ProfileMenu = () => {
       >
         <Typography sx={{ textAlign: 'center', pb: 1 }}>{user?.firstName}</Typography>
         <Divider />
+        {user?.premiumUser && (
+          <MenuItem>
+            <Typography textAlign='center'>Set Reminder</Typography>
+          </MenuItem>
+        )}
         <MenuItem>
-          <Typography textAlign="center">Set Reminder</Typography>
-        </MenuItem>
-        <MenuItem>
-          <Typography textAlign="center" onClick={() => logout()}>
+          <Typography textAlign='center' onClick={() => logout()}>
             Logout
           </Typography>
         </MenuItem>
