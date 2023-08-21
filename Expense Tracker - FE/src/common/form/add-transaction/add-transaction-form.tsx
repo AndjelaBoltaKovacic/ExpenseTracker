@@ -7,9 +7,10 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
-import { VoidFn } from '../../models/common';
+import { VoidFn } from '../../../models/common';
 import CurrencyInput from './currency-input';
 import { FormHelperText } from '@mui/material';
+import ModalButtons from '../../modal/modal-buttons';
 
 const AddTransactionForm = ({ handleClose }: { handleClose: VoidFn }) => {
   const {
@@ -99,15 +100,7 @@ const AddTransactionForm = ({ handleClose }: { handleClose: VoidFn }) => {
           )}
         />
       </FormControl>
-
-      <Box display='flex' justifyContent='center' gap={3} mt={3}>
-        <Button variant='contained' color='primary' onClick={handleClose}>
-          Close
-        </Button>
-        <Button variant='contained' color='secondary' type='submit'>
-          Confirm
-        </Button>
-      </Box>
+      <ModalButtons handleClose={handleClose} handleSubmit={onSubmit} />
     </form>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -13,7 +13,7 @@ import { expenses } from '../../services/mocks/expenses';
 
 type DataEntry = Array<Expense>[number];
 
-const DataTable = () => {
+const DataTable = ({ hideButtons }: { hideButtons?: boolean }) => {
   const [orderBy, setOrderBy] = useState<keyof DataEntry>('id');
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
 
@@ -33,82 +33,92 @@ const DataTable = () => {
   });
 
   return (
-    <TableContainer component={Paper} sx={{ borderRadius: '7px' }}>
-      <Table aria-label='Sortable table'>
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <TableSortLabel
-                active={orderBy === 'id'}
-                direction={orderBy === 'id' ? order : 'asc'}
-                onClick={() => handleSort('id')}
-              >
-                No.
-              </TableSortLabel>
-            </TableCell>
-            <TableCell>
-              <TableSortLabel
-                active={orderBy === 'group'}
-                direction={orderBy === 'group' ? order : 'asc'}
-                onClick={() => handleSort('group')}
-              >
-                Group name
-              </TableSortLabel>
-            </TableCell>
-            <TableCell>
-              <TableSortLabel
-                active={orderBy === 'amount'}
-                direction={orderBy === 'amount' ? order : 'asc'}
-                onClick={() => handleSort('amount')}
-              >
-                Amount
-              </TableSortLabel>
-            </TableCell>
-            <TableCell>
-              <TableSortLabel
-                active={orderBy === 'description'}
-                direction={orderBy === 'description' ? order : 'asc'}
-                onClick={() => handleSort('description')}
-              >
-                Description
-              </TableSortLabel>
-            </TableCell>
-            <TableCell>
-              <TableSortLabel
-                active={orderBy === 'creationTime'}
-                direction={orderBy === 'creationTime' ? order : 'asc'}
-                onClick={() => handleSort('creationTime')}
-              >
-                Creation time
-              </TableSortLabel>
-            </TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {sortedData.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.id}</TableCell>
-              <TableCell>{row.group}</TableCell>
-              <TableCell>{row.amount}</TableCell>
-              <TableCell>{row.description}</TableCell>
-              <TableCell>{row.creationTime}</TableCell>
+    <>
+      <TableContainer component={Paper} sx={{ borderRadius: '7px' }}>
+        <Table aria-label='Sortable table'>
+          <TableHead>
+            <TableRow>
               <TableCell>
-                <Button variant='outlined' color='primary'>
-                  Edit
-                </Button>
+                <TableSortLabel
+                  active={orderBy === 'id'}
+                  direction={orderBy === 'id' ? order : 'asc'}
+                  onClick={() => handleSort('id')}
+                >
+                  No.
+                </TableSortLabel>
               </TableCell>
               <TableCell>
-                <Button variant='outlined' color='secondary'>
-                  Delete
-                </Button>
+                <TableSortLabel
+                  active={orderBy === 'group'}
+                  direction={orderBy === 'group' ? order : 'asc'}
+                  onClick={() => handleSort('group')}
+                >
+                  Group name
+                </TableSortLabel>
               </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === 'amount'}
+                  direction={orderBy === 'amount' ? order : 'asc'}
+                  onClick={() => handleSort('amount')}
+                >
+                  Amount
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === 'description'}
+                  direction={orderBy === 'description' ? order : 'asc'}
+                  onClick={() => handleSort('description')}
+                >
+                  Description
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === 'creationTime'}
+                  direction={orderBy === 'creationTime' ? order : 'asc'}
+                  onClick={() => handleSort('creationTime')}
+                >
+                  Creation time
+                </TableSortLabel>
+              </TableCell>
+              {!hideButtons && (
+                <>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                </>
+              )}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {sortedData.map((row) => (
+              <TableRow key={row.id}>
+                <TableCell>{row.id}</TableCell>
+                <TableCell>{row.group}</TableCell>
+                <TableCell>{row.amount}</TableCell>
+                <TableCell>{row.description}</TableCell>
+                <TableCell>{row.creationTime}</TableCell>
+                {!hideButtons && (
+                  <>
+                    <TableCell>
+                      <Button variant='outlined' color='primary'>
+                        Edit
+                      </Button>
+                    </TableCell>
+                    <TableCell>
+                      <Button variant='outlined' color='secondary'>
+                        Delete
+                      </Button>
+                    </TableCell>
+                  </>
+                )}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 };
 

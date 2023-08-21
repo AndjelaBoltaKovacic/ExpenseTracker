@@ -1,10 +1,21 @@
 import { useState } from 'react';
 import { Tooltip, IconButton, Avatar, Menu, MenuItem, Typography, Divider } from '@mui/material';
 import { useUserContext } from '../../contexts/userContext';
+import CustomModal from '../modal/custom-modal';
 
 export const ProfileMenu = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const { user, isPremium, logout } = useUserContext();
+
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpen = () => {
+    setOpenModal(true);
+  };
+
+  const handleClose = () => {
+    setOpenModal(false);
+  };
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -39,7 +50,7 @@ export const ProfileMenu = () => {
         <Typography sx={{ textAlign: 'center', pb: 1 }}>{user?.firstName}</Typography>
         <Divider />
         {isPremium && (
-          <MenuItem>
+          <MenuItem onClick={handleOpen}>
             <Typography textAlign='center'>Set Reminder</Typography>
           </MenuItem>
         )}
@@ -49,6 +60,9 @@ export const ProfileMenu = () => {
           </Typography>
         </MenuItem>
       </Menu>
+      <CustomModal isOpen={openModal} title={'Set Reminder'} handleClose={handleClose}>
+        <h1></h1>
+      </CustomModal>
     </>
   );
 };

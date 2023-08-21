@@ -6,8 +6,8 @@ import Box from '@mui/material/Box';
 import { Button, Typography } from '@mui/material';
 import NoticeCard from '../../../common/notice-card';
 import { useUserContext } from '../../../contexts/userContext';
-import CustomModal from '../../../common/modal';
-import AddTransactionForm from '../../../common/add-transaction/add-transaction-form';
+import CustomModal from '../../../common/modal/custom-modal';
+import AddTransactionForm from '../../../common/form/add-transaction/add-transaction-form';
 
 function Dashboard() {
   const { isPremium } = useUserContext();
@@ -22,7 +22,7 @@ function Dashboard() {
   };
   return (
     <Container>
-      <CustomModal isOpen={openModal} title='Add Transaction'>
+      <CustomModal isOpen={openModal} title='Add Transaction' handleClose={handleClose}>
         <AddTransactionForm handleClose={handleClose} />
       </CustomModal>
       <AmountDisplay />
@@ -36,13 +36,13 @@ function Dashboard() {
         <Typography p={2} color='primary.main'>
           Last 5 income transactions
         </Typography>
-        <DataTable />
+        <DataTable hideButtons />
       </Box>
       <Box my={2}>
         <Typography p={2} color='primary.main'>
           Last 5 expense transactions
         </Typography>
-        <DataTable />
+        <DataTable hideButtons />
       </Box>
       {isPremium && <NoticeCard title='Weekly reminder' text='some text' />}
     </Container>

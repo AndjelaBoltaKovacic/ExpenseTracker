@@ -1,15 +1,18 @@
+import { ReactNode } from 'react';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
-import { ReactNode } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
+import { VoidFn } from '../../models/common';
 
 const CustomModal = ({
   isOpen,
-
+  handleClose,
   title,
   children,
 }: {
   isOpen: boolean;
+  handleClose: VoidFn;
   title: string;
   children: ReactNode;
 }) => {
@@ -29,6 +32,9 @@ const CustomModal = ({
             boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
           }}
         >
+          <Box textAlign='end' sx={{ cursor: 'pointer' }}>
+            <CloseIcon onClick={handleClose} />
+          </Box>
           <Typography variant='h4' textAlign='center'>
             {title}
           </Typography>

@@ -1,8 +1,8 @@
 import { ReactNode, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { TextField, Button, Typography, Container, Box } from '@mui/material';
-import { emailValidation, passwordValidation } from './form/validation-patterns';
-import PasswordVisibility from './form/passwordVisibility';
+import { emailValidation, passwordValidation } from '../../common/form/validation-patterns';
+import PasswordVisibility from '../../common/form/passwordVisibility';
 import { ThemeContext } from '@emotion/react';
 import { getInputLabelColor } from '../../theme/overrides';
 import { baseUrl } from '../../services/urls';
@@ -39,28 +39,28 @@ const LoginForm = () => {
 
   return (
     <Loader isLoading={loading}>
-      <Container maxWidth="xs" sx={{ marginTop: 8 }}>
-        <Typography variant="h4" align="center" gutterBottom>
+      <Container maxWidth='xs' sx={{ marginTop: 8 }}>
+        <Typography variant='h4' align='center' gutterBottom>
           Login
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextField
             InputLabelProps={inputLabelColorOverride}
-            label="Email"
-            variant="outlined"
+            label='Email'
+            variant='outlined'
             fullWidth
-            margin="normal"
+            margin='normal'
             {...register('email', emailValidation)}
             error={!!errors.email}
             helperText={errors?.email?.message as ReactNode}
           />
           <TextField
             InputLabelProps={inputLabelColorOverride}
-            label="Password"
+            label='Password'
             type={showPassword ? 'text' : 'password'}
-            variant="outlined"
+            variant='outlined'
             fullWidth
-            margin="normal"
+            margin='normal'
             {...register('password', passwordValidation)}
             error={!!errors.password}
             helperText={errors?.password?.message as ReactNode}
@@ -69,15 +69,15 @@ const LoginForm = () => {
             }}
           />
           {error && (
-            <Typography color="error" mt={2} mb={2} textAlign="center">
+            <Typography color='error' mt={2} mb={2} textAlign='center'>
               {error.response.data}
             </Typography>
           )}
-          <Button type="submit" variant="contained" color="primary" fullWidth sx={{ marginTop: 2 }}>
+          <Button type='submit' variant='contained' color='primary' fullWidth sx={{ marginTop: 2 }}>
             Login
           </Button>
-          <Box display="flex" justifyContent="center" mt={3}>
-            <Link to="/">Forgot password?</Link>
+          <Box display='flex' justifyContent='center' mt={3}>
+            <Link to='/'>Forgot password?</Link>
           </Box>
         </form>
       </Container>
