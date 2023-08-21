@@ -26,10 +26,11 @@ export default function MyThemeProvider({ children }: { children: ReactNode }) {
     if (storedTheme) {
       return setMode(storedTheme as Theme);
     }
-    const systemTheme = prefersDarkMode ? Theme.Dark : Theme.Light
+    const systemTheme = prefersDarkMode ? Theme.Dark : Theme.Light;
     setMode(systemTheme);
-    localStorage.setItem('theme', systemTheme)
-  }, []);
+
+    localStorage.setItem('theme', systemTheme);
+  }, [prefersDarkMode]);
 
   const colorMode = useMemo(
     () => ({

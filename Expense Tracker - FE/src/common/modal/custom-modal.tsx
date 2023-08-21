@@ -31,6 +31,8 @@ const CustomModal = ({
             padding: '20px',
             outline: 'none',
             boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
+            width: { xs: '95%', sm: '80%', md: '50%' },
+            maxWidth: '552px',
           }}
         >
           <Box textAlign="end" sx={{ cursor: 'pointer' }}>

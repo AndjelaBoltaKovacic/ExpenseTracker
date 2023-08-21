@@ -1,17 +1,10 @@
 import { useState } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
+import { Table, TableBody, TableContainer, TableHead, TableRow, Button, Paper } from '@mui/material';
 import { Expense } from '../../models/expenses';
-import { VoidFn } from '../../models/common';
+import { DataEntry, VoidFn } from '../../models/common';
 import SortLabel from './sort-label';
-
-type DataEntry = Array<Expense>[number];
+import SmallTableCell from './SmallTableCell';
+import { TABLE_HEADERS } from '../../values/constants/table';
 
 const DataTable = ({
   disableSort,
@@ -50,51 +43,23 @@ const DataTable = ({
         <Table aria-label="Sortable table">
           <TableHead>
             <TableRow>
-              <TableCell>No.</TableCell>
-              <TableCell>
-                <SortLabel
-                  disabled={disableSort}
-                  propertyName="category"
-                  title="Category"
-                  handleSort={handleSort}
-                  order={order}
-                  orderBy={orderBy}
-                />
-              </TableCell>
-              <TableCell>
-                <SortLabel
-                  disabled={disableSort}
-                  propertyName="amount"
-                  title="Amount"
-                  handleSort={handleSort}
-                  order={order}
-                  orderBy={orderBy}
-                />
-              </TableCell>
-              <TableCell>
-                <SortLabel
-                  disabled={disableSort}
-                  propertyName="description"
-                  title="Description"
-                  handleSort={handleSort}
-                  order={order}
-                  orderBy={orderBy}
-                />
-              </TableCell>
-              <TableCell>
-                <SortLabel
-                  disabled={disableSort}
-                  propertyName="creationTime"
-                  title="Date"
-                  handleSort={handleSort}
-                  order={order}
-                  orderBy={orderBy}
-                />
-              </TableCell>
+              <SmallTableCell>No.</SmallTableCell>
+              {TABLE_HEADERS.map(({ title, property }) => (
+                <SmallTableCell>
+                  <SortLabel
+                    disabled={disableSort}
+                    propertyName={property}
+                    title={title}
+                    handleSort={handleSort}
+                    order={order}
+                    orderBy={orderBy}
+                  />
+                </SmallTableCell>
+              ))}
               {!hideButtons && (
                 <>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
+                  <SmallTableCell />
+                  <SmallTableCell />
                 </>
               )}
             </TableRow>
@@ -102,19 +67,19 @@ const DataTable = ({
           <TableBody>
             {sortedData.map((row, i) => (
               <TableRow key={row.id}>
-                <TableCell>{i + 1}</TableCell>
-                <TableCell>{row.category}</TableCell>
-                <TableCell>{row.amount}</TableCell>
-                <TableCell>{row.description}</TableCell>
-                <TableCell>{row.creationTime}</TableCell>
+                <SmallTableCell>{i + 1}</SmallTableCell>
+                <SmallTableCell>{row.category}</SmallTableCell>
+                <SmallTableCell>{row.amount}</SmallTableCell>
+                <SmallTableCell>{row.description}</SmallTableCell>
+                <SmallTableCell>{row.creationTime}</SmallTableCell>
                 {!hideButtons && (
                   <>
-                    <TableCell>
+                    <SmallTableCell>
                       <Button variant="outlined" color="primary" onClick={onEditClick && (() => onEditClick(row))}>
                         Edit
                       </Button>
-                    </TableCell>
-                    <TableCell>
+                    </SmallTableCell>
+                    <SmallTableCell>
                       <Button
                         variant="outlined"
                         color="secondary"
@@ -122,7 +87,7 @@ const DataTable = ({
                       >
                         Delete
                       </Button>
-                    </TableCell>
+                    </SmallTableCell>
                   </>
                 )}
               </TableRow>
