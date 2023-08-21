@@ -15,29 +15,29 @@ const NoticeCard = ({
   return (
     <Box
       border={1}
-      borderColor="primary.main"
-      borderRadius={4}
+      borderColor='primary.main'
+      borderRadius='7px'
       boxShadow={2}
       p={3}
-      margin="auto"
-      marginTop="10vw"
-      textAlign="center"
+      margin='auto'
+      marginTop='10vw'
+      textAlign='center'
       sx={{ width: { xs: '85%', md: '60%' } }}
     >
-      <Typography variant="h4" component="div">
+      <Typography variant='h4' component='div'>
         {title}
       </Typography>
-      <Typography variant="body2" color="text.secondary">
+      <Typography variant='body2' color='text.secondary'>
         {text}
       </Typography>
       {buttonText && (
         <Button
           onClick={onButtonClick}
-          variant="contained"
-          color="secondary"
+          variant='contained'
+          color='secondary'
           style={{
             marginTop: 10,
-            borderRadius: 3,
+            borderRadius: '7px',
             height: 48,
             padding: '0 30px',
           }}

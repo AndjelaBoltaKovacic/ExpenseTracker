@@ -5,21 +5,21 @@ const AmountDisplay = () => {
   return (
     <Box
       border={1}
-      borderColor="primary.main"
-      borderRadius={4}
+      borderColor='primary.main'
+      borderRadius='7px'
       boxShadow={2}
       p={{ xs: 1, md: 3 }}
-      margin="auto"
-      marginTop="10vw"
-      textAlign="center"
+      margin='auto'
+      marginTop='10vw'
+      textAlign='center'
       mt={4}
-      width="100%"
+      width='100%'
       maxWidth={'340px'}
     >
-      <Typography variant="h4" m={1} gutterBottom>
+      <Typography variant='h4' m={1} gutterBottom>
         $ 13452.00
       </Typography>
-      <Typography variant="body1" mx={5} borderTop={1} borderColor="primary.main">
+      <Typography variant='body1' mx={5} borderTop={1} borderColor='primary.main'>
         Total Amount
       </Typography>
     </Box>

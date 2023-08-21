@@ -33,8 +33,8 @@ const DataTable = () => {
   });
 
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="Sortable table">
+    <TableContainer component={Paper} sx={{ borderRadius: '7px' }}>
+      <Table aria-label='Sortable table'>
         <TableHead>
           <TableRow>
             <TableCell>
@@ -95,12 +95,12 @@ const DataTable = () => {
               <TableCell>{row.description}</TableCell>
               <TableCell>{row.creationTime}</TableCell>
               <TableCell>
-                <Button variant="outlined" color="primary">
+                <Button variant='outlined' color='primary'>
                   Edit
                 </Button>
               </TableCell>
               <TableCell>
-                <Button variant="outlined" color="secondary">
+                <Button variant='outlined' color='secondary'>
                   Delete
                 </Button>
               </TableCell>

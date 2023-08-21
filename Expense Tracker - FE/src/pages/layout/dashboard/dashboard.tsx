@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Container from '@mui/material/Container';
 import AmountDisplay from '../../../common/amount-display';
 import DataTable from '../../../common/table/table';
@@ -5,14 +6,32 @@ import Box from '@mui/material/Box';
 import { Button, Typography } from '@mui/material';
 import NoticeCard from '../../../common/notice-card';
 import { useUserContext } from '../../../contexts/userContext';
+import CustomModal from '../../../common/modal';
 
 function Dashboard() {
   const { isPremium } = useUserContext();
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpen = () => {
+    setOpenModal(true);
+  };
+
+  const handleClose = () => {
+    setOpenModal(false);
+  };
   return (
     <Container>
+      <CustomModal
+        isOpen={openModal}
+        handleClose={handleClose}
+        handleConfirm={() => console.log()}
+        title='Add Transaction'
+      >
+        <></>
+      </CustomModal>
       <AmountDisplay />
       <Box mt={2} display='flex' justifyContent='end'>
-        <Button variant='contained' color='secondary'>
+        <Button variant='contained' color='secondary' onClick={handleOpen}>
           Add Transaction
         </Button>
       </Box>
