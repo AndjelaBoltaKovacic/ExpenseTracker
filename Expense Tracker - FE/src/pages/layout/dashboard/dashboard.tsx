@@ -7,6 +7,7 @@ import { Button, Typography } from '@mui/material';
 import NoticeCard from '../../../common/notice-card';
 import { useUserContext } from '../../../contexts/userContext';
 import CustomModal from '../../../common/modal';
+import AddTransactionForm from '../../../common/add-transaction/add-transaction-form';
 
 function Dashboard() {
   const { isPremium } = useUserContext();
@@ -21,13 +22,8 @@ function Dashboard() {
   };
   return (
     <Container>
-      <CustomModal
-        isOpen={openModal}
-        handleClose={handleClose}
-        handleConfirm={() => console.log()}
-        title='Add Transaction'
-      >
-        <></>
+      <CustomModal isOpen={openModal} title='Add Transaction'>
+        <AddTransactionForm handleClose={handleClose} />
       </CustomModal>
       <AmountDisplay />
       <Box mt={2} display='flex' justifyContent='end'>

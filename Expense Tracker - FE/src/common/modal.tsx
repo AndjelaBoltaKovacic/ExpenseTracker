@@ -1,20 +1,15 @@
 import Modal from '@mui/material/Modal';
-import Button from '@mui/material/Button';
-import { VoidFn } from '../models/common';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import { ReactNode } from 'react';
 
 const CustomModal = ({
   isOpen,
-  handleClose,
-  handleConfirm,
+
   title,
   children,
 }: {
   isOpen: boolean;
-  handleClose: VoidFn;
-  handleConfirm: VoidFn;
   title: string;
   children: ReactNode;
 }) => {
@@ -24,7 +19,7 @@ const CustomModal = ({
         <Box
           sx={{
             position: 'absolute',
-            top: '20%',
+            top: '30%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
             backgroundColor: 'background.default',
@@ -38,14 +33,6 @@ const CustomModal = ({
             {title}
           </Typography>
           {children}
-          <Box display='flex' justifyContent='space-between'>
-            <Button variant='contained' onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant='contained' color='secondary' onClick={handleConfirm}>
-              Confirm
-            </Button>
-          </Box>
         </Box>
       </Modal>
     </div>
