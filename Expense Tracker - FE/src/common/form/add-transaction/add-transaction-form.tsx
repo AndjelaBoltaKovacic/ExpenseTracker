@@ -26,12 +26,12 @@ const AddTransactionForm = ({
     formState: { errors },
   } = useForm();
   const transactionTypes = ['Income', 'Expense'];
-  const transactionCategories = ['Group A', 'Group B', 'Group C', 'Group D', 'Group E'];
-  const { type, group, description, amount } = transactionToEdit as Expense;
+  const transactionCategories = ['category A', 'category B', 'category C', 'category D', 'category E'];
+  const { type, category, description, amount } = transactionToEdit ? (transactionToEdit as Expense) : ({} as Expense);
 
   const notChanged =
     type === watch('transactionType') &&
-    group === watch('transactionCategory') &&
+    category === watch('transactionCategory') &&
     description === watch('transactionDescription') &&
     amount === watch('amount');
 
@@ -41,16 +41,16 @@ const AddTransactionForm = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormControl fullWidth variant='outlined' error={!!errors.transactionType} margin='normal'>
+      <FormControl fullWidth variant="outlined" error={!!errors.transactionType} margin="normal">
         <InputLabel>Transaction Type</InputLabel>
         <Controller
-          name='transactionType'
+          name="transactionType"
           control={control}
           defaultValue={type || undefined}
           rules={{ required: 'This field is required' }}
           render={({ field }) => (
             <>
-              <Select {...field} label='Transaction Type'>
+              <Select {...field} label="Transaction Type">
                 {transactionTypes.map((type, index) => (
                   <MenuItem key={index} value={type}>
                     {type}
@@ -62,16 +62,16 @@ const AddTransactionForm = ({
           )}
         />
       </FormControl>
-      <FormControl fullWidth variant='outlined' error={!!errors.transactionCategory} margin='normal'>
+      <FormControl fullWidth variant="outlined" error={!!errors.transactionCategory} margin="normal">
         <InputLabel>Transaction Category</InputLabel>
         <Controller
-          name='transactionCategory'
+          name="transactionCategory"
           control={control}
-          defaultValue={group || undefined}
+          defaultValue={category || undefined}
           rules={{ required: 'This field is required' }}
           render={({ field }) => (
             <>
-              <Select {...field} label='Transaction Category'>
+              <Select {...field} label="Transaction Category">
                 {transactionCategories.map((type, index) => (
                   <MenuItem key={index} value={type}>
                     {type}
@@ -87,11 +87,11 @@ const AddTransactionForm = ({
       </FormControl>
 
       <TextField
-        label='Transaction Description'
+        label="Transaction Description"
         fullWidth
         defaultValue={description || undefined}
-        variant='outlined'
-        margin='normal'
+        variant="outlined"
+        margin="normal"
         {...register('transactionDescription', {
           required: 'This field is required',
           minLength: { value: 5, message: 'Description must have at least 5 characters' },
@@ -99,17 +99,17 @@ const AddTransactionForm = ({
         error={!!errors.transactionDescription}
         helperText={errors?.transactionDescription?.message as ReactNode}
       />
-      <FormControl fullWidth variant='outlined' error={!!errors.amount} margin='normal'>
+      <FormControl fullWidth variant="outlined" error={!!errors.amount} margin="normal">
         <Controller
           defaultValue={amount || undefined}
-          name='amount'
+          name="amount"
           control={control}
           rules={{
             required: 'This field is required',
           }}
           render={({ field }) => (
             <>
-              <CurrencyInput {...field} label='Amount' name='amount' fullWidth />
+              <CurrencyInput {...field} label="Amount" name="amount" fullWidth />
               {errors?.amount && <FormHelperText>{errors?.amount?.message as string}</FormHelperText>}
             </>
           )}

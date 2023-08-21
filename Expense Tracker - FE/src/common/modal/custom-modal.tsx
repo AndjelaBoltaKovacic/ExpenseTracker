@@ -18,10 +18,11 @@ const CustomModal = ({
 }) => {
   return (
     <div>
-      <Modal open={isOpen} aria-labelledby='simple-modal-title' aria-describedby='simple-modal-description'>
+      <Modal open={isOpen} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
         <Box
           sx={{
             position: 'absolute',
+            marginTop: '100px',
             top: '30%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
@@ -32,10 +33,10 @@ const CustomModal = ({
             boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
           }}
         >
-          <Box textAlign='end' sx={{ cursor: 'pointer' }}>
+          <Box textAlign="end" sx={{ cursor: 'pointer' }}>
             <CloseIcon onClick={handleClose} />
           </Box>
-          <Typography variant='h4' textAlign='center'>
+          <Typography variant="h4" textAlign="center">
             {title}
           </Typography>
           {children}

@@ -23,29 +23,29 @@ function Dashboard() {
   };
   return (
     <Container>
-      <CustomModal isOpen={openModal} title='Add Transaction' handleClose={handleClose}>
+      <CustomModal isOpen={openModal} title="Add Transaction" handleClose={handleClose}>
         <AddTransactionForm handleClose={handleClose} />
       </CustomModal>
       <AmountDisplay />
-      <Box mt={2} display='flex' justifyContent='end'>
-        <Button variant='contained' color='secondary' onClick={handleOpen}>
+      <Box mt={2} display="flex" justifyContent="end">
+        <Button variant="contained" color="secondary" onClick={handleOpen}>
           Add Transaction
         </Button>
       </Box>
 
       <Box my={2}>
-        <Typography p={2} color='primary.main'>
+        <Typography p={2} color="primary.main">
           Last 5 income transactions
         </Typography>
-        <DataTable hideButtons data={expenses} />
+        <DataTable hideButtons data={expenses} disableSort />
       </Box>
       <Box my={2}>
-        <Typography p={2} color='primary.main'>
+        <Typography p={2} color="primary.main">
           Last 5 expense transactions
         </Typography>
-        <DataTable hideButtons data={expenses} />
+        <DataTable hideButtons data={expenses} disableSort />
       </Box>
-      {isPremium && <NoticeCard title='Weekly reminder' text='some text' />}
+      {isPremium && <NoticeCard title="Weekly reminder" text="some text" />}
     </Container>
   );
 }
