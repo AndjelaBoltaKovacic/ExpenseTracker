@@ -8,6 +8,7 @@ import NoticeCard from '../../../common/notice-card';
 import { useUserContext } from '../../../contexts/userContext';
 import CustomModal from '../../../common/modal/custom-modal';
 import AddTransactionForm from '../../../common/form/add-transaction/add-transaction-form';
+import { expenses } from '../../../services/mocks/expenses';
 
 function Dashboard() {
   const { isPremium } = useUserContext();
@@ -36,13 +37,13 @@ function Dashboard() {
         <Typography p={2} color='primary.main'>
           Last 5 income transactions
         </Typography>
-        <DataTable hideButtons />
+        <DataTable hideButtons data={expenses} />
       </Box>
       <Box my={2}>
         <Typography p={2} color='primary.main'>
           Last 5 expense transactions
         </Typography>
-        <DataTable hideButtons />
+        <DataTable hideButtons data={expenses} />
       </Box>
       {isPremium && <NoticeCard title='Weekly reminder' text='some text' />}
     </Container>

@@ -1,26 +1,39 @@
 import { ReactNode } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
-import Box from '@mui/material/Box';
 import { VoidFn } from '../../../models/common';
 import CurrencyInput from './currency-input';
 import { FormHelperText } from '@mui/material';
 import ModalButtons from '../../modal/modal-buttons';
+import { Expense } from '../../../models/expenses';
 
-const AddTransactionForm = ({ handleClose }: { handleClose: VoidFn }) => {
+const AddTransactionForm = ({
+  transactionToEdit,
+  handleClose,
+}: {
+  transactionToEdit?: Expense;
+  handleClose: VoidFn;
+}) => {
   const {
     handleSubmit,
     register,
     control,
+    watch,
     formState: { errors },
   } = useForm();
   const transactionTypes = ['Income', 'Expense'];
-  const transactionCategories = ['Category A', 'Category B', 'Category C'];
+  const transactionCategories = ['Group A', 'Group B', 'Group C', 'Group D', 'Group E'];
+  const { type, group, description, amount } = transactionToEdit as Expense;
+
+  const notChanged =
+    type === watch('transactionType') &&
+    group === watch('transactionCategory') &&
+    description === watch('transactionDescription') &&
+    amount === watch('amount');
 
   const onSubmit = (data: any) => {
     console.log(data);
@@ -33,7 +46,7 @@ const AddTransactionForm = ({ handleClose }: { handleClose: VoidFn }) => {
         <Controller
           name='transactionType'
           control={control}
-          defaultValue=''
+          defaultValue={type || undefined}
           rules={{ required: 'This field is required' }}
           render={({ field }) => (
             <>
@@ -54,7 +67,7 @@ const AddTransactionForm = ({ handleClose }: { handleClose: VoidFn }) => {
         <Controller
           name='transactionCategory'
           control={control}
-          defaultValue=''
+          defaultValue={group || undefined}
           rules={{ required: 'This field is required' }}
           render={({ field }) => (
             <>
@@ -76,6 +89,7 @@ const AddTransactionForm = ({ handleClose }: { handleClose: VoidFn }) => {
       <TextField
         label='Transaction Description'
         fullWidth
+        defaultValue={description || undefined}
         variant='outlined'
         margin='normal'
         {...register('transactionDescription', {
@@ -87,6 +101,7 @@ const AddTransactionForm = ({ handleClose }: { handleClose: VoidFn }) => {
       />
       <FormControl fullWidth variant='outlined' error={!!errors.amount} margin='normal'>
         <Controller
+          defaultValue={amount || undefined}
           name='amount'
           control={control}
           rules={{
@@ -100,7 +115,7 @@ const AddTransactionForm = ({ handleClose }: { handleClose: VoidFn }) => {
           )}
         />
       </FormControl>
-      <ModalButtons handleClose={handleClose} handleSubmit={onSubmit} />
+      <ModalButtons handleClose={handleClose} handleSubmit={onSubmit} disableSubmit={notChanged} />
     </form>
   );
 };

@@ -9,11 +9,21 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { Expense } from '../../models/expenses';
-import { expenses } from '../../services/mocks/expenses';
+import { VoidFn } from '../../models/common';
 
 type DataEntry = Array<Expense>[number];
 
-const DataTable = ({ hideButtons }: { hideButtons?: boolean }) => {
+const DataTable = ({
+  hideButtons,
+  data,
+  onEditClick,
+  onDeleteClick,
+}: {
+  hideButtons?: boolean;
+  data: Expense[];
+  onEditClick?: VoidFn;
+  onDeleteClick?: VoidFn;
+}) => {
   const [orderBy, setOrderBy] = useState<keyof DataEntry>('id');
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
 
@@ -23,7 +33,7 @@ const DataTable = ({ hideButtons }: { hideButtons?: boolean }) => {
     setOrderBy(property);
   };
 
-  const sortedData = expenses.slice().sort((a, b) => {
+  const sortedData = data.slice().sort((a, b) => {
     const aValue = a[orderBy];
     const bValue = b[orderBy];
 
@@ -102,12 +112,16 @@ const DataTable = ({ hideButtons }: { hideButtons?: boolean }) => {
                 {!hideButtons && (
                   <>
                     <TableCell>
-                      <Button variant='outlined' color='primary'>
+                      <Button variant='outlined' color='primary' onClick={onEditClick && (() => onEditClick(row))}>
                         Edit
                       </Button>
                     </TableCell>
                     <TableCell>
-                      <Button variant='outlined' color='secondary'>
+                      <Button
+                        variant='outlined'
+                        color='secondary'
+                        onClick={onDeleteClick && (() => onDeleteClick(row))}
+                      >
                         Delete
                       </Button>
                     </TableCell>
