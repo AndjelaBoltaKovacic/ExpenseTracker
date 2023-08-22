@@ -1,19 +1,21 @@
 import { useState } from 'react';
-import { HttpMethod, _void } from '../models/common';
+import { HttpMethod } from '../models/common';
+import { AxiosError } from 'axios';
+import { User } from '../models/user';
 
 interface FetchState<T> {
   data: T | null;
   loading: boolean;
   error: any;
-  fetchData: _void;
+  fetchData: (body: User) => void;
 }
 
 const useFetch = <T>(dependencyService?: any, method?: HttpMethod, path?: string): FetchState<T> => {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const fetchData = (body: any, path?: string) => {
+  const fetchData = (body: any) => {
     setLoading(true);
     setError(null);
 
@@ -21,8 +23,7 @@ const useFetch = <T>(dependencyService?: any, method?: HttpMethod, path?: string
       .then((responseData: T) => {
         setData(responseData);
       })
-      .catch((err: any) => {
-        console.log(err);
+      .catch((err: AxiosError) => {
         setError(err.message);
       }).finally(() => {
         setLoading(false)

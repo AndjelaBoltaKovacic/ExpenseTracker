@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { HttpMethod } from '../models/common';
 import { baseUrl } from './urls';
 
@@ -17,9 +17,8 @@ export class UserService {
         .then(response => {
           resolve(response.data);
         })
-        .catch(error => {
-          console.log(error)
-          throw new Error(error.message)
+        .catch((error: AxiosError) => {
+          reject(error)
         });
     });
   }

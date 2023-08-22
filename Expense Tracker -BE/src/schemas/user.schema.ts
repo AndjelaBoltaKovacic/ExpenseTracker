@@ -2,10 +2,10 @@ import { boolean, object, string, TypeOf } from "zod";
 
 export const createUserSchema = object({
     body: object({
-        firstName: string({
+        firstname: string({
             required_error: "Name is required",
         }),
-        lastName: string({
+        lastname: string({
             required_error: "Last Name is required",
         }),
         role: string({

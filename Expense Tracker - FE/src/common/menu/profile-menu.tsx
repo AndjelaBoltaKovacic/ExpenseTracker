@@ -47,7 +47,7 @@ export const ProfileMenu = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        <Typography sx={{ textAlign: 'center', pb: 1 }}>{user?.firstName}</Typography>
+        <Typography sx={{ textAlign: 'center', pb: 1 }}>{user?.firstname}</Typography>
         <Divider />
         {isPremium && (
           <MenuItem onClick={handleOpen}>

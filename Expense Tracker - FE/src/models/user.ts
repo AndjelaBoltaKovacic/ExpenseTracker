@@ -1,11 +1,17 @@
 import { _void } from './common';
 
+
+export enum Role {
+  Premium = 'PREMIUM',
+  User = 'USER',
+  Admin = 'ADMIN'
+}
 export type DecodedToken = {
   _id: string;
   email: string;
-  firstName: string;
-  lastName: string;
-  role: 'PREMIUM' | 'STANDARD';
+  firstname: string;
+  lastname: string;
+  role: Role;
   createdAt: string;
   updatedAt: string;
   __v: number;
@@ -13,13 +19,18 @@ export type DecodedToken = {
   iat: number;
   exp: number;
 };
-export type User = {
-  id: string;
+export interface User {
+  id?: string;
   email: string;
-  firstName: string;
-  lastName: string;
-  role: 'PREMIUM' | 'STANDARD';
+  firstname: string;
+  lastname: string;
+  role: Role;
 };
+
+export interface UserInput extends User {
+  passwordConfirmation: string;
+  premiumUser: boolean;
+}
 
 export type UserContextType = {
   user: User | null;

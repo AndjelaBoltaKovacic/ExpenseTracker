@@ -1,12 +1,12 @@
 import { ReactNode, useContext, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import useFetch from '../../hooks/useFetch';
 import { TextField, Button, Grid, Container, Typography, FormControlLabel, Checkbox } from '@mui/material';
 import { ThemeContext } from '@emotion/react';
 import { getInputLabelColor } from '../../theme/overrides';
 import { emailValidation, passwordValidation } from '../../common/form/validation-patterns';
 import PasswordVisibility from '../../common/form/passwordVisibility';
-import useFetch from '../../hooks/useFetch';
-import { useNavigate } from 'react-router-dom';
 import NoticeCard from '../../common/notice-card';
 import Loader from '../../common/loader';
 import { User } from '../../models/user';
@@ -28,9 +28,10 @@ function RegistrationForm() {
   const navigate = useNavigate();
   const inputLabelColorOverride = getInputLabelColor(palette.mode);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: FieldValues) => {
+    console.log(data);
     const { premiumUser, passwordConfirmation, ...rest } = data;
-    fetchData({ ...rest, role: premiumUser ? 'PREMIUM' : 'STANDARD' } as User);
+    fetchData({ ...rest, role: premiumUser ? 'PREMIUM' : 'USER' } as User);
   };
 
   return (
@@ -102,7 +103,7 @@ function RegistrationForm() {
                   {...register('passwordConfirmation', {
                     required: 'Confirm Password is required',
                     validate: (value) =>
-                      !value ? 'Confirm Password is required' : value !== password || 'Passwords do not match',
+                      !value ? 'Confirm Password is required' : value === password || 'Passwords do not match',
                   })}
                   error={!!errors.passwordConfirmation}
                   helperText={errors?.passwordConfirmation?.message as ReactNode}
@@ -122,7 +123,7 @@ function RegistrationForm() {
             </Grid>
             {error && (
               <Typography color='error' mt={2} mb={2} textAlign='center'>
-                {error.response.data}
+                {error}
               </Typography>
             )}
             <Button sx={{ marginTop: 2 }} type='submit' fullWidth variant='contained' color='primary'>
