@@ -1,31 +1,26 @@
 import { useState } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
-import TableSortLabel from '@mui/material/TableSortLabel';
+import { Table, TableBody, TableContainer, TableHead, TableRow, Button, Paper } from '@mui/material';
 import { Expense } from '../../models/expenses';
-import { VoidFn } from '../../models/common';
-
-type DataEntry = Array<Expense>[number];
+import { DataEntry, _void } from '../../models/common';
+import SortLabel from './sort-label';
+import SmallTableCell from './SmallTableCell';
+import { TABLE_HEADERS } from '../../values/constants/table';
 
 const DataTable = ({
+  disableSort,
   hideButtons,
   data,
   onEditClick,
   onDeleteClick,
 }: {
+  disableSort?: boolean;
   hideButtons?: boolean;
   data: Expense[];
-  onEditClick?: VoidFn;
-  onDeleteClick?: VoidFn;
+  onEditClick?: _void;
+  onDeleteClick?: _void;
 }) => {
-  const [orderBy, setOrderBy] = useState<keyof DataEntry>('id');
-  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
+  const [orderBy, setOrderBy] = useState<keyof DataEntry>('creationTime');
+  const [order, setOrder] = useState<'asc' | 'desc'>('desc');
 
   const handleSort = (property: keyof DataEntry) => {
     const isAscending = orderBy === property && order === 'asc';
@@ -45,86 +40,54 @@ const DataTable = ({
   return (
     <>
       <TableContainer component={Paper} sx={{ borderRadius: '7px' }}>
-        <Table aria-label='Sortable table'>
+        <Table aria-label="Sortable table">
           <TableHead>
             <TableRow>
-              <TableCell>
-                <TableSortLabel
-                  active={orderBy === 'id'}
-                  direction={orderBy === 'id' ? order : 'asc'}
-                  onClick={() => handleSort('id')}
-                >
-                  No.
-                </TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel
-                  active={orderBy === 'group'}
-                  direction={orderBy === 'group' ? order : 'asc'}
-                  onClick={() => handleSort('group')}
-                >
-                  Group name
-                </TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel
-                  active={orderBy === 'amount'}
-                  direction={orderBy === 'amount' ? order : 'asc'}
-                  onClick={() => handleSort('amount')}
-                >
-                  Amount
-                </TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel
-                  active={orderBy === 'description'}
-                  direction={orderBy === 'description' ? order : 'asc'}
-                  onClick={() => handleSort('description')}
-                >
-                  Description
-                </TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel
-                  active={orderBy === 'creationTime'}
-                  direction={orderBy === 'creationTime' ? order : 'asc'}
-                  onClick={() => handleSort('creationTime')}
-                >
-                  Creation time
-                </TableSortLabel>
-              </TableCell>
+              <SmallTableCell>No.</SmallTableCell>
+              {TABLE_HEADERS.map(({ title, property }) => (
+                <SmallTableCell>
+                  <SortLabel
+                    disabled={disableSort}
+                    propertyName={property}
+                    title={title}
+                    handleSort={handleSort}
+                    order={order}
+                    orderBy={orderBy}
+                  />
+                </SmallTableCell>
+              ))}
               {!hideButtons && (
                 <>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
+                  <SmallTableCell />
+                  <SmallTableCell />
                 </>
               )}
             </TableRow>
           </TableHead>
           <TableBody>
-            {sortedData.map((row) => (
+            {sortedData.map((row, i) => (
               <TableRow key={row.id}>
-                <TableCell>{row.id}</TableCell>
-                <TableCell>{row.group}</TableCell>
-                <TableCell>{row.amount}</TableCell>
-                <TableCell>{row.description}</TableCell>
-                <TableCell>{row.creationTime}</TableCell>
+                <SmallTableCell>{i + 1}</SmallTableCell>
+                <SmallTableCell>{row.category}</SmallTableCell>
+                <SmallTableCell>$ {row.amount}</SmallTableCell>
+                <SmallTableCell>{row.description}</SmallTableCell>
+                <SmallTableCell>{row.creationTime}</SmallTableCell>
                 {!hideButtons && (
                   <>
-                    <TableCell>
-                      <Button variant='outlined' color='primary' onClick={onEditClick && (() => onEditClick(row))}>
+                    <SmallTableCell>
+                      <Button variant="outlined" color="primary" onClick={onEditClick && (() => onEditClick(row))}>
                         Edit
                       </Button>
-                    </TableCell>
-                    <TableCell>
+                    </SmallTableCell>
+                    <SmallTableCell>
                       <Button
-                        variant='outlined'
-                        color='secondary'
+                        variant="outlined"
+                        color="secondary"
                         onClick={onDeleteClick && (() => onDeleteClick(row))}
                       >
                         Delete
                       </Button>
-                    </TableCell>
+                    </SmallTableCell>
                   </>
                 )}
               </TableRow>

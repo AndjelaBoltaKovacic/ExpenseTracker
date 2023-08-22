@@ -54,8 +54,8 @@ function RegistrationForm() {
                   fullWidth
                   label='First Name'
                   {...register('firstname', { required: 'First Name is required' })}
-                  error={!!errors.firstName}
-                  helperText={errors.firstName?.message as ReactNode}
+                  error={!!errors.firstname}
+                  helperText={errors.firstname?.message as ReactNode}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -64,8 +64,8 @@ function RegistrationForm() {
                   fullWidth
                   label='Last Name'
                   {...register('lastname', { required: 'Last Name is required' })}
-                  error={!!errors.lastName}
-                  helperText={errors.lastName?.message as ReactNode}
+                  error={!!errors.lastname}
+                  helperText={errors.lastname?.message as ReactNode}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -100,11 +100,12 @@ function RegistrationForm() {
                   label='Confirm Password'
                   type={showConfirmPassword ? 'text' : 'password'}
                   {...register('passwordConfirmation', {
+                    required: 'Confirm Password is required',
                     validate: (value) =>
-                      !value ? 'Confirm Password is required' : value === password || 'Passwords do not match',
+                      !value ? 'Confirm Password is required' : value !== password || 'Passwords do not match',
                   })}
-                  error={!!errors.confirmPassword}
-                  helperText={errors?.confirmPassword?.message as ReactNode}
+                  error={!!errors.passwordConfirmation}
+                  helperText={errors?.passwordConfirmation?.message as ReactNode}
                   InputProps={{
                     endAdornment: (
                       <PasswordVisibility showPass={showConfirmPassword} onClick={setShowConfirmPassword} />

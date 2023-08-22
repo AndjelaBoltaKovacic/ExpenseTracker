@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { HttpMethod, VoidFn } from '../models/common';
+import { HttpMethod, _void } from '../models/common';
 
 interface FetchState<T> {
   data: T | null;
   loading: boolean;
   error: any;
-  fetchData: VoidFn;
+  fetchData: _void;
 }
 
 const useFetch = <T>(dependencyService?: any, method?: HttpMethod, path?: string): FetchState<T> => {
@@ -23,7 +23,7 @@ const useFetch = <T>(dependencyService?: any, method?: HttpMethod, path?: string
       })
       .catch((err: any) => {
         console.log(err);
-        setError(err);
+        setError(err.message);
       }).finally(() => {
         setLoading(false)
       });

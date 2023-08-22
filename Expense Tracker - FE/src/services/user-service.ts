@@ -3,9 +3,11 @@ import { HttpMethod } from '../models/common';
 import { baseUrl } from './urls';
 
 export class UserService {
-  private static userApiUrl = `${baseUrl}/auth/`
+  private static userApiUrl = `${baseUrl}/auth/`;
+
   public static register(method: HttpMethod, body: { firstname: string, lastname: string, email: string, password: string, role: 'PREMIUM' | 'USER' }) {
-    const url = this.userApiUrl.concat('register');
+    const url = UserService.userApiUrl.concat('register');
+
     return new Promise((resolve, reject) => {
       axios({
         method,
@@ -16,14 +18,15 @@ export class UserService {
           resolve(response.data);
         })
         .catch(error => {
-          reject(error);
+          console.log(error)
+          throw new Error(error.message)
         });
     });
   }
 
 
   public static login(method: HttpMethod, body: { email: string, password: string }) {
-    const url = this.userApiUrl.concat('authenticate');
+    const url = UserService.userApiUrl.concat('authenticate');
     return new Promise((resolve, reject) => {
       axios({
         method,

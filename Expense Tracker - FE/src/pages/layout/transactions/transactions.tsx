@@ -6,6 +6,8 @@ import AddTransactionForm from '../../../common/form/add-transaction/add-transac
 import ModalButtons from '../../../common/modal/modal-buttons';
 import Typography from '@mui/material/Typography';
 import { Expense } from '../../../models/expenses';
+import EditTransaction from '../../../common/form/edit/edit-transaction';
+import DeleteTransaction from '../../../common/form/steps/delete';
 
 function Transactions() {
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
@@ -33,17 +35,11 @@ function Transactions() {
   return (
     <>
       <DataTable data={expenses} onEditClick={handleEditOpen} onDeleteClick={handleDeleteOpen} />
-      <CustomModal title='Edit Transaction' isOpen={openEditModal} handleClose={handleEditClose}>
-        <AddTransactionForm handleClose={handleEditClose} transactionToEdit={transationToModify as Expense} />
+      <CustomModal isOpen={openEditModal} handleClose={handleEditClose}>
+        <EditTransaction handleClose={handleEditClose} transactionToEdit={transationToModify as Expense} />
       </CustomModal>
-      <CustomModal title='Delete Transaction' isOpen={openDeleteModal} handleClose={handleDeleteClose}>
-        <Typography variant='h5'>Are you sure you want to delete this transaction?</Typography>
-        <ModalButtons
-          handleClose={handleDeleteClose}
-          handleSubmit={() => {
-            console.log('send delete request');
-          }}
-        />
+      <CustomModal isOpen={openDeleteModal} handleClose={handleDeleteClose}>
+        <DeleteTransaction handleClose={handleDeleteClose} transactionToDelete={transationToModify as Expense} />
       </CustomModal>
     </>
   );
