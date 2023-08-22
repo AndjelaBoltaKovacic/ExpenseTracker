@@ -5,12 +5,12 @@ import { ThemeContext } from '@emotion/react';
 import { getInputLabelColor } from '../../theme/overrides';
 import { emailValidation, passwordValidation } from '../../common/form/validation-patterns';
 import PasswordVisibility from '../../common/form/passwordVisibility';
-import { baseUrl } from '../../services/urls';
 import useFetch from '../../hooks/useFetch';
 import { useNavigate } from 'react-router-dom';
 import NoticeCard from '../../common/notice-card';
 import Loader from '../../common/loader';
 import { User } from '../../models/user';
+import { UserService } from '../../services/user-service';
 
 function RegistrationForm() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -23,13 +23,13 @@ function RegistrationForm() {
     watch,
   } = useForm();
 
-  const { data, loading, error, fetchData } = useFetch(`${baseUrl}/users`, 'POST');
+  const { data, loading, error, fetchData } = useFetch(UserService.register, 'POST');
   const password = watch('password', '');
   const navigate = useNavigate();
   const inputLabelColorOverride = getInputLabelColor(palette.mode);
 
   const onSubmit = (data: any) => {
-    const { premiumUser, ...rest } = data;
+    const { premiumUser, passwordConfirmation, ...rest } = data;
     fetchData({ ...rest, role: premiumUser ? 'PREMIUM' : 'STANDARD' } as User);
   };
 
@@ -53,7 +53,7 @@ function RegistrationForm() {
                   InputLabelProps={inputLabelColorOverride}
                   fullWidth
                   label='First Name'
-                  {...register('firstName', { required: 'First Name is required' })}
+                  {...register('firstname', { required: 'First Name is required' })}
                   error={!!errors.firstName}
                   helperText={errors.firstName?.message as ReactNode}
                 />
@@ -63,7 +63,7 @@ function RegistrationForm() {
                   InputLabelProps={inputLabelColorOverride}
                   fullWidth
                   label='Last Name'
-                  {...register('lastName', { required: 'Last Name is required' })}
+                  {...register('lastname', { required: 'Last Name is required' })}
                   error={!!errors.lastName}
                   helperText={errors.lastName?.message as ReactNode}
                 />

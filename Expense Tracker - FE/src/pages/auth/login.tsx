@@ -16,7 +16,7 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { palette }: any = useContext(ThemeContext);
   const inputLabelColorOverride = getInputLabelColor(palette.mode);
-  const { data, loading, error, fetchData } = useFetch<UserToken>(`${baseUrl}/sessions`, 'POST');
+  const { data, loading, error, fetchData } = {} as any;
   const { login } = useUserContext();
   const navigate = useNavigate();
 
