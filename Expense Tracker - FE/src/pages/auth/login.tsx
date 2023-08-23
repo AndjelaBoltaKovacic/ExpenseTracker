@@ -5,18 +5,19 @@ import { emailValidation, passwordValidation } from '../../common/form/validatio
 import PasswordVisibility from '../../common/form/passwordVisibility';
 import { ThemeContext } from '@emotion/react';
 import { getInputLabelColor } from '../../theme/overrides';
-import { baseUrl } from '../../services/urls';
 import useFetch from '../../hooks/useFetch';
 import { useUserContext } from '../../contexts/userContext';
 import Loader from '../../common/loader';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserToken } from '../../models/user';
+import UserService from '../../services/user-service';
+import { HttpMethod } from '../../values/enums/service';
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { palette }: any = useContext(ThemeContext);
   const inputLabelColorOverride = getInputLabelColor(palette.mode);
-  const { data, loading, error, fetchData } = {} as any;
+  const { data, loading, error, fetchData } = useFetch(UserService.login, HttpMethod.POST);
+
   const { login } = useUserContext();
   const navigate = useNavigate();
 
@@ -70,7 +71,7 @@ const LoginForm = () => {
           />
           {error && (
             <Typography color='error' mt={2} mb={2} textAlign='center'>
-              {error.response.data}
+              {error}
             </Typography>
           )}
           <Button type='submit' variant='contained' color='primary' fullWidth sx={{ marginTop: 2 }}>

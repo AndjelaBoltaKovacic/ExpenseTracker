@@ -8,6 +8,4 @@ export type MenuItem = {
 
 export type _void = (arg?: any) => void;
 
-export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
-
 export type DataEntry = Array<Expense>[number];

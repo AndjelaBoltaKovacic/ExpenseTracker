@@ -9,12 +9,15 @@ import { emailValidation, passwordValidation } from '../../common/form/validatio
 import PasswordVisibility from '../../common/form/passwordVisibility';
 import NoticeCard from '../../common/notice-card';
 import Loader from '../../common/loader';
-import { User } from '../../models/user';
-import { UserService } from '../../services/user-service';
+import { User, UserRole } from '../../models/user';
+import UserService from '../../services/user-service';
+import { HttpMethod } from '../../values/enums/service';
 
 function RegistrationForm() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+  const { data, loading, error, fetchData } = useFetch(UserService.register, HttpMethod.POST);
+  const navigate = useNavigate();
   const { palette }: any = useContext(ThemeContext);
   const {
     register,
@@ -23,15 +26,13 @@ function RegistrationForm() {
     watch,
   } = useForm();
 
-  const { data, loading, error, fetchData } = useFetch(UserService.register, 'POST');
   const password = watch('password', '');
-  const navigate = useNavigate();
+
   const inputLabelColorOverride = getInputLabelColor(palette.mode);
 
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
     const { premiumUser, passwordConfirmation, ...rest } = data;
-    fetchData({ ...rest, role: premiumUser ? 'PREMIUM' : 'USER' } as User);
+    fetchData({ ...rest, role: premiumUser ? UserRole.Premium : UserRole.User } as User);
   };
 
   return (

@@ -1,7 +1,7 @@
 import { _void } from './common';
 
 
-export enum Role {
+export enum UserRole {
   Premium = 'PREMIUM',
   User = 'USER',
   Admin = 'ADMIN'
@@ -11,7 +11,7 @@ export type DecodedToken = {
   email: string;
   firstname: string;
   lastname: string;
-  role: Role;
+  role: UserRole;
   createdAt: string;
   updatedAt: string;
   __v: number;
@@ -24,7 +24,7 @@ export interface User {
   email: string;
   firstname: string;
   lastname: string;
-  role: Role;
+  role: UserRole;
 };
 
 export interface UserInput extends User {
@@ -39,4 +39,4 @@ export type UserContextType = {
   logout: _void;
 };
 
-export type UserToken = { accessToken: string; refreshToken: string };
+export type UserToken = { access_token: string; refresh_token: string };

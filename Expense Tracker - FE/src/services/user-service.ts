@@ -1,44 +1,21 @@
-import axios, { AxiosError } from 'axios';
-import { HttpMethod } from '../models/common';
 import { baseUrl } from './urls';
+import { User, UserToken } from '../models/user';
+import { axiosApiCall } from './helpers/axios-api';
+import { HttpMethod } from '../values/enums/service';
 
-export class UserService {
-  private static userApiUrl = `${baseUrl}/auth/`;
+const UserService = {
+  userApiUrl: `${baseUrl}/auth/`,
 
-  public static register(method: HttpMethod, body: { firstname: string, lastname: string, email: string, password: string, role: 'PREMIUM' | 'USER' }) {
+  register: (method: HttpMethod, body: User): Promise<UserToken> => {
     const url = UserService.userApiUrl.concat('register');
+    return axiosApiCall<UserToken>(method, url, body);
+  },
 
-    return new Promise((resolve, reject) => {
-      axios({
-        method,
-        url,
-        data: body,
-      })
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch((error: AxiosError) => {
-          reject(error)
-        });
-    });
-  }
-
-
-  public static login(method: HttpMethod, body: { email: string, password: string }) {
+  login: (method: HttpMethod, body: Partial<User>): Promise<UserToken> => {
     const url = UserService.userApiUrl.concat('authenticate');
-    return new Promise((resolve, reject) => {
-      axios({
-        method,
-        url,
-        data: body,
-      })
-        .then(response => {
-          resolve(response.data);
-        })
-        .catch(error => {
-          reject(error);
-        });
-    });
-  }
+    return axiosApiCall<UserToken>(method, url, body);
+  },
 
-}
+};
+
+export default UserService;

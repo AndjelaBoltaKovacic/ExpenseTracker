@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { HttpMethod } from '../models/common';
 import { AxiosError } from 'axios';
 import { User } from '../models/user';
+import { HttpMethod } from '../values/enums/service';
 
 interface FetchState<T> {
   data: T | null;
