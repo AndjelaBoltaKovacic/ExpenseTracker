@@ -9,14 +9,14 @@ import useFetch from '../../hooks/useFetch';
 import { useUserContext } from '../../contexts/userContext';
 import Loader from '../../common/loader';
 import { Link, useNavigate } from 'react-router-dom';
-import UserService from '../../services/user-service';
-import { HttpMethod } from '../../values/enums/service';
+import UserService from '../../services/user.service';
+import { User, UserToken } from '../../models/user';
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { palette }: any = useContext(ThemeContext);
   const inputLabelColorOverride = getInputLabelColor(palette.mode);
-  const { data, loading, error, fetchData } = useFetch(UserService.login, HttpMethod.POST);
+  const { data, loading, error, fetchData } = useFetch<UserToken>(UserService.login);
 
   const { login } = useUserContext();
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const LoginForm = () => {
   } = useForm();
 
   const onSubmit = (data: any) => {
-    fetchData(data);
+    fetchData(data as User);
   };
 
   useEffect(() => {

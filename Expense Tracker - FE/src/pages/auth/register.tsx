@@ -9,14 +9,13 @@ import { emailValidation, passwordValidation } from '../../common/form/validatio
 import PasswordVisibility from '../../common/form/passwordVisibility';
 import NoticeCard from '../../common/notice-card';
 import Loader from '../../common/loader';
-import { User, UserRole } from '../../models/user';
-import UserService from '../../services/user-service';
-import { HttpMethod } from '../../values/enums/service';
+import { User, UserRole, UserToken } from '../../models/user';
+import UserService from '../../services/user.service';
 
 function RegistrationForm() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
-  const { data, loading, error, fetchData } = useFetch(UserService.register, HttpMethod.POST);
+  const { data, loading, error, fetchData } = useFetch<UserToken>(UserService.register);
   const navigate = useNavigate();
   const { palette }: any = useContext(ThemeContext);
   const {
