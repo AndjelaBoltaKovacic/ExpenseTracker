@@ -10,6 +10,8 @@ import CurrencyInput from './currency-input';
 import { FormHelperText } from '@mui/material';
 import ModalButtons from '../../modal/modal-buttons';
 import { Expense } from '../../../models/expenses';
+import TransactionService from '../../../services/trasnaction.service';
+import useFetch from '../../../hooks/useFetch';
 
 const AddTransactionForm = ({
   transactionToEdit,
@@ -27,7 +29,14 @@ const AddTransactionForm = ({
     watch,
     formState: { errors },
   } = useForm();
+  const {
+    data: transGroups,
+    error: tgError,
+    loading: tgLoading,
+    fetchData: fetchTransGroups,
+  } = useFetch(TransactionService.getIncomeGroups, '?page=0&size=10&sort=name');
   const [notChanged, setNotChanged] = useState(true);
+  const [transactionGroups, setTransactionGroups] = useState([]);
   const transactionTypes = ['Income', 'Expense'];
   const transactionCategories = ['category A', 'category B', 'category C', 'category D', 'category E'];
   const { type, category, description, amount } = transactionToEdit ? (transactionToEdit as Expense) : ({} as Expense);
@@ -36,6 +45,17 @@ const AddTransactionForm = ({
   const categoryType = watch('category');
   const descriptionType = watch('description');
   const transactionAmount = watch('amount');
+
+  useEffect(() => {
+    fetchTransGroups();
+  }, []);
+
+  useEffect(() => {
+    if (transGroups) {
+      // setTransactionGroups(transGroups);
+      console.log(transGroups);
+    }
+  }, [transGroups]);
 
   useEffect(() => {
     setNotChanged(
@@ -73,27 +93,30 @@ const AddTransactionForm = ({
           )}
         />
       </FormControl>
-      <FormControl fullWidth variant="outlined" error={!!errors.category} margin="normal">
-        <InputLabel>Transaction Category</InputLabel>
-        <Controller
-          name="category"
-          control={control}
-          defaultValue={category || undefined}
-          rules={{ required: 'This field is required' }}
-          render={({ field }) => (
-            <>
-              <Select {...field} label="Transaction Category">
-                {transactionCategories.map((type, index) => (
-                  <MenuItem key={index} value={type}>
-                    {type}
-                  </MenuItem>
-                ))}
-              </Select>
-              {errors?.category && <FormHelperText>{errors?.category?.message as string}</FormHelperText>}
-            </>
-          )}
-        />
-      </FormControl>
+      {!!transactionGroups?.length && (
+        <FormControl fullWidth variant="outlined" error={!!errors.category} margin="normal">
+          <InputLabel>Transaction Category</InputLabel>
+          <Controller
+            name="category"
+            control={control}
+            defaultValue={category || undefined}
+            rules={{ required: 'This field is required' }}
+            render={({ field }) => (
+              <>
+                (
+                <Select {...field} label="Transaction Category">
+                  {transactionGroups.map((type, index) => (
+                    <MenuItem key={index} value={type}>
+                      {type}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {errors?.category && <FormHelperText>{errors?.category?.message as string}</FormHelperText>}
+              </>
+            )}
+          />
+        </FormControl>
+      )}
       <TextField
         label="Transaction Description"
         fullWidth

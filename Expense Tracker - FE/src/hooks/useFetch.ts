@@ -1,15 +1,13 @@
 import { useState } from 'react';
 import { AxiosError } from 'axios';
 import { User } from '../models/user';
-import { HttpMethod } from '../values/enums/service';
-import TransactionService from '../services/trasnaction.service';
-import UserService from '../services/user.service';
+
 
 interface FetchState<T> {
   data: T | null;
   loading: boolean;
   error: any;
-  fetchData: (body: User) => void;
+  fetchData: (body?: User) => void;
 }
 
 const useFetch = <T>(dependencyService: any, path?: string): FetchState<T> => {
@@ -17,7 +15,7 @@ const useFetch = <T>(dependencyService: any, path?: string): FetchState<T> => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = (body: any) => {
+  const fetchData = (body?: any) => {
     setLoading(true);
     setError(null);
 
@@ -27,8 +25,9 @@ const useFetch = <T>(dependencyService: any, path?: string): FetchState<T> => {
       })
       .catch((err: AxiosError) => {
         setError(err.message);
-      }).finally(() => {
-        setLoading(false)
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Container from '@mui/material/Container';
 import AmountDisplay from '../../../common/amount-display';
 import DataTable from '../../../common/table/table';
@@ -10,10 +10,30 @@ import CustomModal from '../../../common/modal/custom-modal';
 import AddTransactionForm from '../../../common/form/add-transaction/add-transaction-form';
 import { expenses } from '../../../services/mocks/expenses';
 import Loader from '../../../common/loader';
+import useFetch from '../../../hooks/useFetch';
+import TransactionService from '../../../services/trasnaction.service';
 
 function Dashboard() {
   const { isPremium } = useUserContext();
   const [openModal, setOpenModal] = useState(false);
+  const {
+    data: incomes,
+    error: incomesError,
+    loading: incomesLoading,
+    fetchData: fetchIncomes,
+  } = useFetch(TransactionService.getIncomes, '?page=0&size=5&sort=createdDtm');
+
+  const {
+    data: expenses,
+    error: expensesError,
+    loading: expensesLoading,
+    fetchData: fetchExpenses,
+  } = useFetch(TransactionService.getIncomes, '?page=0&size=5&sort=createdDtm');
+
+  useEffect(() => {
+    fetchIncomes();
+    fetchExpenses();
+  }, []);
 
   const handleOpen = () => {
     setOpenModal(true);
@@ -24,7 +44,7 @@ function Dashboard() {
   };
   return (
     <>
-      <Loader isLoading={false}>
+      <Loader isLoading={incomesLoading || expensesLoading}>
         <Container>
           <AmountDisplay />
           <Box mt={2} display="flex" justifyContent={{ xs: 'center', md: 'end' }}>
@@ -37,13 +57,13 @@ function Dashboard() {
             <Typography p={2} color="primary.main">
               Last 5 income transactions
             </Typography>
-            <DataTable hideButtons data={expenses} disableSort />
+            <DataTable hideButtons data={[]} disableSort />
           </Box>
           <Box my={2}>
             <Typography p={2} color="primary.main">
               Last 5 expense transactions
             </Typography>
-            <DataTable hideButtons data={expenses} disableSort />
+            <DataTable hideButtons data={[]} disableSort />
           </Box>
           {isPremium && <NoticeCard title="Weekly reminder" text="some text" />}
         </Container>
