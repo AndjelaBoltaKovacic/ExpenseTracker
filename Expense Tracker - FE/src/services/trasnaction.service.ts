@@ -9,6 +9,8 @@ const transactionApiUrl = `${baseUrl}/transaction/`;
 const TransactionService = {
     incomeUrl: transactionApiUrl.concat('income'),
     expenseUrl: transactionApiUrl.concat('expense'),
+    incomeGroupUrl: transactionApiUrl.concat('income-group'),
+    expenseGroupUrl: transactionApiUrl.concat('expense-group'),
 
 
     //INCOMES
@@ -41,7 +43,41 @@ const TransactionService = {
 
     deleteExpense({ id }: { id: string }) {
         return axiosApiCall<any>(HttpMethod.DELETE, `${this.incomeUrl}/${id}`);
-    }
+    },
+
+    //INCOME GROUPS
+    getIncomeGroups() {
+        return axiosApiCall<any>(HttpMethod.GET, this.incomeGroupUrl);
+    },
+
+    addIncomeGroup({ body }: { body: any }) {
+        return axiosApiCall<any>(HttpMethod.POST, this.incomeGroupUrl, body);
+    },
+    editIncomeGroup({ body, id }: { body: any, id: string }) {
+        return axiosApiCall<any>(HttpMethod.PUT, `${this.incomeGroupUrl}/${id}`, body);
+    },
+
+    deleteIncomeGroup({ id }: { id: string }) {
+        return axiosApiCall<any>(HttpMethod.DELETE, `${this.incomeGroupUrl}/${id}`);
+    },
+    //EXPENSE GROUP
+    getExpenseGroups() {
+        return axiosApiCall<any>(HttpMethod.GET, this.expenseGroupUrl);
+    },
+
+    addExpenseGroup({ body }: { body: any }) {
+        return axiosApiCall<any>(HttpMethod.POST, this.expenseGroupUrl, body);
+    },
+    editExpenseGroup({ body, id }: { body: any, id: string }) {
+        return axiosApiCall<any>(HttpMethod.PUT, `${this.expenseGroupUrl}/${id}`, body);
+    },
+
+    deleteExpenseGroup({ id }: { id: string }) {
+        return axiosApiCall<any>(HttpMethod.DELETE, `${this.expenseGroupUrl}/${id}`);
+    },
+
+
+
 
 
 
