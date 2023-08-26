@@ -1,6 +1,6 @@
 import { baseUrl } from './urls';
 import { User, UserToken } from '../models/user';
-import { axiosApiCall } from './helpers/axios-api';
+import { axiosApiCall } from './axios-api';
 import { HttpMethod } from '../values/enums/service';
 
 

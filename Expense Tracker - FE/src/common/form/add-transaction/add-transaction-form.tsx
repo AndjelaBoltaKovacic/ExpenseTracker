@@ -10,8 +10,9 @@ import CurrencyInput from './currency-input';
 import { FormHelperText } from '@mui/material';
 import ModalButtons from '../../modal/modal-buttons';
 import { Expense } from '../../../models/expenses';
-import TransactionService from '../../../services/trasnaction.service';
+import TransactionService from '../../../services/transaction.service';
 import useFetch from '../../../hooks/useFetch';
+import Loader from '../../loader';
 
 const AddTransactionForm = ({
   transactionToEdit,
@@ -38,7 +39,6 @@ const AddTransactionForm = ({
   const [notChanged, setNotChanged] = useState(true);
   const [transactionGroups, setTransactionGroups] = useState([]);
   const transactionTypes = ['Income', 'Expense'];
-  const transactionCategories = ['category A', 'category B', 'category C', 'category D', 'category E'];
   const { type, category, description, amount } = transactionToEdit ? (transactionToEdit as Expense) : ({} as Expense);
 
   const transactionType = watch('type');
@@ -70,30 +70,33 @@ const AddTransactionForm = ({
     handleConfirm(data);
   };
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <FormControl fullWidth variant="outlined" error={!!errors.type} margin="normal">
-        <InputLabel>Transaction Type</InputLabel>
-        <Controller
-          name="type"
-          control={control}
-          defaultValue={type || undefined}
-          rules={{ required: 'This field is required' }}
-          render={({ field }) => (
-            <>
-              <Select {...field} label="Transaction Type">
-                {transactionTypes.map((type, index) => (
-                  <MenuItem key={index} value={type}>
-                    {type}
-                  </MenuItem>
-                ))}
-              </Select>
-              {errors?.type && <FormHelperText>{errors?.type?.message as string}</FormHelperText>}
-            </>
-          )}
-        />
-      </FormControl>
-      {!!transactionGroups?.length && (
+  return tgError ? (
+    // Error component
+    <div> bla </div>
+  ) : (
+    <Loader isLoading={tgLoading}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <FormControl fullWidth variant="outlined" error={!!errors.type} margin="normal">
+          <InputLabel>Transaction Type</InputLabel>
+          <Controller
+            name="type"
+            control={control}
+            defaultValue={type || undefined}
+            rules={{ required: 'This field is required' }}
+            render={({ field }) => (
+              <>
+                <Select {...field} label="Transaction Type">
+                  {transactionTypes.map((type, index) => (
+                    <MenuItem key={index} value={type}>
+                      {type}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {errors?.type && <FormHelperText>{errors?.type?.message as string}</FormHelperText>}
+              </>
+            )}
+          />
+        </FormControl>
         <FormControl fullWidth variant="outlined" error={!!errors.category} margin="normal">
           <InputLabel>Transaction Category</InputLabel>
           <Controller
@@ -103,9 +106,8 @@ const AddTransactionForm = ({
             rules={{ required: 'This field is required' }}
             render={({ field }) => (
               <>
-                (
                 <Select {...field} label="Transaction Category">
-                  {transactionGroups.map((type, index) => (
+                  {transactionGroups?.map((type, index) => (
                     <MenuItem key={index} value={type}>
                       {type}
                     </MenuItem>
@@ -116,38 +118,39 @@ const AddTransactionForm = ({
             )}
           />
         </FormControl>
-      )}
-      <TextField
-        label="Transaction Description"
-        fullWidth
-        defaultValue={description || undefined}
-        variant="outlined"
-        margin="normal"
-        {...register('description', {
-          required: 'This field is required',
-          minLength: { value: 5, message: 'Description must have at least 5 characters' },
-        })}
-        error={!!errors.description}
-        helperText={errors?.description?.message as ReactNode}
-      />
-      <FormControl fullWidth variant="outlined" error={!!errors.amount} margin="normal">
-        <Controller
-          defaultValue={amount || undefined}
-          name="amount"
-          control={control}
-          rules={{
+
+        <TextField
+          label="Transaction Description"
+          fullWidth
+          defaultValue={description || undefined}
+          variant="outlined"
+          margin="normal"
+          {...register('description', {
             required: 'This field is required',
-          }}
-          render={({ field }) => (
-            <>
-              <CurrencyInput {...field} label="Amount" name="amount" fullWidth />
-              {errors?.amount && <FormHelperText>{errors?.amount?.message as string}</FormHelperText>}
-            </>
-          )}
+            minLength: { value: 5, message: 'Description must have at least 5 characters' },
+          })}
+          error={!!errors.description}
+          helperText={errors?.description?.message as ReactNode}
         />
-      </FormControl>
-      <ModalButtons handleClose={handleClose} handleSubmit={handleSubmit} disableSubmit={notChanged} />
-    </form>
+        <FormControl fullWidth variant="outlined" error={!!errors.amount} margin="normal">
+          <Controller
+            defaultValue={amount || undefined}
+            name="amount"
+            control={control}
+            rules={{
+              required: 'This field is required',
+            }}
+            render={({ field }) => (
+              <>
+                <CurrencyInput {...field} label="Amount" name="amount" fullWidth />
+                {errors?.amount && <FormHelperText>{errors?.amount?.message as string}</FormHelperText>}
+              </>
+            )}
+          />
+        </FormControl>
+        <ModalButtons handleClose={handleClose} handleSubmit={handleSubmit} disableSubmit={notChanged} />
+      </form>
+    </Loader>
   );
 };
 

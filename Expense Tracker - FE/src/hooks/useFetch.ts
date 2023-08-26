@@ -21,10 +21,12 @@ const useFetch = <T>(dependencyService: any, path?: string): FetchState<T> => {
 
     dependencyService({ path, body })
       .then((responseData: T) => {
+        console.log(responseData);
         setData(responseData);
       })
-      .catch((err: AxiosError) => {
-        setError(err.message);
+      .catch((err: string) => {
+        console.log(error);
+        setError(err);
       })
       .finally(() => {
         setLoading(false);

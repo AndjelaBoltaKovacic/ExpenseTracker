@@ -44,8 +44,8 @@ const DataTable = ({
           <TableHead>
             <TableRow>
               <SmallTableCell>No.</SmallTableCell>
-              {TABLE_HEADERS.map(({ title, property }) => (
-                <SmallTableCell>
+              {TABLE_HEADERS.map(({ title, property }, i) => (
+                <SmallTableCell key={`${title}_${i}`}>
                   <SortLabel
                     disabled={disableSort}
                     propertyName={property}

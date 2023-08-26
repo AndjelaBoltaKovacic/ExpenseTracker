@@ -11,7 +11,7 @@ import AddTransactionForm from '../../../common/form/add-transaction/add-transac
 import { expenses } from '../../../services/mocks/expenses';
 import Loader from '../../../common/loader';
 import useFetch from '../../../hooks/useFetch';
-import TransactionService from '../../../services/trasnaction.service';
+import TransactionService from '../../../services/transaction.service';
 
 function Dashboard() {
   const { isPremium } = useUserContext();
