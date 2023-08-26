@@ -29,17 +29,17 @@ const DAYS_OF_MONTH = [
 ];
 
 export const transactionGroups = [
-  { value: 'groceries', label: 'Groceries' },
-  { value: 'transport', label: 'Transport' },
-  { value: 'leisure', label: 'Leisure' },
-  { value: 'health', label: 'Health' },
-  { value: 'utilities', label: 'Utilities' },
-  { value: 'shopping', label: 'Shopping' },
-  { value: 'education', label: 'Education' },
-  { value: 'entertainment', label: 'Entertainment' },
-  { value: 'dining', label: 'Dining' },
-  // Add more types as needed
+  'Groceries',
+  'Transport',
+  'Leisure',
+  'Health',
+  'Utilities',
+  'Shopping',
+  'Education',
+  'Entertainment',
+  'Dining',
 ];
+
 
 export { MENU_ITEMS, PROFILE_MENU_ITEMS, AUTH_MENU_ITEMS, DAYS_OF_WEEK, DAYS_OF_MONTH };
   

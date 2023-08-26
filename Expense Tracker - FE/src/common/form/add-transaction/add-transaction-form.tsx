@@ -73,6 +73,8 @@ const AddTransactionForm = ({
     handleConfirm(data);
   };
 
+  console.log(transactionToEdit);
+
   return tgError ? (
     <Notice
       outcome={Outcome.Fail}
@@ -108,14 +110,14 @@ const AddTransactionForm = ({
           <Controller
             name="category"
             control={control}
-            defaultValue={category || undefined}
+            defaultValue={category}
             rules={{ required: 'This field is required' }}
             render={({ field }) => (
               <>
                 <Select {...field} label="Transaction Category">
-                  {transactionGroups?.map(({ value, label }, index) => (
-                    <MenuItem key={index} value={value}>
-                      {label}
+                  {transactionGroups?.map((type, index) => (
+                    <MenuItem key={index} value={type}>
+                      {type}
                     </MenuItem>
                   ))}
                   <MenuItem value={''}>Add custom category</MenuItem>
@@ -155,7 +157,7 @@ const AddTransactionForm = ({
             )}
           />
         </FormControl>
-        <ModalButtons handleClose={handleClose} handleSubmit={handleSubmit} disableSubmit={notChanged} />
+        <ModalButtons handleClose={handleClose} handleSubmit={handleConfirm} disableSubmit={notChanged} />
       </form>
     </Loader>
   );

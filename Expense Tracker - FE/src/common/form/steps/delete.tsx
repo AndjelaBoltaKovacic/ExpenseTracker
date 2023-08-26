@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { DeleteTransactionSteps, EditTransactionSteps, Outcome } from '../../../values/enums/form-steps';
+import { DeleteTransactionSteps, Outcome } from '../../../values/enums/form-steps';
 import Loader from '../../loader';
 import Confirm from './confirm';
 import Notice from './notice';
 import { _void } from '../../../models/common';
-import { Typography } from '@mui/material';
 
 function DeleteTransaction({ transactionToDelete, handleClose }: { transactionToDelete: any; handleClose: _void }) {
   const [step, setStep] = useState<DeleteTransactionSteps>(DeleteTransactionSteps.Confirm);

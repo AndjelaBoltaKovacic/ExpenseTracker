@@ -1,9 +1,15 @@
 import { Expense } from '../../models/expenses';
+import { transactionGroups } from '../../values/constants/menu';
+
+const getRandomCategory = () => {
+  const randomIndex = Math.floor(Math.random() * transactionGroups.length);
+  return transactionGroups[randomIndex];
+};
 
 export const expenses: Expense[] = [
   {
     id: 1,
-    category: 'category A',
+    category: getRandomCategory(),
     amount: 100,
     description: 'Description A',
     creationTime: '2023-08-20',
@@ -11,7 +17,7 @@ export const expenses: Expense[] = [
   },
   {
     id: 2,
-    category: 'category B',
+    category: getRandomCategory(),
     amount: 200,
     description: 'Description B',
     creationTime: '2023-08-21',
@@ -19,7 +25,7 @@ export const expenses: Expense[] = [
   },
   {
     id: 3,
-    category: 'category C',
+    category: getRandomCategory(),
     amount: 150,
     description: 'Description C',
     creationTime: '2023-08-22',
@@ -27,7 +33,7 @@ export const expenses: Expense[] = [
   },
   {
     id: 4,
-    category: 'category D',
+    category: getRandomCategory(),
     amount: 300,
     description: 'Description D',
     creationTime: '2023-08-23',
@@ -35,11 +41,10 @@ export const expenses: Expense[] = [
   },
   {
     id: 5,
-    category: 'category E',
+    category: getRandomCategory(),
     amount: 50,
     description: 'Description E',
     creationTime: '2023-08-24',
     type: 'Income',
   },
 ];
-

@@ -15,6 +15,7 @@ import { _void } from '../../../models/common';
 import { TableDisplay } from '../../../common/table/table-display';
 import NoticeCard from '../../../common/notice-card';
 import ReminderService from '../../../services/reminder.service';
+import AddTransaction from '../../../common/form/add-transaction/add-transaction';
 
 function Dashboard({ user }: { user: string }) {
   const { isPremium } = useUserContext();
@@ -90,7 +91,7 @@ function Dashboard({ user }: { user: string }) {
         )}
       </Loader>
       <CustomModal isOpen={openModal} title="Add Transaction" handleClose={handleClose}>
-        <AddTransactionForm handleClose={handleClose} handleConfirm={() => console.log('bla')} />
+        <AddTransaction handleClose={handleClose} />
       </CustomModal>
     </>
   );
