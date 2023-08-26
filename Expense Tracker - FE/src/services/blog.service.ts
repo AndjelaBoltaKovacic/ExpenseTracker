@@ -3,15 +3,15 @@ import { User, UserTokens } from '../models/user';
 import { axiosApiCall } from './axios-api';
 import { HttpMethod } from '../values/enums/service';
 
-const userApiUrl = `${baseUrl}/auth/`;
+const blogApiUrl = `${baseUrl}/blog/`;
 const UserService = {
-  register({ body }: { body: User }): Promise<UserTokens> {
-    const url = userApiUrl.concat('register');
+  setReminder({ body }: { body: {} }): Promise<UserTokens> {
+    const url = blogApiUrl.concat('register');
     return axiosApiCall<UserTokens>(HttpMethod.POST, url, body);
   },
 
   login({ body }: { body: Partial<User> }): Promise<UserTokens> {
-    const url = userApiUrl.concat('authenticate');
+    const url = blogApiUrl.concat('authenticate');
     return axiosApiCall<UserTokens>(HttpMethod.POST, url, body);
   },
 };

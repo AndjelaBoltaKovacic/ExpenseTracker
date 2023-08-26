@@ -1,11 +1,6 @@
+import { UserRole } from '../values/enums/user';
 import { _void } from './common';
 
-
-export enum UserRole {
-  Premium = 'PREMIUM',
-  User = 'USER',
-  Admin = 'ADMIN'
-}
 export type DecodedToken = {
   _id: string;
   email: string;
@@ -19,7 +14,7 @@ export type DecodedToken = {
   iat: number;
   exp: number;
 };
-export interface User {
+export type User = {
   id?: string;
   email: string;
   firstname: string;
@@ -39,4 +34,4 @@ export type UserContextType = {
   logout: _void;
 };
 
-export type UserToken = { access_token: string; refresh_token: string };
+export type UserTokens = { access_token: string; refresh_token: string };

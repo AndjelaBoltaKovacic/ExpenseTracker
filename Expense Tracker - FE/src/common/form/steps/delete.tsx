@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { DeleteTransactionSteps, EditTransactionSteps } from '../../../values/enums/steps';
+import { DeleteTransactionSteps, EditTransactionSteps } from '../../../values/enums/form-steps';
 import Loader from '../../loader';
 import Confirm from './confirm';
 import Notice from './notice';

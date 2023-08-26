@@ -24,10 +24,10 @@ const NoticeCard = ({
       textAlign="center"
       sx={{ width: { xs: '85%', md: '60%' } }}
     >
-      <Typography variant="h4" component="div">
+      <Typography variant="h4" component="div" mb={2}>
         {title}
       </Typography>
-      <Typography variant="body2" color="text.secondary">
+      <Typography variant="body1" color="text.secondary" mb={2}>
         {text}
       </Typography>
       {buttonText && (

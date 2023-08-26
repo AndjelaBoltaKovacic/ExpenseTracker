@@ -10,13 +10,13 @@ import { useUserContext } from '../../contexts/userContext';
 import Loader from '../../common/loader';
 import { Link, useNavigate } from 'react-router-dom';
 import UserService from '../../services/user.service';
-import { User, UserToken } from '../../models/user';
+import { User, UserTokens } from '../../models/user';
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { palette }: any = useContext(ThemeContext);
   const inputLabelColorOverride = getInputLabelColor(palette.mode);
-  const { data, loading, error, fetchData } = useFetch<UserToken>(UserService.login);
+  const { data, loading, error, fetchData } = useFetch<UserTokens>(UserService.login);
 
   const { login } = useUserContext();
   const navigate = useNavigate();

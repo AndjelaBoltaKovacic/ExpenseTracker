@@ -1,3 +1,6 @@
+import TransactionService from '../services/transaction.service';
+import { TransactionType } from '../values/enums/transactions';
+
 export const getLocationValue = (pathname: string) => {
   switch (pathname) {
     case '/dashboard':
@@ -13,7 +16,4 @@ export const getLocationValue = (pathname: string) => {
     default:
       return 0;
   }
-}
-
-
-
+};

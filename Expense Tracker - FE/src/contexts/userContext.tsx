@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { decodeToken } from '../helpers/auth';
-import { UserRole, User, UserContextType, UserToken } from '../models/user';
+import { User, UserContextType, UserTokens } from '../models/user';
+import { UserRole } from '../values/enums/user';
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
@@ -16,7 +17,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const isPremium = user?.role === UserRole.Premium;
 
-  const login = ({ access_token }: UserToken) => {
+  const login = ({ access_token }: UserTokens) => {
     const decodedToken = decodeToken(access_token);
     setUser(decodedToken);
     localStorage.setItem('token', access_token);

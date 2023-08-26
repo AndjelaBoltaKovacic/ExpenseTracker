@@ -1,14 +1,12 @@
 import { useState } from 'react';
-import { AxiosError } from 'axios';
 import { User } from '../models/user';
 
-
-interface FetchState<T> {
+type FetchState<T> = {
   data: T | null;
   loading: boolean;
   error: any;
   fetchData: (body?: User) => void;
-}
+};
 
 const useFetch = <T>(dependencyService: any, path?: string): FetchState<T> => {
   const [data, setData] = useState<T | null>(null);

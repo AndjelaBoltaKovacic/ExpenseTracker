@@ -1,4 +1,4 @@
-export interface TrasnactionsDTO<T> {
+export type TrasnactionsDTO<T> = {
   content: T[];
   pageable: {
     sort: {
@@ -25,4 +25,4 @@ export interface TrasnactionsDTO<T> {
   first: boolean;
   numberOfElements: number;
   empty: boolean;
-}
+};

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { EditTransactionSteps } from '../../../values/enums/steps';
+import { EditTransactionSteps } from '../../../values/enums/form-steps';
 import AddTransactionForm from '../add-transaction/add-transaction-form';
 import { Expense } from '../../../models/expenses';
 import { _void } from '../../../models/common';

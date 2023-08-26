@@ -9,13 +9,14 @@ import { emailValidation, passwordValidation } from '../../common/form/validatio
 import PasswordVisibility from '../../common/form/passwordVisibility';
 import NoticeCard from '../../common/notice-card';
 import Loader from '../../common/loader';
-import { User, UserRole, UserToken } from '../../models/user';
+import { User, UserTokens } from '../../models/user';
 import UserService from '../../services/user.service';
+import { UserRole } from '../../values/enums/user';
 
 function RegistrationForm() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
-  const { data, loading, error, fetchData } = useFetch<UserToken>(UserService.register);
+  const { data, loading, error, fetchData } = useFetch<UserTokens>(UserService.register);
   const navigate = useNavigate();
   const { palette }: any = useContext(ThemeContext);
   const {
@@ -38,13 +39,13 @@ function RegistrationForm() {
     <Loader isLoading={loading}>
       {data ? (
         <NoticeCard
-          title='Your account has been created successfuly'
-          buttonText='Login'
+          title="Your account has been created successfuly"
+          buttonText="Login"
           onButtonClick={() => navigate('/login')}
         />
       ) : (
-        <Container component='main' maxWidth='xs' sx={{ marginTop: 8, marginBottom: 2 }}>
-          <Typography variant='h4' align='center' gutterBottom>
+        <Container component="main" maxWidth="xs" sx={{ marginTop: 8, marginBottom: 2 }}>
+          <Typography variant="h4" align="center" gutterBottom>
             Register
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -53,7 +54,7 @@ function RegistrationForm() {
                 <TextField
                   InputLabelProps={inputLabelColorOverride}
                   fullWidth
-                  label='First Name'
+                  label="First Name"
                   {...register('firstname', { required: 'First Name is required' })}
                   error={!!errors.firstname}
                   helperText={errors.firstname?.message as ReactNode}
@@ -63,7 +64,7 @@ function RegistrationForm() {
                 <TextField
                   InputLabelProps={inputLabelColorOverride}
                   fullWidth
-                  label='Last Name'
+                  label="Last Name"
                   {...register('lastname', { required: 'Last Name is required' })}
                   error={!!errors.lastname}
                   helperText={errors.lastname?.message as ReactNode}
@@ -73,8 +74,8 @@ function RegistrationForm() {
                 <TextField
                   InputLabelProps={inputLabelColorOverride}
                   fullWidth
-                  label='Email'
-                  type='email'
+                  label="Email"
+                  type="email"
                   {...register('email', emailValidation)}
                   error={!!errors.email}
                   helperText={errors?.email?.message as ReactNode}
@@ -84,7 +85,7 @@ function RegistrationForm() {
                 <TextField
                   InputLabelProps={inputLabelColorOverride}
                   fullWidth
-                  label='Password'
+                  label="Password"
                   type={showPassword ? 'text' : 'password'}
                   {...register('password', passwordValidation)}
                   error={!!errors.password}
@@ -98,7 +99,7 @@ function RegistrationForm() {
                 <TextField
                   InputLabelProps={inputLabelColorOverride}
                   fullWidth
-                  label='Confirm Password'
+                  label="Confirm Password"
                   type={showConfirmPassword ? 'text' : 'password'}
                   {...register('passwordConfirmation', {
                     required: 'Confirm Password is required',
@@ -117,16 +118,16 @@ function RegistrationForm() {
               <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
                 <FormControlLabel
                   control={<Checkbox {...register('premiumUser')} />}
-                  label='Sign Up As A Premium User'
+                  label="Sign Up As A Premium User"
                 />
               </Grid>
             </Grid>
             {error && (
-              <Typography color='error' mt={2} mb={2} textAlign='center'>
+              <Typography color="error" mt={2} mb={2} textAlign="center">
                 {error}
               </Typography>
             )}
-            <Button sx={{ marginTop: 2 }} type='submit' fullWidth variant='contained' color='primary'>
+            <Button sx={{ marginTop: 2 }} type="submit" fullWidth variant="contained" color="primary">
               Register
             </Button>
           </form>
