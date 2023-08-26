@@ -13,6 +13,9 @@ import { Expense } from '../../../models/expenses';
 import TransactionService from '../../../services/transaction.service';
 import useFetch from '../../../hooks/useFetch';
 import Loader from '../../loader';
+import Notice from '../steps/notice';
+import { Outcome } from '../../../values/enums/form-steps';
+import { transactionGroups } from '../../../values/constants/menu';
 
 const AddTransactionForm = ({
   transactionToEdit,
@@ -37,7 +40,7 @@ const AddTransactionForm = ({
     fetchData: fetchTransGroups,
   } = useFetch(TransactionService.getIncomeGroups, '?page=0&size=10&sort=name');
   const [notChanged, setNotChanged] = useState(true);
-  const [transactionGroups, setTransactionGroups] = useState([]);
+  // const [transactionGroups, setTransactionGroups] = useState([]);
   const transactionTypes = ['Income', 'Expense'];
   const { type, category, description, amount } = transactionToEdit ? (transactionToEdit as Expense) : ({} as Expense);
 
@@ -71,8 +74,11 @@ const AddTransactionForm = ({
   };
 
   return tgError ? (
-    // Error component
-    <div> bla </div>
+    <Notice
+      outcome={Outcome.Fail}
+      text="Oops! Something went wrong. Please try again later"
+      handleClose={handleClose}
+    />
   ) : (
     <Loader isLoading={tgLoading}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -107,11 +113,12 @@ const AddTransactionForm = ({
             render={({ field }) => (
               <>
                 <Select {...field} label="Transaction Category">
-                  {transactionGroups?.map((type, index) => (
-                    <MenuItem key={index} value={type}>
-                      {type}
+                  {transactionGroups?.map(({ value, label }, index) => (
+                    <MenuItem key={index} value={value}>
+                      {label}
                     </MenuItem>
                   ))}
+                  <MenuItem value={''}>Add custom category</MenuItem>
                 </Select>
                 {errors?.category && <FormHelperText>{errors?.category?.message as string}</FormHelperText>}
               </>

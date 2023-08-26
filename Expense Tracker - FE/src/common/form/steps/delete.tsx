@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { DeleteTransactionSteps, EditTransactionSteps } from '../../../values/enums/form-steps';
+import { DeleteTransactionSteps, EditTransactionSteps, Outcome } from '../../../values/enums/form-steps';
 import Loader from '../../loader';
 import Confirm from './confirm';
 import Notice from './notice';
@@ -26,10 +26,18 @@ function DeleteTransaction({ transactionToDelete, handleClose }: { transactionTo
             />
           ),
           [DeleteTransactionSteps.Success]: (
-            <Notice success text="You have successfully deleted the transaction" handleClose={handleClose} />
+            <Notice
+              outcome={Outcome.Success}
+              text="You have successfully deleted the transaction"
+              handleClose={handleClose}
+            />
           ),
           [DeleteTransactionSteps.Fail]: (
-            <Notice text="Oops! Something went wrong. Please try again later" handleClose={handleClose} />
+            <Notice
+              outcome={Outcome.Fail}
+              text="Oops! Something went wrong. Please try again later"
+              handleClose={handleClose}
+            />
           ),
         }[step]
       }

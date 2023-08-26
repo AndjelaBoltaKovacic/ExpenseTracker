@@ -17,3 +17,14 @@ export enum DeleteTransactionSteps {
   Success,
   Fail,
 }
+
+export enum AddReminderSteps {
+  Add,
+  Success,
+  Fail,
+}
+
+export enum Outcome {
+  Success = 'success',
+  Fail = 'fail',
+}

@@ -14,6 +14,6 @@ export const axiosApiCall = <T>(method: HttpMethod, url: string, data?: any): Pr
         isContent(response.data) ? resolve(response.data.content) : resolve(response.data);
       })
       .catch((error) => {
-        reject(error.response.data);
+        reject(error?.response?.data);
       });
   });

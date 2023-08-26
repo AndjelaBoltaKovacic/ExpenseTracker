@@ -14,6 +14,7 @@ import { TransactionType } from '../../../values/enums/transactions';
 import { _void } from '../../../models/common';
 import { TableDisplay } from '../../../common/table/table-display';
 import NoticeCard from '../../../common/notice-card';
+import ReminderService from '../../../services/reminder.service';
 
 function Dashboard({ user }: { user: string }) {
   const { isPremium } = useUserContext();
@@ -32,11 +33,19 @@ function Dashboard({ user }: { user: string }) {
     fetchData: fetchExpenses,
   } = useFetch<any>(TransactionService.getExpenses, '?page=0&size=5&sort=createdDtm');
 
-  const hasData = incomes.length && expenses.length && !incomesError && !expensesError;
+  const {
+    data: reminder,
+    error: reminderError,
+    loading: reminderLoading,
+    fetchData: fetchReminder,
+  } = useFetch<any>(ReminderService.getReminder);
+
+  const hasData = incomes?.length && expenses?.length && !incomesError && !expensesError;
 
   useEffect(() => {
     fetchIncomes();
     fetchExpenses();
+    fetchReminder();
   }, []);
 
   const handleOpen = () => {
@@ -46,6 +55,10 @@ function Dashboard({ user }: { user: string }) {
   const handleClose = () => {
     setOpenModal(false);
   };
+
+  useEffect(() => {
+    reminder && console.log(reminder);
+  }, [reminder]);
 
   return (
     <>

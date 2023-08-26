@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { EditTransactionSteps } from '../../../values/enums/form-steps';
+import { EditTransactionSteps, Outcome } from '../../../values/enums/form-steps';
 import AddTransactionForm from '../add-transaction/add-transaction-form';
 import { Expense } from '../../../models/expenses';
 import { _void } from '../../../models/common';
@@ -44,10 +44,18 @@ function EditTransaction({ transactionToEdit, handleClose }: { transactionToEdit
             />
           ),
           [EditTransactionSteps.Success]: (
-            <Notice success text="You have successfully edited the transaction" handleClose={handleClose} />
+            <Notice
+              outcome={Outcome.Success}
+              text="You have successfully edited the transaction"
+              handleClose={handleClose}
+            />
           ),
           [EditTransactionSteps.Fail]: (
-            <Notice text="Oops! Something went wrong. Please try again" handleClose={handleClose} />
+            <Notice
+              outcome={Outcome.Fail}
+              text="Oops! Something went wrong. Please try again later"
+              handleClose={handleClose}
+            />
           ),
         }[step]
       }
