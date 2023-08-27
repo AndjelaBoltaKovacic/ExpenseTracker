@@ -34,7 +34,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       const decodedToken = decodeToken(token);
       setUser(decodedToken);
     }
-  }, [login]);
+  }, []);
 
   return <UserContext.Provider value={{ user, isPremium, login, logout }}>{children}</UserContext.Provider>;
 };

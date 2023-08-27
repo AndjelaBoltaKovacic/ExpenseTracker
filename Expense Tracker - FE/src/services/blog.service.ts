@@ -1,19 +1,14 @@
 import { baseUrl } from './urls';
-import { User, UserTokens } from '../models/user';
 import { axiosApiCall } from './axios-api';
 import { HttpMethod } from '../values/enums/service';
+import { BlogDTO } from '../models/blog';
 
-const blogApiUrl = `${baseUrl}/blog/`;
-const UserService = {
-  setReminder({ body }: { body: {} }): Promise<UserTokens> {
-    const url = blogApiUrl.concat('register');
-    return axiosApiCall<UserTokens>(HttpMethod.POST, url, body);
-  },
+const blogApiUrl = `${baseUrl}/blog`;
 
-  login({ body }: { body: Partial<User> }): Promise<UserTokens> {
-    const url = blogApiUrl.concat('authenticate');
-    return axiosApiCall<UserTokens>(HttpMethod.POST, url, body);
+const BlogService = {
+  getBlogs({ path }: { path: string }): Promise<BlogDTO> {
+    return axiosApiCall<BlogDTO>(HttpMethod.GET, `${blogApiUrl}${path}`);
   },
 };
 
-export default UserService;
+export default BlogService;

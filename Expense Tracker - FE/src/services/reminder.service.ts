@@ -5,7 +5,7 @@ import { Reminder, ReminderRequest } from '../models/reminder';
 
 const reminderApiUrl = `${baseUrl}/reminder`;
 const ReminderService = {
-  setReminder({ body }: { body: ReminderRequest }): Promise<any> {
+  setReminder({ body }: { body: ReminderRequest }): Promise<Reminder> {
     return axiosApiCall<any>(HttpMethod.POST, reminderApiUrl, body);
   },
   getReminder(): Promise<Reminder> {
