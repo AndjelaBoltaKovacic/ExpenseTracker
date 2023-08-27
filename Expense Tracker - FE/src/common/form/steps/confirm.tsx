@@ -15,7 +15,7 @@ function Confirm({
   data: any;
 }) {
   const { type, category, description, amount } = data;
-  console.log(data);
+  // console.log(data);
   return (
     <>
       <Typography fontSize={20} textAlign="center" padding={2}>

@@ -26,3 +26,9 @@ export type TrasnactionsDTO<T> = {
   numberOfElements: number;
   empty: boolean;
 };
+
+export type TransactionBody = {
+  name: string;
+  incomeGroupId: string;
+  amount: number;
+};

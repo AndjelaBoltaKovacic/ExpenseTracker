@@ -10,7 +10,7 @@ export const axiosApiCall = <T>(method: HttpMethod, url: string, data?: any): Pr
       data,
     })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         isContent(response.data) ? resolve(response.data.content) : resolve(response.data);
       })
       .catch((error) => {

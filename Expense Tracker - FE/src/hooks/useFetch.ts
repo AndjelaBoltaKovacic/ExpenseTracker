@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { User } from '../models/user';
+import { TransactionBody } from '../models/transactions.dto';
 
 type FetchState<T> = {
   data: T | null;
   loading: boolean;
   error: any;
-  fetchData: (body?: User) => void;
+  fetchData: (body?: User | TransactionBody) => void;
 };
 
 const useFetch = <T>(dependencyService: any, path?: string): FetchState<T> => {
@@ -19,11 +20,9 @@ const useFetch = <T>(dependencyService: any, path?: string): FetchState<T> => {
 
     dependencyService({ path, body })
       .then((responseData: T) => {
-        console.log(responseData);
         setData(responseData);
       })
       .catch((err: string) => {
-        console.log(error);
         setError(err);
       })
       .finally(() => {

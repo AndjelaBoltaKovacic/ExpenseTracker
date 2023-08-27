@@ -1,15 +1,10 @@
 import { Expense } from '../../models/expenses';
-import { transactionGroups } from '../../values/constants/menu';
-
-const getRandomCategory = () => {
-  const randomIndex = Math.floor(Math.random() * transactionGroups.length);
-  return transactionGroups[randomIndex];
-};
+import { TRANSACTION_GROUPS } from '../../values/constants/menu';
 
 export const expenses: Expense[] = [
   {
     id: 1,
-    category: getRandomCategory(),
+    category: 'Shopping', // Replace with the desired category name
     amount: 100,
     description: 'Description A',
     creationTime: '2023-08-20',
@@ -17,7 +12,7 @@ export const expenses: Expense[] = [
   },
   {
     id: 2,
-    category: getRandomCategory(),
+    category: 'Transport & Car', // Replace with the desired category name
     amount: 200,
     description: 'Description B',
     creationTime: '2023-08-21',
@@ -25,7 +20,7 @@ export const expenses: Expense[] = [
   },
   {
     id: 3,
-    category: getRandomCategory(),
+    category: 'Leisure & Entertainment', // Replace with the desired category name
     amount: 150,
     description: 'Description C',
     creationTime: '2023-08-22',
@@ -33,7 +28,7 @@ export const expenses: Expense[] = [
   },
   {
     id: 4,
-    category: getRandomCategory(),
+    category: 'Food & Groceries', // Replace with the desired category name
     amount: 300,
     description: 'Description D',
     creationTime: '2023-08-23',
@@ -41,7 +36,7 @@ export const expenses: Expense[] = [
   },
   {
     id: 5,
-    category: getRandomCategory(),
+    category: 'Bars & Restaurants', // Replace with the desired category name
     amount: 50,
     description: 'Description E',
     creationTime: '2023-08-24',

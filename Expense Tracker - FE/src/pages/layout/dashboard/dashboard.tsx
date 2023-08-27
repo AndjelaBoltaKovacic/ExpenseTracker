@@ -58,7 +58,7 @@ function Dashboard({ user }: { user: string }) {
   };
 
   useEffect(() => {
-    reminder && console.log(reminder);
+    // reminder && console.log(reminder);
   }, [reminder]);
 
   return (

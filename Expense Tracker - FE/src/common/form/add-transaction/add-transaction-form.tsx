@@ -15,9 +15,9 @@ import useFetch from '../../../hooks/useFetch';
 import Loader from '../../loader';
 import Notice from '../steps/notice';
 import { Outcome } from '../../../values/enums/form-steps';
-import { transactionGroups } from '../../../values/constants/menu';
+import { TRANSACTION_GROUPS } from '../../../values/constants/menu';
 
-const AddTransactionForm = ({
+function AddTransactionForm({
   transactionToEdit,
   handleClose,
   handleConfirm,
@@ -25,7 +25,7 @@ const AddTransactionForm = ({
   transactionToEdit?: Expense;
   handleClose: _void;
   handleConfirm: _void;
-}) => {
+}) {
   const {
     handleSubmit,
     register,
@@ -38,9 +38,9 @@ const AddTransactionForm = ({
     error: tgError,
     loading: tgLoading,
     fetchData: fetchTransGroups,
-  } = useFetch(TransactionService.getIncomeGroups, '?page=0&size=10&sort=name');
+  } = useFetch<any[]>(TransactionService.getIncomeGroups, '?page=0&size=10&sort=name');
   const [notChanged, setNotChanged] = useState(true);
-  // const [transactionGroups, setTransactionGroups] = useState([]);
+  const [transactionGroups, setTransactionGroups] = useState(TRANSACTION_GROUPS);
   const transactionTypes = ['Income', 'Expense'];
   const { type, category, description, amount } = transactionToEdit ? (transactionToEdit as Expense) : ({} as Expense);
 
@@ -54,9 +54,8 @@ const AddTransactionForm = ({
   }, []);
 
   useEffect(() => {
-    if (transGroups) {
-      // setTransactionGroups(transGroups);
-      console.log(transGroups);
+    if (transGroups?.length) {
+      setTransactionGroups((prevVal) => [...prevVal, ...transGroups]);
     }
   }, [transGroups]);
 
@@ -72,8 +71,6 @@ const AddTransactionForm = ({
   const onSubmit = (data: any) => {
     handleConfirm(data);
   };
-
-  console.log(transactionToEdit);
 
   return tgError ? (
     <Notice
@@ -110,14 +107,14 @@ const AddTransactionForm = ({
           <Controller
             name="category"
             control={control}
-            defaultValue={category}
+            defaultValue={category || undefined}
             rules={{ required: 'This field is required' }}
             render={({ field }) => (
               <>
                 <Select {...field} label="Transaction Category">
-                  {transactionGroups?.map((type, index) => (
-                    <MenuItem key={index} value={type}>
-                      {type}
+                  {transactionGroups?.map(({ name }, index) => (
+                    <MenuItem key={index} value={name}>
+                      {name}
                     </MenuItem>
                   ))}
                   <MenuItem value={''}>Add custom category</MenuItem>
@@ -157,7 +154,7 @@ const AddTransactionForm = ({
             )}
           />
         </FormControl>
-        <ModalButtons handleClose={handleClose} handleSubmit={handleConfirm} disableSubmit={notChanged} />
+        <ModalButtons handleClose={handleClose} handleSubmit={handleSubmit} disableSubmit={notChanged} />
       </form>
     </Loader>
   );
