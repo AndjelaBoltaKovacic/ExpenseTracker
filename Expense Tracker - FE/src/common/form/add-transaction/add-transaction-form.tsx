@@ -16,6 +16,8 @@ import Notice from '../steps/notice';
 import { Outcome } from '../../../values/enums/form-steps';
 import { Expense, Income, TransactionGroup } from '../../../models/transactions';
 import { TransactionType } from '../../../values/enums/transactions';
+import CategoryIcon from '../../category-icon';
+import { Settings } from '@mui/icons-material';
 
 function AddTransactionForm({
   transactionToEdit,
@@ -119,10 +121,13 @@ function AddTransactionForm({
                 <Select {...field} label='Transaction Category'>
                   {transactionGroups?.map(({ name }, index) => (
                     <MenuItem key={index} value={name}>
-                      {name}
+                      <CategoryIcon name={name} /> &nbsp;{name}
                     </MenuItem>
                   ))}
-                  <MenuItem value={''}>Add custom category</MenuItem>
+                  <MenuItem value={''}>
+                    <Settings color='primary' />
+                    &nbsp; Manage Categories
+                  </MenuItem>
                 </Select>
                 {errors?.category && <FormHelperText>{errors?.category?.message as string}</FormHelperText>}
               </>

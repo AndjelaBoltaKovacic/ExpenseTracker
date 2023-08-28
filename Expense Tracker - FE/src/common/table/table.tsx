@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Table, TableBody, TableContainer, TableHead, TableRow, Button, Paper } from '@mui/material';
+import { Table, TableBody, TableContainer, TableHead, TableRow, Button, Paper, Box } from '@mui/material';
 import { DataEntry, _void } from '../../models/common';
 import SortLabel from './sort-label';
 import SmallTableCell from './SmallTableCell';
 import { TABLE_HEADERS } from '../../values/constants/table';
 import { Transaction } from '../../models/transactions';
+import CategoryIcon from '../category-icon';
 
 const DataTable = ({
   disableSort,
@@ -68,9 +69,14 @@ const DataTable = ({
             {sortedData.map((row, i) => (
               <TableRow key={row.id}>
                 <SmallTableCell>{i + 1}</SmallTableCell>
-                <SmallTableCell>{row.groupId}</SmallTableCell>
-                <SmallTableCell>$ {row.amount}</SmallTableCell>
                 <SmallTableCell>{row.name}</SmallTableCell>
+                <SmallTableCell>
+                  <Box display='flex' alignItems='center' gap={1}>
+                    <CategoryIcon name={row.groupName} />
+                    {row.groupName}
+                  </Box>
+                </SmallTableCell>
+                <SmallTableCell>$ {row.amount}</SmallTableCell>
                 <SmallTableCell>{row.createdDtm}</SmallTableCell>
                 {!hideButtons && (
                   <>
