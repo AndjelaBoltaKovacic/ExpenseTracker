@@ -1,4 +1,4 @@
-import { TableSortLabel } from '@mui/material';
+import { TableSortLabel, Typography } from '@mui/material';
 import { _void } from '../../models/common';
 
 function SortLabel({
@@ -19,14 +19,18 @@ function SortLabel({
   return (
     <>
       {disabled ? (
-        title
+        <Typography component='span' sx={{ color: 'primary.main' }}>
+          {title}
+        </Typography>
       ) : (
         <TableSortLabel
           active={orderBy === propertyName}
           direction={orderBy === propertyName ? order : 'asc'}
           onClick={() => handleSort(propertyName)}
         >
-          {title}
+          <Typography component='span' sx={{ color: 'primary.main' }}>
+            {title}
+          </Typography>
         </TableSortLabel>
       )}
     </>

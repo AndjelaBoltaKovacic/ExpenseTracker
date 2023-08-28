@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AddTransactionSteps, Outcome } from '../../../values/enums/form-steps';
 import AddTransactionForm from '../add-transaction/add-transaction-form';
-import { Expense } from '../../../models/transactions';
+import { TransactionFormData } from '../../../models/transactions';
 import { _void } from '../../../models/common';
 import Confirm from '../steps/confirm';
 import Notice from '../steps/notice';
@@ -12,13 +12,14 @@ import useFetch from '../../../hooks/useFetch';
 
 function AddTransaction({ handleClose }: { handleClose: _void }) {
   const [step, setStep] = useState<AddTransactionSteps>(AddTransactionSteps.Add);
-  const [transactionData, setTransactionData] = useState({} as Expense);
+  const [transactionData, setTransactionData] = useState({} as TransactionFormData);
   const { data, error, loading, fetchData } = useFetch(
     transactionData.type === TransactionType.Income ? TransactionService.addIncome : TransactionService.addExpense
   );
 
   const handleFormConfirm = (data: any) => {
-    setTransactionData(data);
+    const [groupId, groupName] = data.groupId.split('_');
+    setTransactionData({ ...data, groupId, groupName });
     setStep(AddTransactionSteps.Confirm);
   };
   const handleBack = () => {
@@ -26,7 +27,8 @@ function AddTransaction({ handleClose }: { handleClose: _void }) {
   };
 
   const handleSubmit = () => {
-    // fetchData();
+    const { groupName, type, ...body } = transactionData;
+    fetchData(body);
   };
 
   useEffect(() => {
@@ -41,7 +43,7 @@ function AddTransaction({ handleClose }: { handleClose: _void }) {
           [AddTransactionSteps.Add]: <AddTransactionForm handleClose={handleClose} handleConfirm={handleFormConfirm} />,
           [AddTransactionSteps.Confirm]: (
             <Confirm
-              text='Are you sure you want to edit this transaction?'
+              text='Are you sure you want to add this transaction?'
               handleBack={handleBack}
               handleConfirm={handleSubmit}
               data={transactionData}
@@ -50,7 +52,7 @@ function AddTransaction({ handleClose }: { handleClose: _void }) {
           [AddTransactionSteps.Success]: (
             <Notice
               outcome={Outcome.Success}
-              text='You have successfully edited the transaction'
+              text='You have successfully added the transaction'
               handleClose={handleClose}
             />
           ),

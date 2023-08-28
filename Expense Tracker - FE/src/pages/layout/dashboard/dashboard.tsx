@@ -12,32 +12,40 @@ import Reminder from '../../../common/reminder';
 import { TransactionType } from '../../../values/enums/transactions';
 import { TableDisplay } from '../../../common/table/table-display';
 import NoticeCard from '../../../common/notice-card';
-import ReminderService from '../../../services/reminder.service';
 import AddTransaction from '../../../common/form/add-transaction/add-transaction';
+import { Transaction } from '../../../models/transactions';
 
 function Dashboard({ user }: { user: string }) {
   const { isPremium } = useUserContext();
+  const [incomes, setIncomes] = useState<Transaction[]>([] as Transaction[]);
+  const [expenses, setExpenses] = useState<Transaction[]>([] as Transaction[]);
   const [openModal, setOpenModal] = useState(false);
   const {
-    data: incomes,
-    error: incomesError,
-    loading: incomesLoading,
+    data: incm,
+    error: incmError,
+    loading: incmLoading,
     fetchData: fetchIncomes,
-  } = useFetch<any>(TransactionService.getIncomes, '?page=0&size=5&sort=createdDtm');
+  } = useFetch<Transaction[]>(TransactionService.getIncomes, '?page=0&size=5&sort=createdDtm');
 
   const {
-    data: expenses,
-    error: expensesError,
-    loading: expensesLoading,
+    data: exp,
+    error: expError,
+    loading: expLoading,
     fetchData: fetchExpenses,
-  } = useFetch<any>(TransactionService.getExpenses, '?page=0&size=5&sort=createdDtm');
-
-  const hasData = incomes?.length && expenses?.length && !incomesError && !expensesError;
+  } = useFetch<Transaction[]>(TransactionService.getExpenses, '?page=0&size=5&sort=createdDtm');
 
   useEffect(() => {
     fetchIncomes();
     fetchExpenses();
   }, []);
+
+  useEffect(() => {
+    exp && setExpenses(exp);
+  }, [exp]);
+
+  useEffect(() => {
+    incm && setIncomes(incm);
+  }, [incm]);
 
   const handleOpen = () => {
     setOpenModal(true);
@@ -49,8 +57,8 @@ function Dashboard({ user }: { user: string }) {
 
   return (
     <>
-      <Loader isLoading={incomesLoading || expensesLoading}>
-        {hasData ? (
+      <Loader isLoading={incmLoading || expLoading}>
+        {exp?.length || incm?.length ? (
           <Container>
             <AmountDisplay />
             <Box mt={2} display='flex' justifyContent={{ xs: 'center', md: 'end' }}>
@@ -60,10 +68,10 @@ function Dashboard({ user }: { user: string }) {
             </Box>
 
             <Box my={2}>
-              <TableDisplay data={incomes} error={incomesError} type={TransactionType.Income} />
+              <TableDisplay data={incomes} error={incmError} type={TransactionType.Income} />
             </Box>
             <Box my={2}>
-              <TableDisplay data={expenses} error={expensesError} type={TransactionType.Expense} />
+              <TableDisplay data={expenses} error={expError} type={TransactionType.Expense} />
             </Box>
             {isPremium && <Reminder />}
           </Container>

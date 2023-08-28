@@ -7,7 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import { _void } from '../../../models/common';
 import CurrencyInput from './currency-input';
-import { FormHelperText } from '@mui/material';
+import { Box, FormHelperText } from '@mui/material';
 import ModalButtons from '../../modal/modal-buttons';
 import TransactionService from '../../../services/transaction.service';
 import useFetch from '../../../hooks/useFetch';
@@ -16,8 +16,8 @@ import Notice from '../steps/notice';
 import { Outcome } from '../../../values/enums/form-steps';
 import { Expense, Income, TransactionGroup } from '../../../models/transactions';
 import { TransactionType } from '../../../values/enums/transactions';
-import CategoryIcon from '../../category-icon';
 import { Settings } from '@mui/icons-material';
+import CategoryIcon from '../../category-icon';
 
 function AddTransactionForm({
   transactionToEdit,
@@ -28,6 +28,8 @@ function AddTransactionForm({
   handleClose: _void;
   handleConfirm: _void;
 }) {
+  const [transactionGroups, setTransactionGroups] = useState<TransactionGroup[]>([] as TransactionGroup[]);
+  const transactionTypes = ['Income', 'Expense'];
   //FORM VALUES
   const {
     handleSubmit,
@@ -38,9 +40,9 @@ function AddTransactionForm({
   } = useForm();
 
   const transactionType = watch('type');
-  const categoryType = watch('category');
-  const formName = watch('name');
-  const transactionAmount = watch('amount');
+  const groupId = watch('groupId');
+  const name = watch('name');
+  const amount = watch('amount');
   const [notChanged, setNotChanged] = useState(true);
 
   //API VALUES
@@ -54,10 +56,13 @@ function AddTransactionForm({
       ? TransactionService.getIncomeGroups
       : TransactionService.getExpenseGroups
   );
-
-  const [transactionGroups, setTransactionGroups] = useState<TransactionGroup[]>([] as TransactionGroup[]);
-  const transactionTypes = ['Income', 'Expense'];
-  const { type, category, name, amount } = transactionToEdit ? transactionToEdit : ({} as any);
+  const {
+    type,
+    groupId: groupID,
+    groupName,
+    name: transactionToEditName,
+    amount: transactionToEditAmount,
+  } = transactionToEdit ? transactionToEdit : ({} as any);
 
   useEffect(() => {
     transactionType && fetchTransGroups();
@@ -71,9 +76,12 @@ function AddTransactionForm({
 
   useEffect(() => {
     setNotChanged(
-      type === transactionType && categoryType === category && formName === name && amount === transactionAmount
+      type === transactionType &&
+        groupID?.includes(groupId) &&
+        name === transactionToEditName &&
+        amount === transactionToEditAmount
     );
-  }, [transactionAmount, categoryType, transactionType, formName]);
+  }, [amount, groupId, type, name]);
 
   const onSubmit = (data: any) => {
     handleConfirm(data);
@@ -109,19 +117,28 @@ function AddTransactionForm({
             )}
           />
         </FormControl>
-        <FormControl fullWidth variant='outlined' error={!!errors.category} margin='normal'>
+        <FormControl fullWidth variant='outlined' error={!!errors.groupId} margin='normal'>
           <InputLabel>Transaction Category</InputLabel>
           <Controller
-            name='category'
+            name='groupId'
             control={control}
-            defaultValue={category || undefined}
+            defaultValue={groupID ? `${groupID}_${groupName}` : undefined}
             rules={{ required: 'This field is required' }}
             render={({ field }) => (
               <>
                 <Select {...field} label='Transaction Category'>
-                  {transactionGroups?.map(({ name }, index) => (
-                    <MenuItem key={index} value={name}>
-                      <CategoryIcon name={name} /> &nbsp;{name}
+                  {groupID && (
+                    <MenuItem value={`${groupID}_${groupName}`}>
+                      <Box display='flex' alignItems='end'>
+                        <CategoryIcon name={groupName} /> &nbsp;{groupName}
+                      </Box>
+                    </MenuItem>
+                  )}
+                  {transactionGroups?.map(({ name, id }) => (
+                    <MenuItem key={id} value={`${id}_${name}`}>
+                      <Box display='flex' alignItems='end'>
+                        <CategoryIcon name={name} /> &nbsp;{name}
+                      </Box>
                     </MenuItem>
                   ))}
                   <MenuItem value={''}>
@@ -129,7 +146,7 @@ function AddTransactionForm({
                     &nbsp; Manage Categories
                   </MenuItem>
                 </Select>
-                {errors?.category && <FormHelperText>{errors?.category?.message as string}</FormHelperText>}
+                {errors?.groupId && <FormHelperText>{errors?.groupId?.message as string}</FormHelperText>}
               </>
             )}
           />
@@ -138,15 +155,15 @@ function AddTransactionForm({
         <TextField
           label='Transaction Description'
           fullWidth
-          defaultValue={formName || undefined}
+          defaultValue={transactionToEditName || undefined}
           variant='outlined'
           margin='normal'
-          {...register('formName', {
+          {...register('name', {
             required: 'This field is required',
             minLength: { value: 5, message: 'Description must have at least 5 characters' },
           })}
-          error={!!errors.formName}
-          helperText={errors?.formName?.message as ReactNode}
+          error={!!errors.name}
+          helperText={errors?.name?.message as ReactNode}
         />
         <FormControl fullWidth variant='outlined' error={!!errors.amount} margin='normal'>
           <Controller

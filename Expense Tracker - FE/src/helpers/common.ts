@@ -1,5 +1,3 @@
-import TransactionService from '../services/transaction.service';
-import { TransactionType } from '../values/enums/transactions';
 
 export const getLocationValue = (pathname: string) => {
   switch (pathname) {

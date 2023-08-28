@@ -5,6 +5,7 @@ import { expenses } from '../../../services/mocks/expenses';
 import { Expense } from '../../../models/transactions';
 import EditTransaction from '../../../common/form/edit/edit-transaction';
 import DeleteTransaction from '../../../common/form/steps/delete';
+import { TransactionType } from '../../../values/enums/transactions';
 
 function Transactions() {
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
@@ -31,7 +32,12 @@ function Transactions() {
 
   return (
     <>
-      <DataTable data={expenses} onEditClick={handleEditOpen} onDeleteClick={handleDeleteOpen} />
+      <DataTable
+        type={TransactionType.Expense}
+        data={expenses}
+        onEditClick={handleEditOpen}
+        onDeleteClick={handleDeleteOpen}
+      />
       <CustomModal isOpen={openEditModal} handleClose={handleEditClose}>
         <EditTransaction handleClose={handleEditClose} transactionToEdit={transationToModify as Expense} />
       </CustomModal>

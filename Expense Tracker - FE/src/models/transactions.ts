@@ -40,7 +40,7 @@ export interface Transaction {
 };
 
 
-interface TransactionFormData extends Transaction {
+export interface TransactionFormData extends Transaction {
   type?: TransactionType
 }
 export interface Expense extends TransactionFormData {

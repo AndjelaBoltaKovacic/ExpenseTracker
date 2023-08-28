@@ -1,7 +1,7 @@
 import { Box, Paper, Typography } from '@mui/material';
 import { _void } from '../../../models/common';
 import ModalButtons from '../../modal/modal-buttons';
-import { Expense } from '../../../models/transactions';
+import { TransactionFormData } from '../../../models/transactions';
 
 function Confirm({
   text,
@@ -12,10 +12,10 @@ function Confirm({
   text: string;
   handleBack: _void;
   handleConfirm: _void;
-  data: any;
+  data: TransactionFormData;
 }) {
-  const { type, category, description, amount } = data;
-  // console.log(data);
+  const { type, groupName, name, amount } = data;
+  console.log(data);
   return (
     <>
       <Typography fontSize={20} textAlign='center' padding={2}>
@@ -31,13 +31,13 @@ function Confirm({
         <Box mt={2}>
           <Typography variant='subtitle1' sx={{ marginBottom: '8px' }}>
             <b>Category: </b>
-            {category}
+            {groupName}
           </Typography>
         </Box>
         <Box mt={2}>
           <Typography variant='subtitle1' sx={{ marginBottom: '8px' }}>
             <b>Description: </b>
-            {description}
+            {name}
           </Typography>
         </Box>
         <Box mt={2}>
