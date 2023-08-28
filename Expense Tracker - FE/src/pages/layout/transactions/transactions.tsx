@@ -9,7 +9,7 @@ import TransactionService from '../../../services/transaction.service';
 import useFetch from '../../../hooks/useFetch';
 import Loader from '../../../common/loader';
 import NoticeCard from '../../../common/notice-card';
-import { Box, Container, TextField } from '@mui/material';
+import { Box, Button, Container, TextField } from '@mui/material';
 import TransactionToggler from '../../../common/toggler/transaction-toggler';
 
 import { FilterBox } from '../../../common/form/filter-box';
@@ -20,7 +20,6 @@ function Transactions() {
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [isExpense, setIsExpense] = useState<boolean>(true);
-  const [fetchTrigger, setFetchTrigger] = useState(false);
   const [sort, setSort] = useState<string>('updatedDtm');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const [page, setPage] = useState<number>(0);
@@ -47,16 +46,18 @@ function Transactions() {
   };
 
   const handleEditClose = () => {
+    fetchData();
     setOpenEditModal(false);
   };
 
   const handleDeleteClose = () => {
+    fetchData();
     setOpenDeleteModal(false);
   };
 
   useEffect(() => {
     fetchData();
-  }, [isExpense, fetchTrigger]);
+  }, [isExpense]);
 
   useEffect(() => {
     data && setTransactions(data);
@@ -65,6 +66,13 @@ function Transactions() {
   const handleAmountChange = (event: any, newValue: any) => {
     setAmountFrom(newValue[0]);
     setAmountTo(newValue[1]);
+  };
+
+  const handleResetFilters = () => {
+    setAmountTo(1000);
+    setAmountFrom(0);
+    setDateRange([null, null]);
+    fetchData();
   };
 
   return (
@@ -79,12 +87,13 @@ function Transactions() {
                 dateRange={dateRange}
                 setDateRange={setDateRange}
                 handleAmountChange={handleAmountChange}
-                handleSubmit={() => setFetchTrigger((prevVal) => !prevVal)}
+                handleSubmit={() => fetchData()}
               />
             </Box>
 
-            <Box mt="3vw" mb="1vw">
+            <Box mt="3vw" mb="1vw" display="flex" justifyContent="space-between">
               <TransactionToggler value={isExpense} onChange={() => setIsExpense((prev) => !prev)} />
+              <Button onClick={() => handleResetFilters()}>Reset Filters</Button>
             </Box>
 
             <DataTable

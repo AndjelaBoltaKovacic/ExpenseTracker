@@ -27,7 +27,7 @@ function EditTransaction({ transactionToEdit, handleClose }: { transactionToEdit
   };
 
   const handleSubmit = () => {
-    // fetchData(body);
+    fetchData({ name: transactionData.name, amount: transactionData.amount, groupId: transactionData.groupId });
   };
 
   useEffect(() => {
@@ -36,11 +36,12 @@ function EditTransaction({ transactionToEdit, handleClose }: { transactionToEdit
   }, [data, error]);
 
   return (
-    <Loader isLoading={loading} size='8vw'>
+    <Loader isLoading={loading} size="8vw">
       {
         {
           [EditTransactionSteps.Edit]: (
             <AddTransactionForm
+              disableType
               handleClose={handleClose}
               handleConfirm={handleFormConfirm}
               transactionToEdit={transactionToEdit as Expense}
@@ -48,7 +49,7 @@ function EditTransaction({ transactionToEdit, handleClose }: { transactionToEdit
           ),
           [EditTransactionSteps.Confirm]: (
             <Confirm
-              text='Are you sure you want to edit this transaction?'
+              text="Are you sure you want to edit this transaction?"
               handleBack={handleBack}
               handleConfirm={handleSubmit}
               data={transactionData}
@@ -57,14 +58,14 @@ function EditTransaction({ transactionToEdit, handleClose }: { transactionToEdit
           [EditTransactionSteps.Success]: (
             <Notice
               outcome={Outcome.Success}
-              text='You have successfully edited the transaction'
+              text="You have successfully edited the transaction"
               handleClose={handleClose}
             />
           ),
           [EditTransactionSteps.Fail]: (
             <Notice
               outcome={Outcome.Fail}
-              text='Oops! Something went wrong. Please try again later'
+              text="Oops! Something went wrong. Please try again later"
               handleClose={handleClose}
             />
           ),

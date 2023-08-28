@@ -4,7 +4,6 @@ import Typography from '@mui/material/Typography';
 import TransactionService from '../services/transaction.service';
 import useFetch from '../hooks/useFetch';
 import Loader from './loader';
-import { formatNumberWithDecimal } from '../helpers/common';
 
 const AmountDisplay = () => {
   const [totalAmount, setTotalAmount] = useState<number | null>(null);
@@ -40,7 +39,7 @@ const AmountDisplay = () => {
         {totalAmount && (
           <>
             <Typography variant="h4" m={1} gutterBottom>
-              $ {formatNumberWithDecimal(totalAmount)}
+              $ {totalAmount.toFixed(2)}
             </Typography>
             <Typography variant="body1" mx={5} borderTop={1} borderColor="primary.main">
               Total Amount

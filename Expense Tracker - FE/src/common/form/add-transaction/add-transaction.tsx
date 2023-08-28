@@ -18,8 +18,7 @@ function AddTransaction({ handleClose }: { handleClose: _void }) {
   );
 
   const handleFormConfirm = (data: any) => {
-    const [groupId, groupName] = data.groupId.split('_');
-    setTransactionData({ ...data, groupId, groupName });
+    setTransactionData(data);
     setStep(AddTransactionSteps.Confirm);
   };
   const handleBack = () => {

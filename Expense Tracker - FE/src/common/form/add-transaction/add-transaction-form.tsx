@@ -23,10 +23,12 @@ function AddTransactionForm({
   transactionToEdit,
   handleClose,
   handleConfirm,
+  disableType,
 }: {
   transactionToEdit?: Expense | Income;
   handleClose: _void;
   handleConfirm: _void;
+  disableType?: boolean;
 }) {
   const [transactionGroups, setTransactionGroups] = useState<TransactionGroup[]>([] as TransactionGroup[]);
   const transactionTypes = ['Income', 'Expense'];
@@ -59,7 +61,6 @@ function AddTransactionForm({
   const {
     type,
     groupId: groupID,
-    groupName,
     name: transactionToEditName,
     amount: transactionToEditAmount,
   } = transactionToEdit ? transactionToEdit : ({} as any);
@@ -77,35 +78,36 @@ function AddTransactionForm({
   useEffect(() => {
     setNotChanged(
       type === transactionType &&
-        groupID?.includes(groupId) &&
+        groupId?.includes(groupID) &&
         name === transactionToEditName &&
         amount === transactionToEditAmount
     );
-  }, [amount, groupId, type, name]);
+  }, [amount, groupId, transactionType, name]);
 
   const onSubmit = (data: any) => {
-    handleConfirm(data);
+    const groupName = transactionGroups.find((group) => group.id === data.groupId)?.name;
+    handleConfirm({ ...data, groupName });
   };
 
   return tgError ? (
     <Notice
       outcome={Outcome.Fail}
-      text='Oops! Something went wrong. Please try again later'
+      text="Oops! Something went wrong. Please try again later"
       handleClose={handleClose}
     />
   ) : (
     <Loader isLoading={tgLoading}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl fullWidth variant='outlined' error={!!errors.type} margin='normal'>
+        <FormControl fullWidth variant="outlined" error={!!errors.type} margin="normal" disabled={disableType}>
           <InputLabel>Transaction Type</InputLabel>
           <Controller
-            name='type'
+            name="type"
             control={control}
             defaultValue={type || undefined}
             rules={{ required: 'This field is required' }}
             render={({ field }) => (
               <>
-                <Select {...field} label='Transaction Type'>
+                <Select {...field} label="Transaction Type">
                   {transactionTypes.map((type, index) => (
                     <MenuItem key={index} value={type}>
                       {type}
@@ -117,32 +119,25 @@ function AddTransactionForm({
             )}
           />
         </FormControl>
-        <FormControl fullWidth variant='outlined' error={!!errors.groupId} margin='normal'>
+        <FormControl fullWidth variant="outlined" error={!!errors.groupId} margin="normal">
           <InputLabel>Transaction Category</InputLabel>
           <Controller
-            name='groupId'
+            name="groupId"
             control={control}
-            defaultValue={groupID ? `${groupID}_${groupName}` : undefined}
+            defaultValue={groupID || undefined}
             rules={{ required: 'This field is required' }}
             render={({ field }) => (
               <>
-                <Select {...field} label='Transaction Category'>
-                  {groupID && (
-                    <MenuItem value={`${groupID}_${groupName}`}>
-                      <Box display='flex' alignItems='end'>
-                        <CategoryIcon name={groupName} /> &nbsp;{groupName}
-                      </Box>
-                    </MenuItem>
-                  )}
+                <Select {...field} label="Transaction Category">
                   {transactionGroups?.map(({ name, id }) => (
-                    <MenuItem key={id} value={`${id}_${name}`}>
-                      <Box display='flex' alignItems='end'>
+                    <MenuItem key={id} value={id}>
+                      <Box display="flex" alignItems="end">
                         <CategoryIcon name={name} /> &nbsp;{name}
                       </Box>
                     </MenuItem>
                   ))}
-                  <MenuItem value={''}>
-                    <Settings color='primary' />
+                  <MenuItem value={'settings'}>
+                    <Settings color="primary" />
                     &nbsp; Manage Categories
                   </MenuItem>
                 </Select>
@@ -153,11 +148,11 @@ function AddTransactionForm({
         </FormControl>
 
         <TextField
-          label='Transaction Description'
+          label="Transaction Description"
           fullWidth
           defaultValue={transactionToEditName || undefined}
-          variant='outlined'
-          margin='normal'
+          variant="outlined"
+          margin="normal"
           {...register('name', {
             required: 'This field is required',
             minLength: { value: 5, message: 'Description must have at least 5 characters' },
@@ -165,17 +160,17 @@ function AddTransactionForm({
           error={!!errors.name}
           helperText={errors?.name?.message as ReactNode}
         />
-        <FormControl fullWidth variant='outlined' error={!!errors.amount} margin='normal'>
+        <FormControl fullWidth variant="outlined" error={!!errors.amount} margin="normal">
           <Controller
-            defaultValue={amount || undefined}
-            name='amount'
+            defaultValue={transactionToEditAmount || undefined}
+            name="amount"
             control={control}
             rules={{
               required: 'This field is required',
             }}
             render={({ field }) => (
               <>
-                <CurrencyInput {...field} label='Amount' name='amount' fullWidth />
+                <CurrencyInput {...field} label="Amount" name="amount" fullWidth />
                 {errors?.amount && <FormHelperText>{errors?.amount?.message as string}</FormHelperText>}
               </>
             )}

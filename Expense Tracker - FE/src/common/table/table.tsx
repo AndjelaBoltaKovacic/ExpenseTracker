@@ -8,7 +8,6 @@ import { Transaction } from '../../models/transactions';
 import CategoryIcon from '../category-icon';
 import { TransactionType } from '../../values/enums/transactions';
 import { formatDate } from '../../helpers/date-formatter';
-import { formatNumberWithDecimal } from '../../helpers/common';
 
 const DataTable = ({
   disableSort,
@@ -93,7 +92,7 @@ const DataTable = ({
                   <Typography component="small" sx={{ color: 'primary.main' }}>
                     ${' '}
                   </Typography>
-                  {formatNumberWithDecimal(row.amount)}
+                  {row.amount.toFixed(2)}
                 </SmallTableCell>
                 <SmallTableCell>{formatDate(row.updatedDtm)}</SmallTableCell>
                 {!hideButtons && (
