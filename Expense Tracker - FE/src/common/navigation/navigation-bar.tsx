@@ -1,6 +1,6 @@
 import { AppBar, Box, Toolbar, Container } from '@mui/material';
 import { Logo } from '../logo';
-import { Toggler } from '../toggler';
+import { ThemeToggler } from '../toggler/theme-toggler';
 import { ProfileMenu } from '../menu/profile-menu';
 import { MENU_ITEMS, AUTH_MENU_ITEMS } from '../../values/constants/menu';
 import { NavTabs } from './nav-tabs';
@@ -26,7 +26,7 @@ function NavigationBar() {
             <NavTabs items={menuItems} />
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <Toggler />
+            <ThemeToggler />
           </Box>
           {!!user && (
             <Box sx={{ flexGrow: 0 }}>

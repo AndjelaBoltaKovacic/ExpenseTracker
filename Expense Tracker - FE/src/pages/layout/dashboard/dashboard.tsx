@@ -58,7 +58,7 @@ function Dashboard({ user }: { user: string }) {
   return (
     <>
       <Loader isLoading={incmLoading || expLoading}>
-        {exp?.length || incm?.length ? (
+        {expenses?.length || incomes?.length ? (
           <Container>
             <AmountDisplay />
             <Box mt={2} display='flex' justifyContent={{ xs: 'center', md: 'end' }}>
