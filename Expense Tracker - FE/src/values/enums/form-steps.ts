@@ -28,3 +28,10 @@ export enum Outcome {
   Success = 'success',
   Fail = 'fail',
 }
+
+export enum ManageGroupsSteps {
+  Manage = 'manage',
+  Confirm = 'confirm',
+  Success = 'success',
+  Fail = 'fail',
+}

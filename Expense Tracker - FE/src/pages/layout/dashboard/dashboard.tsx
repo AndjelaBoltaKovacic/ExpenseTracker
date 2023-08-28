@@ -14,12 +14,14 @@ import { TableDisplay } from '../../../common/table/table-display';
 import NoticeCard from '../../../common/notice-card';
 import AddTransaction from '../../../common/form/add-transaction/add-transaction';
 import { Transaction } from '../../../models/transactions';
+import ManageGroups from '../../../common/form/manage-groups/manage-groups';
 
 function Dashboard({ user }: { user: string }) {
   const { isPremium } = useUserContext();
   const [incomes, setIncomes] = useState<Transaction[]>([] as Transaction[]);
   const [expenses, setExpenses] = useState<Transaction[]>([] as Transaction[]);
-  const [openModal, setOpenModal] = useState(false);
+  const [openTransModal, setOpenTransModal] = useState(false);
+  const [openGroupModal, setOpenGroupModal] = useState(false);
 
   const {
     data: incm,
@@ -48,14 +50,22 @@ function Dashboard({ user }: { user: string }) {
     incm && setIncomes(incm);
   }, [incm]);
 
-  const handleOpen = () => {
-    setOpenModal(true);
+  const handleOpenTransModal = () => {
+    setOpenTransModal(true);
   };
 
-  const handleClose = () => {
+  const handleCloseTransModal = () => {
     fetchIncomes();
     fetchExpenses();
-    setOpenModal(false);
+    setOpenTransModal(false);
+  };
+
+  const handleOpenGroupModal = () => {
+    setOpenGroupModal(true);
+  };
+
+  const handleCloseGroupModal = () => {
+    setOpenGroupModal(false);
   };
 
   return (
@@ -64,9 +74,12 @@ function Dashboard({ user }: { user: string }) {
         {expenses?.length || incomes?.length ? (
           <Container>
             <AmountDisplay />
-            <Box mt={2} display="flex" justifyContent={{ xs: 'center', md: 'end' }}>
-              <Button variant="contained" color="secondary" onClick={handleOpen}>
+            <Box mt={2} display="flex" justifyContent={'center'} gap={2}>
+              <Button variant="contained" color="secondary" onClick={handleOpenTransModal}>
                 Add Transaction
+              </Button>
+              <Button variant="contained" color="secondary" onClick={handleOpenGroupModal}>
+                Manage Categories
               </Button>
             </Box>
             <Box my={2}>
@@ -82,12 +95,15 @@ function Dashboard({ user }: { user: string }) {
             title={`Welcome, ${user}!`}
             text="It seems like you don't have any transactions yet."
             buttonText="Get started"
-            onButtonClick={handleOpen}
+            onButtonClick={handleOpenTransModal}
           />
         )}
       </Loader>
-      <CustomModal isOpen={openModal} title="Add Transaction" handleClose={handleClose}>
-        <AddTransaction handleClose={handleClose} />
+      <CustomModal isOpen={openTransModal} title="Add Transaction" handleClose={handleCloseTransModal}>
+        <AddTransaction handleClose={handleCloseTransModal} />
+      </CustomModal>
+      <CustomModal isOpen={openGroupModal} title="Manage Categories" handleClose={handleCloseGroupModal}>
+        <ManageGroups handleClose={handleCloseGroupModal} />
       </CustomModal>
     </>
   );
