@@ -13,26 +13,27 @@ import { Box, Container, TextField } from '@mui/material';
 import TransactionToggler from '../../../common/toggler/transaction-toggler';
 
 import { FilterBox } from '../../../common/form/filter-box';
-import { DatePicker } from '@mui/lab';
+import { DateRange } from '@mui/lab';
+import { Dayjs } from 'dayjs';
 
 function Transactions() {
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [isExpense, setIsExpense] = useState<boolean>(true);
+  const [fetchTrigger, setFetchTrigger] = useState(false);
   const [sort, setSort] = useState<string>('updatedDtm');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const [page, setPage] = useState<number>(0);
   const [amountFrom, setAmountFrom] = useState<number>(0);
-  const [amountTo, setAmountTo] = useState<number>(0);
-  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
-
+  const [amountTo, setAmountTo] = useState<number>(10000);
+  const [dateRange, setDateRange] = useState<DateRange<Dayjs>>([null, null]);
   const [transationToModify, setTransactionToModify] = useState<Expense | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([] as Transaction[]);
   const { data, loading, error, fetchData } = useFetch<Transaction[]>(
     isExpense ? TransactionService.getExpenses : TransactionService.getIncomes,
-    `?amountFrom=${amountFrom || ''}&amountTo=${amountTo || ''}&dateFrom=${dateRange[0] || ''}&dateTo=${
-      dateRange[1] || ''
-    }&page=${0}&size=10&sort=${sort}`
+    `?amountFrom=${amountFrom}&amountTo=${amountTo}&dateFrom=${
+      dateRange[0] ? dateRange[0].format('YYYY-MM-DD') : ''
+    }&dateTo=${dateRange[1] ? dateRange[1].format('YYYY-MM-DD') : ''}&page=${0}&size=10&sort=${sort}`
   );
 
   const handleEditOpen = (transaction: Expense) => {
@@ -55,7 +56,7 @@ function Transactions() {
 
   useEffect(() => {
     fetchData();
-  }, [isExpense]);
+  }, [isExpense, fetchTrigger]);
 
   useEffect(() => {
     data && setTransactions(data);
@@ -75,15 +76,15 @@ function Transactions() {
               <TransactionToggler value={isExpense} onChange={() => setIsExpense((prev) => !prev)} />
             </Box>
             <Box flexGrow={1} mb='3vw'>
-              <FilterBox amountTo={amountTo} amountFrom={amountFrom} handleAmountChange={handleAmountChange} />
+              <FilterBox
+                amountTo={amountTo}
+                amountFrom={amountFrom}
+                dateRange={dateRange}
+                setDateRange={setDateRange}
+                handleAmountChange={handleAmountChange}
+                handleSubmit={() => setFetchTrigger((prevVal) => !prevVal)}
+              />
             </Box>
-
-            <DatePicker
-              label='Select Date'
-              value={dateRange[0]}
-              onChange={(newDate: any) => setDateRange(newDate)}
-              renderInput={(params: any) => <TextField {...params} />}
-            />
             <DataTable
               type={TransactionType.Expense}
               data={transactions}

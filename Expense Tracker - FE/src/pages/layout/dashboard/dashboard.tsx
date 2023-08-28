@@ -14,6 +14,7 @@ import { TableDisplay } from '../../../common/table/table-display';
 import NoticeCard from '../../../common/notice-card';
 import AddTransaction from '../../../common/form/add-transaction/add-transaction';
 import { Transaction } from '../../../models/transactions';
+import { DatePicker } from '@mui/lab';
 
 function Dashboard({ user }: { user: string }) {
   const { isPremium } = useUserContext();
@@ -66,7 +67,6 @@ function Dashboard({ user }: { user: string }) {
                 Add Transaction
               </Button>
             </Box>
-
             <Box my={2}>
               <TableDisplay data={incomes} error={incmError} type={TransactionType.Income} />
             </Box>

@@ -1,15 +1,26 @@
-import { StaticDateRangePicker } from '@mui/lab';
-import { pickersLayoutClasses } from '@mui/x-date-pickers/PickersLayout';
-
-export default function SingleInputDateRangePicker() {
+import * as React from 'react';
+import { Dayjs } from 'dayjs';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import { LocalizationProvider } from '@mui/x-date-pickers-pro';
+import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
+import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
+export default function BasicDateRangePicker({ dateRange, setDateRange }: any) {
   return (
-    <StaticDateRangePicker
-      defaultValue={[new Date('2022-04-17'), new Date('2022-04-21')]}
-      sx={{
-        [`.${pickersLayoutClasses.contentWrapper}`]: {
-          alignItems: 'center',
-        },
-      }}
-    />
+    <LocalizationProvider dateAdapter={AdapterDayjs} localeText={{ start: 'Start Date', end: 'End Date' }}>
+      <DateRangePicker
+        value={dateRange}
+        onChange={(newValue) => {
+          setDateRange(newValue);
+        }}
+        renderInput={(startProps, endProps) => (
+          <React.Fragment>
+            <TextField {...startProps} />
+            <Box sx={{ mx: 2 }}> to </Box>
+            <TextField {...endProps} />
+          </React.Fragment>
+        )}
+      />
+    </LocalizationProvider>
   );
 }

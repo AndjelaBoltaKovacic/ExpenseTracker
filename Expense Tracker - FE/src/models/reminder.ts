@@ -5,7 +5,7 @@ export type ReminderRequest = {
   type: ReminderType;
 };
 
-export type Reminder = {
+export type ReminderDTO = {
   reminderDay: number;
   reminderType: ReminderType;
   username: string;

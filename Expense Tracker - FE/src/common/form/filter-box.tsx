@@ -1,6 +1,7 @@
-import { Box, Slider } from '@mui/material';
+import { Box, Button, Slider } from '@mui/material';
+import BasicDateRangePicker from './datepciker';
 
-export function FilterBox({ amountFrom, amountTo, handleAmountChange }: any) {
+export function FilterBox({ amountFrom, amountTo, handleAmountChange, dateRange, setDateRange, handleSubmit }: any) {
   return (
     <>
       <fieldset
@@ -20,17 +21,23 @@ export function FilterBox({ amountFrom, amountTo, handleAmountChange }: any) {
         >
           Filters
         </legend>
-        <Box display='flex' alignItems='center' width='50%' gap={3}>
-          <span>0</span>
-          <Slider
-            value={[amountFrom, amountTo]}
-            onChange={handleAmountChange}
-            min={0}
-            max={10000}
-            valueLabelDisplay='auto'
-            aria-labelledby='range-slider'
-          />
-          <span>10000</span>
+        <Box display='flex' justifyContent='space-around' width='100%'>
+          <Box display='flex' alignItems='center' width='50%' gap={3}>
+            <span>0</span>
+            <Slider
+              value={[amountFrom, amountTo]}
+              onChange={handleAmountChange}
+              min={0}
+              max={1000}
+              valueLabelDisplay='auto'
+              aria-labelledby='range-slider'
+            />
+            <span>1000</span>
+          </Box>
+          <BasicDateRangePicker dateRange={dateRange} setDateRange={setDateRange} />
+          <Button variant='contained' color='primary' onClick={() => handleSubmit()}>
+            Find
+          </Button>
         </Box>
       </fieldset>
     </>

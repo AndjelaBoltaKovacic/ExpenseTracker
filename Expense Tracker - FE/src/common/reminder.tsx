@@ -3,11 +3,11 @@ import ReminderService from '../services/reminder.service';
 import useFetch from '../hooks/useFetch';
 import Loader from './loader';
 import NoticeCard from './notice-card';
-import { ReminderType } from '../values/enums/reminder';
+import { ReminderDTO } from '../models/reminder';
 
 function Reminder() {
-  const [reminder, setReminder] = useState<ReminderType>();
-  const { data, error, loading, fetchData } = useFetch<ReminderType>(ReminderService.getReminder);
+  const [reminder, setReminder] = useState<ReminderDTO>();
+  const { data, error, loading, fetchData } = useFetch<ReminderDTO>(ReminderService.getReminder);
 
   useEffect(() => {
     fetchData();
@@ -16,13 +16,17 @@ function Reminder() {
   useEffect(() => {
     if (data) {
       setReminder(data);
-      console.log(data);
     }
   }, [data]);
 
   return !error ? (
     <Loader isLoading={loading}>
-      <NoticeCard title="Weekly reminder" text="some text" />
+      <NoticeCard
+        title={`You have a ${
+          reminder?.reminderType &&
+          reminder.reminderType.charAt(0).toUpperCase() + reminder.reminderType.slice(1).toLowerCase()
+        } reminder.`}
+      />
     </Loader>
   ) : null;
 }

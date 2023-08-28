@@ -1,15 +1,15 @@
 import { baseUrl } from './urls';
 import { axiosApiCall } from './axios-api';
 import { HttpMethod } from '../values/enums/service';
-import { Reminder, ReminderRequest } from '../models/reminder';
+import { ReminderDTO, ReminderRequest } from '../models/reminder';
 
 const reminderApiUrl = `${baseUrl}/reminder`;
 const ReminderService = {
-  setReminder({ body }: { body: ReminderRequest }): Promise<Reminder> {
+  setReminder({ body }: { body: ReminderRequest }): Promise<ReminderDTO> {
     return axiosApiCall<any>(HttpMethod.POST, reminderApiUrl, body);
   },
-  getReminder(): Promise<Reminder> {
-    return axiosApiCall<Reminder>(HttpMethod.GET, reminderApiUrl);
+  getReminder(): Promise<ReminderDTO> {
+    return axiosApiCall<ReminderDTO>(HttpMethod.GET, reminderApiUrl);
   },
 };
 
