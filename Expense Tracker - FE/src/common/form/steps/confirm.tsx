@@ -1,7 +1,7 @@
 import { Box, Paper, Typography } from '@mui/material';
 import { _void } from '../../../models/common';
 import ModalButtons from '../../modal/modal-buttons';
-import { Expense } from '../../../models/expenses';
+import { Expense } from '../../../models/transactions';
 
 function Confirm({
   text,

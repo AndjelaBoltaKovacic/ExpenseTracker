@@ -1,4 +1,4 @@
-import { Expense } from './expenses';
+import { Transaction } from './transactions';
 
 export type MenuItem = {
   title: string;
@@ -8,4 +8,4 @@ export type MenuItem = {
 
 export type _void = (arg?: any) => void;
 
-export type DataEntry = Array<Expense>[number];
+export type DataEntry = Array<Transaction>[number];

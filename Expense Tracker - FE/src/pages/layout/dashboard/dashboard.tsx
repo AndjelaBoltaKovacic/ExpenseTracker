@@ -5,13 +5,11 @@ import Box from '@mui/material/Box';
 import { Button } from '@mui/material';
 import { useUserContext } from '../../../contexts/userContext';
 import CustomModal from '../../../common/modal/custom-modal';
-import AddTransactionForm from '../../../common/form/add-transaction/add-transaction-form';
 import Loader from '../../../common/loader';
 import useFetch from '../../../hooks/useFetch';
 import TransactionService from '../../../services/transaction.service';
 import Reminder from '../../../common/reminder';
 import { TransactionType } from '../../../values/enums/transactions';
-import { _void } from '../../../models/common';
 import { TableDisplay } from '../../../common/table/table-display';
 import NoticeCard from '../../../common/notice-card';
 import ReminderService from '../../../services/reminder.service';
@@ -34,19 +32,11 @@ function Dashboard({ user }: { user: string }) {
     fetchData: fetchExpenses,
   } = useFetch<any>(TransactionService.getExpenses, '?page=0&size=5&sort=createdDtm');
 
-  const {
-    data: reminder,
-    error: reminderError,
-    loading: reminderLoading,
-    fetchData: fetchReminder,
-  } = useFetch<any>(ReminderService.getReminder);
-
   const hasData = incomes?.length && expenses?.length && !incomesError && !expensesError;
 
   useEffect(() => {
     fetchIncomes();
     fetchExpenses();
-    fetchReminder();
   }, []);
 
   const handleOpen = () => {
@@ -57,18 +47,14 @@ function Dashboard({ user }: { user: string }) {
     setOpenModal(false);
   };
 
-  useEffect(() => {
-    // reminder && console.log(reminder);
-  }, [reminder]);
-
   return (
     <>
       <Loader isLoading={incomesLoading || expensesLoading}>
         {hasData ? (
           <Container>
             <AmountDisplay />
-            <Box mt={2} display="flex" justifyContent={{ xs: 'center', md: 'end' }}>
-              <Button variant="contained" color="secondary" onClick={handleOpen}>
+            <Box mt={2} display='flex' justifyContent={{ xs: 'center', md: 'end' }}>
+              <Button variant='contained' color='secondary' onClick={handleOpen}>
                 Add Transaction
               </Button>
             </Box>
@@ -85,12 +71,12 @@ function Dashboard({ user }: { user: string }) {
           <NoticeCard
             title={`Welcome, ${user}!`}
             text="It seems like you don't have any transactions yet."
-            buttonText="Get started"
+            buttonText='Get started'
             onButtonClick={handleOpen}
           />
         )}
       </Loader>
-      <CustomModal isOpen={openModal} title="Add Transaction" handleClose={handleClose}>
+      <CustomModal isOpen={openModal} title='Add Transaction' handleClose={handleClose}>
         <AddTransaction handleClose={handleClose} />
       </CustomModal>
     </>

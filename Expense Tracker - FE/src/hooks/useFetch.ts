@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { User } from '../models/user';
-import { TransactionBody } from '../models/transactions.dto';
+import { Expense, Income } from '../models/transactions';
+
 
 type FetchState<T> = {
   data: T | null;
   loading: boolean;
   error: any;
-  fetchData: (body?: User | TransactionBody) => void;
+  fetchData: (body?: User | Expense | Income) => void;
 };
 
 const useFetch = <T>(dependencyService: any, path?: string): FetchState<T> => {

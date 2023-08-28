@@ -2,7 +2,7 @@ import { useState } from 'react';
 import CustomModal from '../../../common/modal/custom-modal';
 import DataTable from '../../../common/table/table';
 import { expenses } from '../../../services/mocks/expenses';
-import { Expense } from '../../../models/expenses';
+import { Expense } from '../../../models/transactions';
 import EditTransaction from '../../../common/form/edit/edit-transaction';
 import DeleteTransaction from '../../../common/form/steps/delete';
 

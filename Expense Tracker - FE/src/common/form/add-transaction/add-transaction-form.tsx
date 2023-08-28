@@ -9,23 +9,24 @@ import { _void } from '../../../models/common';
 import CurrencyInput from './currency-input';
 import { FormHelperText } from '@mui/material';
 import ModalButtons from '../../modal/modal-buttons';
-import { Expense } from '../../../models/expenses';
 import TransactionService from '../../../services/transaction.service';
 import useFetch from '../../../hooks/useFetch';
 import Loader from '../../loader';
 import Notice from '../steps/notice';
 import { Outcome } from '../../../values/enums/form-steps';
-import { TRANSACTION_GROUPS } from '../../../values/constants/menu';
+import { Expense, Income, TransactionGroup } from '../../../models/transactions';
+import { TransactionType } from '../../../values/enums/transactions';
 
 function AddTransactionForm({
   transactionToEdit,
   handleClose,
   handleConfirm,
 }: {
-  transactionToEdit?: Expense;
+  transactionToEdit?: Expense | Income;
   handleClose: _void;
   handleConfirm: _void;
 }) {
+  //FORM VALUES
   const {
     handleSubmit,
     register,
@@ -33,40 +34,44 @@ function AddTransactionForm({
     watch,
     formState: { errors },
   } = useForm();
+
+  const transactionType = watch('type');
+  const categoryType = watch('category');
+  const formName = watch('name');
+  const transactionAmount = watch('amount');
+  const [notChanged, setNotChanged] = useState(true);
+
+  //API VALUES
   const {
     data: transGroups,
     error: tgError,
     loading: tgLoading,
     fetchData: fetchTransGroups,
-  } = useFetch<any[]>(TransactionService.getIncomeGroups, '?page=0&size=10&sort=name');
-  const [notChanged, setNotChanged] = useState(true);
-  const [transactionGroups, setTransactionGroups] = useState(TRANSACTION_GROUPS);
-  const transactionTypes = ['Income', 'Expense'];
-  const { type, category, description, amount } = transactionToEdit ? (transactionToEdit as Expense) : ({} as Expense);
+  } = useFetch<TransactionGroup[]>(
+    transactionType === TransactionType.Income
+      ? TransactionService.getIncomeGroups
+      : TransactionService.getExpenseGroups
+  );
 
-  const transactionType = watch('type');
-  const categoryType = watch('category');
-  const descriptionType = watch('description');
-  const transactionAmount = watch('amount');
+  const [transactionGroups, setTransactionGroups] = useState<TransactionGroup[]>([] as TransactionGroup[]);
+  const transactionTypes = ['Income', 'Expense'];
+  const { type, category, name, amount } = transactionToEdit ? transactionToEdit : ({} as any);
 
   useEffect(() => {
-    fetchTransGroups();
-  }, []);
+    transactionType && fetchTransGroups();
+  }, [transactionType]);
 
   useEffect(() => {
     if (transGroups?.length) {
-      setTransactionGroups((prevVal) => [...prevVal, ...transGroups]);
+      setTransactionGroups(transGroups);
     }
   }, [transGroups]);
 
   useEffect(() => {
     setNotChanged(
-      type === transactionType &&
-        categoryType === category &&
-        descriptionType === description &&
-        amount === transactionAmount
+      type === transactionType && categoryType === category && formName === name && amount === transactionAmount
     );
-  }, [transactionAmount, categoryType, transactionType, descriptionType]);
+  }, [transactionAmount, categoryType, transactionType, formName]);
 
   const onSubmit = (data: any) => {
     handleConfirm(data);
@@ -75,22 +80,22 @@ function AddTransactionForm({
   return tgError ? (
     <Notice
       outcome={Outcome.Fail}
-      text="Oops! Something went wrong. Please try again later"
+      text='Oops! Something went wrong. Please try again later'
       handleClose={handleClose}
     />
   ) : (
     <Loader isLoading={tgLoading}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl fullWidth variant="outlined" error={!!errors.type} margin="normal">
+        <FormControl fullWidth variant='outlined' error={!!errors.type} margin='normal'>
           <InputLabel>Transaction Type</InputLabel>
           <Controller
-            name="type"
+            name='type'
             control={control}
             defaultValue={type || undefined}
             rules={{ required: 'This field is required' }}
             render={({ field }) => (
               <>
-                <Select {...field} label="Transaction Type">
+                <Select {...field} label='Transaction Type'>
                   {transactionTypes.map((type, index) => (
                     <MenuItem key={index} value={type}>
                       {type}
@@ -102,16 +107,16 @@ function AddTransactionForm({
             )}
           />
         </FormControl>
-        <FormControl fullWidth variant="outlined" error={!!errors.category} margin="normal">
+        <FormControl fullWidth variant='outlined' error={!!errors.category} margin='normal'>
           <InputLabel>Transaction Category</InputLabel>
           <Controller
-            name="category"
+            name='category'
             control={control}
             defaultValue={category || undefined}
             rules={{ required: 'This field is required' }}
             render={({ field }) => (
               <>
-                <Select {...field} label="Transaction Category">
+                <Select {...field} label='Transaction Category'>
                   {transactionGroups?.map(({ name }, index) => (
                     <MenuItem key={index} value={name}>
                       {name}
@@ -126,29 +131,29 @@ function AddTransactionForm({
         </FormControl>
 
         <TextField
-          label="Transaction Description"
+          label='Transaction Description'
           fullWidth
-          defaultValue={description || undefined}
-          variant="outlined"
-          margin="normal"
-          {...register('description', {
+          defaultValue={formName || undefined}
+          variant='outlined'
+          margin='normal'
+          {...register('formName', {
             required: 'This field is required',
             minLength: { value: 5, message: 'Description must have at least 5 characters' },
           })}
-          error={!!errors.description}
-          helperText={errors?.description?.message as ReactNode}
+          error={!!errors.formName}
+          helperText={errors?.formName?.message as ReactNode}
         />
-        <FormControl fullWidth variant="outlined" error={!!errors.amount} margin="normal">
+        <FormControl fullWidth variant='outlined' error={!!errors.amount} margin='normal'>
           <Controller
             defaultValue={amount || undefined}
-            name="amount"
+            name='amount'
             control={control}
             rules={{
               required: 'This field is required',
             }}
             render={({ field }) => (
               <>
-                <CurrencyInput {...field} label="Amount" name="amount" fullWidth />
+                <CurrencyInput {...field} label='Amount' name='amount' fullWidth />
                 {errors?.amount && <FormHelperText>{errors?.amount?.message as string}</FormHelperText>}
               </>
             )}

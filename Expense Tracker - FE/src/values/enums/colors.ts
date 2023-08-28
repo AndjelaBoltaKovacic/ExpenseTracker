@@ -1,11 +1,11 @@
 enum DarkTheme {
-  Primary = '#FF6B6B',
+  Primary = '#CF6679',
   PrimaryVariant = '#D64545',
   Secondary = '#66A182',
   SecondaryVariant = '#4B805E',
   Background = '#2C3E50',
   Surface = '#34495E',
-  Error = '#E74C3C',
+  Error = '#FF6B6B',
   OnPrimary = '#FFFFFF',
   OnSecondary = '#34495E',
   OnBackground = '#FFFFFF',
@@ -14,13 +14,13 @@ enum DarkTheme {
 }
 
 enum LightTheme {
-  Primary = '#3498DB',
-  PrimaryVariant = '#2980B9',
-  Secondary = '#F39C12',
-  SecondaryVariant = '#E67E22',
+  Primary = '#66A182',
+  PrimaryVariant = '#66A182',
+  Secondary = '#CF6679',
+  SecondaryVariant = '#66A182',
   Background = '#ECF0F1',
   Surface = '#FFFFFF',
-  Error = '#FF0000',
+  Error = '#FF6B6B',
   OnPrimary = '#FFFFFF',
   OnSecondary = '#FFFFFF',
   OnBackground = '#000000',

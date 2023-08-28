@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AddTransactionSteps, Outcome } from '../../../values/enums/form-steps';
 import AddTransactionForm from '../add-transaction/add-transaction-form';
-import { Expense } from '../../../models/expenses';
+import { Expense } from '../../../models/transactions';
 import { _void } from '../../../models/common';
 import Confirm from '../steps/confirm';
 import Notice from '../steps/notice';
@@ -17,12 +17,6 @@ function AddTransaction({ handleClose }: { handleClose: _void }) {
     transactionData.type === TransactionType.Income ? TransactionService.addIncome : TransactionService.addExpense
   );
 
-  const body = {
-    name: transactionData.description,
-    incomeGroupId: transactionData.category,
-    amount: transactionData.amount,
-  };
-
   const handleFormConfirm = (data: any) => {
     setTransactionData(data);
     setStep(AddTransactionSteps.Confirm);
@@ -32,7 +26,7 @@ function AddTransaction({ handleClose }: { handleClose: _void }) {
   };
 
   const handleSubmit = () => {
-    fetchData(body);
+    // fetchData();
   };
 
   useEffect(() => {
@@ -41,13 +35,13 @@ function AddTransaction({ handleClose }: { handleClose: _void }) {
   }, [data, error]);
 
   return (
-    <Loader isLoading={loading} size="8vw">
+    <Loader isLoading={loading} size='8vw'>
       {
         {
           [AddTransactionSteps.Add]: <AddTransactionForm handleClose={handleClose} handleConfirm={handleFormConfirm} />,
           [AddTransactionSteps.Confirm]: (
             <Confirm
-              text="Are you sure you want to edit this transaction?"
+              text='Are you sure you want to edit this transaction?'
               handleBack={handleBack}
               handleConfirm={handleSubmit}
               data={transactionData}
@@ -56,14 +50,14 @@ function AddTransaction({ handleClose }: { handleClose: _void }) {
           [AddTransactionSteps.Success]: (
             <Notice
               outcome={Outcome.Success}
-              text="You have successfully edited the transaction"
+              text='You have successfully edited the transaction'
               handleClose={handleClose}
             />
           ),
           [AddTransactionSteps.Fail]: (
             <Notice
               outcome={Outcome.Fail}
-              text="Oops! Something went wrong. Please try again later"
+              text='Oops! Something went wrong. Please try again later'
               handleClose={handleClose}
             />
           ),
