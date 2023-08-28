@@ -9,16 +9,14 @@ import { UserProvider } from './contexts/userContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <React.StrictMode>
-    <StyledEngineProvider injectFirst>
-      <MyThemeProvider>
-        <UserProvider>
+  <StyledEngineProvider injectFirst>
+    <MyThemeProvider>
+      <UserProvider>
         <BrowserRouter>
           <App />
-          </BrowserRouter>
-        </UserProvider>
-      </MyThemeProvider>
-    </StyledEngineProvider>
-  </React.StrictMode>
+        </BrowserRouter>
+      </UserProvider>
+    </MyThemeProvider>
+  </StyledEngineProvider>
 );
 

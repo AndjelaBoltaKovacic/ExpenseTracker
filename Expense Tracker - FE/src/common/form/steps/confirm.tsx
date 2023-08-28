@@ -18,31 +18,31 @@ function Confirm({
   // console.log(data);
   return (
     <>
-      <Typography fontSize={20} textAlign="center" padding={2}>
+      <Typography fontSize={20} textAlign='center' padding={2}>
         {text}
       </Typography>
       <Paper elevation={3} sx={{ padding: '16px', maxWidth: '300px', margin: 'auto' }}>
         <Box>
-          <Typography variant="subtitle1" sx={{ marginBottom: '8px' }}>
+          <Typography variant='subtitle1' sx={{ marginBottom: '8px' }}>
             <b>Type: </b>
             {type}
           </Typography>
         </Box>
         <Box mt={2}>
-          <Typography variant="subtitle1" sx={{ marginBottom: '8px' }}>
+          <Typography variant='subtitle1' sx={{ marginBottom: '8px' }}>
             <b>Category: </b>
             {category}
           </Typography>
         </Box>
         <Box mt={2}>
-          <Typography variant="subtitle1" sx={{ marginBottom: '8px' }}>
+          <Typography variant='subtitle1' sx={{ marginBottom: '8px' }}>
             <b>Description: </b>
             {description}
           </Typography>
         </Box>
         <Box mt={2}>
-          <Typography variant="subtitle1" sx={{ marginBottom: '8px' }}>
-            <b>Amount: </b> {amount}
+          <Typography variant='subtitle1' sx={{ marginBottom: '8px' }}>
+            <b>Amount: </b> ${amount}
           </Typography>
         </Box>
       </Paper>

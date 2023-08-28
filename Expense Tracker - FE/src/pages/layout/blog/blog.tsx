@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import useFetch from '../../../hooks/useFetch';
 import BlogService from '../../../services/blog.service';
 import Loader from '../../../common/loader';
@@ -13,8 +13,16 @@ function Blog() {
   const [page, setPage] = useState<number>(0);
   const [blogs, setBlogs] = useState<Article[]>([] as Article[]);
   const { data, error, loading, fetchData } = useFetch<BlogDTO>(BlogService.getBlogs, `?page=${page}&size=10`);
-
-  const sentinelRef = useInfiniteScroll(() => setPage((prev) => prev + 10));
+  const intersectionObserver = useRef<React.MutableRefObject<HTMLDivElement>>();
+  const { infiniteScrollTrigger } = useInfiniteScroll(
+    intersectionObserver,
+    loading,
+    useCallback(() => {
+      if (data && data.data.length <= data?.meta?.total) {
+        setPage((prev) => prev + 10);
+      }
+    }, [])
+  );
   useEffect(() => {
     fetchData();
   }, [page]);
@@ -23,17 +31,25 @@ function Blog() {
     data && setBlogs((prevData) => [...prevData, ...data.data]);
   }, [data]);
 
+  const handleRefetch = () => {
+    fetchData();
+  };
   return (
     <Box mt={5}>
       <Loader isLoading={loading}>
         {error ? (
-          <NoticeCard title="Opps! Something went wrong!" text="Sorry for the inconvenience. Please try again later." />
+          <NoticeCard
+            title='Opps! Something went wrong!'
+            text='Sorry for the inconvenience. Please try again later.'
+            buttonText='Get articles'
+            onButtonClick={handleRefetch}
+          />
         ) : (
           <>
             {[...MOCK_ARTICLES, ...blogs].map((blog, i) => (
               <BlogCard blog={blog} key={i} />
             ))}
-            <div ref={sentinelRef} />
+            <div ref={infiniteScrollTrigger}>bla</div>
           </>
         )}
       </Loader>

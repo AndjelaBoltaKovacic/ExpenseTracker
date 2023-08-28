@@ -1,37 +1,26 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useCallback } from "react";
 
-const useInfiniteScroll = (loadMoreCallback: any) => {
-  const sentinelRef = useRef(null);
+const useInfiniteScroll = (
+  intersectionObserver: React.MutableRefObject<any>,
+  isPending: boolean,
+  callback: { (): void; (): void },
+) => {
+  const infiniteScrollTrigger = useCallback(
+    (node: any) => {
+      if (isPending) return;
+      if (intersectionObserver.current) { intersectionObserver.current.disconnect(); }
+      intersectionObserver.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          if (window.scrollY) {
+            callback();
+          }
+        }
+      });
 
-  const handleIntersection = useCallback(
-    (entries: any) => {
-      const [entry] = entries;
-      if (entry.isIntersecting) {
-        loadMoreCallback();
-      }
+      if (node) intersectionObserver.current.observe(node);
     },
-    [loadMoreCallback]
+    [isPending, intersectionObserver, callback],
   );
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(handleIntersection, {
-      root: null,
-      rootMargin: '0px',
-      threshold: 1.0,
-    });
-
-    if (sentinelRef.current) {
-      observer.observe(sentinelRef.current);
-    }
-
-    return () => {
-      if (sentinelRef.current) {
-        observer.unobserve(sentinelRef.current);
-      }
-    };
-  }, [handleIntersection]);
-
-  return sentinelRef;
+  return { infiniteScrollTrigger };
 };
-
 export default useInfiniteScroll;
