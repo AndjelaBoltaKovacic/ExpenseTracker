@@ -72,10 +72,7 @@ function Transactions() {
       <Loader isLoading={loading}>
         {!error ? (
           <>
-            <Box marginBottom='3vw' display='flex' gap={3} alignItems='center'>
-              <TransactionToggler value={isExpense} onChange={() => setIsExpense((prev) => !prev)} />
-            </Box>
-            <Box flexGrow={1} mb='3vw'>
+            <Box flexGrow={1} mb="3vw">
               <FilterBox
                 amountTo={amountTo}
                 amountFrom={amountFrom}
@@ -85,6 +82,11 @@ function Transactions() {
                 handleSubmit={() => setFetchTrigger((prevVal) => !prevVal)}
               />
             </Box>
+
+            <Box mt="3vw" mb="1vw">
+              <TransactionToggler value={isExpense} onChange={() => setIsExpense((prev) => !prev)} />
+            </Box>
+
             <DataTable
               type={TransactionType.Expense}
               data={transactions}
@@ -100,9 +102,9 @@ function Transactions() {
           </>
         ) : (
           <NoticeCard
-            title='Opps! Something went wrong!'
-            text='Sorry for the inconvenience. Please try again later.'
-            buttonText='Retry'
+            title="Opps! Something went wrong!"
+            text="Sorry for the inconvenience. Please try again later."
+            buttonText="Retry"
             onButtonClick={() => fetchData()}
           />
         )}

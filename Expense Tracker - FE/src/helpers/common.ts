@@ -15,3 +15,11 @@ export const getLocationValue = (pathname: string) => {
       return 0;
   }
 };
+
+export const formatNumberWithDecimal = (value: number) => {
+  if (Number.isInteger(value)) {
+    return value.toFixed(2);
+  } else {
+    return value.toString();
+  }
+};

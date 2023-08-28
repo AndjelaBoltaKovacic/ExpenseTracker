@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import { decodeToken } from '../helpers/auth';
 import { User, UserContextType, UserTokens } from '../models/user';
 import { UserRole } from '../values/enums/user';
@@ -17,16 +17,16 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const isPremium = user?.role === UserRole.Premium;
 
-  const login = ({ access_token }: UserTokens) => {
+  const login = useCallback(({ access_token }: UserTokens) => {
+    localStorage.setItem('token', access_token);
     const decodedToken = decodeToken(access_token);
     setUser(decodedToken);
-    localStorage.setItem('token', access_token);
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setUser(null);
     localStorage.removeItem('token');
-  };
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem('token');

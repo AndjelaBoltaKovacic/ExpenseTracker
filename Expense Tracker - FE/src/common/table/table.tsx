@@ -8,6 +8,7 @@ import { Transaction } from '../../models/transactions';
 import CategoryIcon from '../category-icon';
 import { TransactionType } from '../../values/enums/transactions';
 import { formatDate } from '../../helpers/date-formatter';
+import { formatNumberWithDecimal } from '../../helpers/common';
 
 const DataTable = ({
   disableSort,
@@ -45,11 +46,11 @@ const DataTable = ({
   return (
     <>
       <TableContainer component={Paper} sx={{ borderRadius: '7px' }}>
-        <Table aria-label='Sortable table'>
+        <Table aria-label="Sortable table">
           <TableHead>
             <TableRow>
               <SmallTableCell>
-                <Typography component='span' sx={{ color: 'primary.main' }}>
+                <Typography component="span" sx={{ color: 'primary.main' }}>
                   No.
                 </Typography>
               </SmallTableCell>
@@ -77,30 +78,30 @@ const DataTable = ({
             {sortedData.map((row, i) => (
               <TableRow key={row.id}>
                 <SmallTableCell>
-                  <Typography component='span' sx={{ color: 'primary.main' }}>
+                  <Typography component="span" sx={{ color: 'primary.main' }}>
                     {i + 1}
                   </Typography>
                 </SmallTableCell>
                 <SmallTableCell>{row.name}</SmallTableCell>
                 <SmallTableCell>
-                  <Box display='flex' alignItems='center' gap={1}>
+                  <Box display="flex" alignItems="center" gap={1}>
                     <CategoryIcon name={row.groupName} />
                     {row.groupName}
                   </Box>
                 </SmallTableCell>
                 <SmallTableCell>
-                  <Typography component='span' sx={{ color: 'primary.main' }}>
-                    $
-                  </Typography>{' '}
-                  {row.amount}
+                  <Typography component="small" sx={{ color: 'primary.main' }}>
+                    ${' '}
+                  </Typography>
+                  {formatNumberWithDecimal(row.amount)}
                 </SmallTableCell>
                 <SmallTableCell>{formatDate(row.updatedDtm)}</SmallTableCell>
                 {!hideButtons && (
                   <>
                     <SmallTableCell>
                       <Button
-                        variant='outlined'
-                        color='primary'
+                        variant="outlined"
+                        color="primary"
                         onClick={onEditClick && (() => onEditClick({ ...row, type }))}
                       >
                         Edit
@@ -108,8 +109,8 @@ const DataTable = ({
                     </SmallTableCell>
                     <SmallTableCell>
                       <Button
-                        variant='outlined'
-                        color='secondary'
+                        variant="outlined"
+                        color="secondary"
                         onClick={onDeleteClick && (() => onDeleteClick({ ...row, type }))}
                       >
                         Delete

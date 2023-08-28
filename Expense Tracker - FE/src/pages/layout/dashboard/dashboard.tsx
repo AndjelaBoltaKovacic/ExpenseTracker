@@ -14,13 +14,13 @@ import { TableDisplay } from '../../../common/table/table-display';
 import NoticeCard from '../../../common/notice-card';
 import AddTransaction from '../../../common/form/add-transaction/add-transaction';
 import { Transaction } from '../../../models/transactions';
-import { DatePicker } from '@mui/lab';
 
 function Dashboard({ user }: { user: string }) {
   const { isPremium } = useUserContext();
   const [incomes, setIncomes] = useState<Transaction[]>([] as Transaction[]);
   const [expenses, setExpenses] = useState<Transaction[]>([] as Transaction[]);
   const [openModal, setOpenModal] = useState(false);
+
   const {
     data: incm,
     error: incmError,
@@ -53,6 +53,8 @@ function Dashboard({ user }: { user: string }) {
   };
 
   const handleClose = () => {
+    fetchIncomes();
+    fetchExpenses();
     setOpenModal(false);
   };
 
@@ -62,8 +64,8 @@ function Dashboard({ user }: { user: string }) {
         {expenses?.length || incomes?.length ? (
           <Container>
             <AmountDisplay />
-            <Box mt={2} display='flex' justifyContent={{ xs: 'center', md: 'end' }}>
-              <Button variant='contained' color='secondary' onClick={handleOpen}>
+            <Box mt={2} display="flex" justifyContent={{ xs: 'center', md: 'end' }}>
+              <Button variant="contained" color="secondary" onClick={handleOpen}>
                 Add Transaction
               </Button>
             </Box>
@@ -79,12 +81,12 @@ function Dashboard({ user }: { user: string }) {
           <NoticeCard
             title={`Welcome, ${user}!`}
             text="It seems like you don't have any transactions yet."
-            buttonText='Get started'
+            buttonText="Get started"
             onButtonClick={handleOpen}
           />
         )}
       </Loader>
-      <CustomModal isOpen={openModal} title='Add Transaction' handleClose={handleClose}>
+      <CustomModal isOpen={openModal} title="Add Transaction" handleClose={handleClose}>
         <AddTransaction handleClose={handleClose} />
       </CustomModal>
     </>

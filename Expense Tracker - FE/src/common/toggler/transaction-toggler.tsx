@@ -4,15 +4,15 @@ import { _void } from '../../models/common';
 
 function TransactionToggler({ value, onChange }: { value: boolean; onChange: _void }) {
   return (
-    <ToggleButtonGroup value={value} exclusive onChange={() => onChange()} aria-label='transaction-type'>
+    <ToggleButtonGroup value={value} exclusive onChange={() => onChange()} aria-label="transaction-type">
       <ToggleButton
         value={false}
-        aria-label='income'
+        aria-label="income"
         sx={{
           height: '40px',
-          backgroundColor: 'secondary.main',
+          backgroundColor: 'rgba(102, 161, 130, 0.6)',
           '&:hover': {
-            backgroundColor: 'secondary.main',
+            backgroundColor: 'rgba(102, 161, 130, 0.3)',
           },
         }}
       >
@@ -20,12 +20,12 @@ function TransactionToggler({ value, onChange }: { value: boolean; onChange: _vo
       </ToggleButton>
       <ToggleButton
         value={true}
-        aria-label='expense'
+        aria-label="expense"
         sx={{
           height: '40px',
-          backgroundColor: 'secondary.main',
+          backgroundColor: 'rgba(102, 161, 130, 0.6)',
           '&:hover': {
-            backgroundColor: 'secondary.main',
+            backgroundColor: 'rgba(102, 161, 130, 0.3)',
           },
         }}
       >

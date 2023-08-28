@@ -45,14 +45,14 @@ export const ProfileMenu = () => {
 
   return (
     <>
-      <Tooltip title='Open settings'>
+      <Tooltip title="Open User Menu">
         <IconButton onClick={handleOpenUserMenu} sx={{ pl: 1 }}>
           <Avatar />
         </IconButton>
       </Tooltip>
       <Menu
         sx={{ mt: '45px' }}
-        id='menu-appbar'
+        id="menu-appbar"
         anchorEl={anchorElUser}
         anchorOrigin={{
           vertical: 'top',
@@ -66,17 +66,17 @@ export const ProfileMenu = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        <Typography sx={{ textAlign: 'center', pb: 1 }} color='primary.main'>
-          {user?.firstname}
+        <Typography sx={{ textAlign: 'center', pb: 1 }} color="primary.main">
+          <b>{user?.firstname}</b>
         </Typography>
         <Divider />
         {isPremium && (
           <MenuItem onClick={handleOpenReminder}>
-            <Typography textAlign='center'>Set Reminder</Typography>
+            <Typography textAlign="center">Set Reminder</Typography>
           </MenuItem>
         )}
         <MenuItem>
-          <Typography textAlign='center' onClick={handleOpenLogout}>
+          <Typography textAlign="center" onClick={handleOpenLogout}>
             Logout
           </Typography>
         </MenuItem>
@@ -85,7 +85,7 @@ export const ProfileMenu = () => {
         <AddReminder handleClose={handleCloseReminder} />
       </CustomModal>
       <CustomModal isOpen={logoutModal} title={'Are you sure you want to log out?'} handleClose={handleCloseLogout}>
-        <Notice handleClose={handleLogout} btnText='Log out' />
+        <Notice handleClose={handleLogout} btnText="Log out" />
       </CustomModal>
     </>
   );

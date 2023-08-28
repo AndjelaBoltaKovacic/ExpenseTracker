@@ -9,6 +9,7 @@ const incomeUrl = transactionApiUrl.concat('income');
 const expenseUrl = transactionApiUrl.concat('expense');
 const incomeGroupUrl = transactionApiUrl.concat('income-group');
 const expenseGroupUrl = transactionApiUrl.concat('expense-group');
+const totalAmountUrl = transactionApiUrl.concat('total-amount');
 
 const TransactionService = {
   //INCOMES
@@ -72,6 +73,11 @@ const TransactionService = {
 
   deleteExpenseGroup<T>({ path }: { path: string }) {
     return axiosApiCall<TransactionsDTO<T>>(HttpMethod.DELETE, `${expenseGroupUrl}/${path}`);
+  },
+
+  //TOTAL AMOUNT
+  getTotalAmount<T>() {
+    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.GET, totalAmountUrl);
   },
 };
 
