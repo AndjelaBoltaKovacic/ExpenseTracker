@@ -4,11 +4,12 @@ import TransactionService from '../../../../services/transaction.service';
 import useFetch from '../../../../hooks/useFetch';
 import GroupsTable from '../groups-table';
 import Loader from '../../../loader';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { TransactionGroup } from '../../../../models/transactions';
+import Notice from '../../steps/notice';
+import { _void } from '../../../../models/common';
 
-function Manage() {
-  const [isExpense, setIsExpense] = useState<boolean>(true);
+function Manage({ onEdit, onDelete, isExpense, setIsExpense, onAdd }: any) {
   const [groups, setGroups] = useState<TransactionGroup[]>([] as TransactionGroup[]);
   const { data, error, loading, fetchData } = useFetch<TransactionGroup[]>(
     isExpense ? TransactionService.getExpenseGroups : TransactionService.getIncomeGroups
@@ -24,10 +25,14 @@ function Manage() {
 
   return (
     <Loader isLoading={loading}>
-      <Box display="flex" justifyContent="center" mt={3} mb={3}>
-        <TransactionToggler value={isExpense} onChange={() => setIsExpense((prev) => !prev)} />
+      <Box display='flex' justifyContent='space-between' mt={3} mb={3}>
+        <TransactionToggler value={isExpense} onChange={() => setIsExpense((prev: boolean) => !prev)} />
+        <Button variant='contained' color='primary' onClick={() => onAdd()}>
+          Add Category
+        </Button>
       </Box>
-      {data && <GroupsTable data={data} onDeleteClick={() => {}} onEditClick={() => {}} />}
+      {error && <Notice handleClose={() => fetchData()} btnText='Try again' text='Oops! Something went wrong' />}
+      {data && <GroupsTable data={groups} onDeleteClick={onDelete} onEditClick={onEdit} />}
     </Loader>
   );
 }

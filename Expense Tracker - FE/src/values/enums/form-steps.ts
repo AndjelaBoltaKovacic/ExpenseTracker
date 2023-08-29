@@ -31,6 +31,8 @@ export enum Outcome {
 
 export enum ManageGroupsSteps {
   Manage = 'manage',
+  Edit = ' edit',
+  Add = 'add',
   Confirm = 'confirm',
   Success = 'success',
   Fail = 'fail',

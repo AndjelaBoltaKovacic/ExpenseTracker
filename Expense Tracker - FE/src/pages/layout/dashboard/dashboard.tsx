@@ -15,6 +15,7 @@ import NoticeCard from '../../../common/notice-card';
 import AddTransaction from '../../../common/form/add-transaction/add-transaction';
 import { Transaction } from '../../../models/transactions';
 import ManageGroups from '../../../common/form/manage-groups/manage-groups';
+import { Settings } from '@mui/icons-material';
 
 function Dashboard({ user }: { user: string }) {
   const { isPremium } = useUserContext();
@@ -74,12 +75,13 @@ function Dashboard({ user }: { user: string }) {
         {expenses?.length || incomes?.length ? (
           <Container>
             <AmountDisplay />
-            <Box mt={2} display="flex" justifyContent={'center'} gap={2}>
-              <Button variant="contained" color="secondary" onClick={handleOpenTransModal}>
+            <Box mt={2} display='flex' justifyContent={'center'} gap={2}>
+              <Button variant='contained' color='secondary' onClick={handleOpenTransModal}>
                 Add Transaction
               </Button>
-              <Button variant="contained" color="secondary" onClick={handleOpenGroupModal}>
-                Manage Categories
+              <Button variant='contained' color='secondary' onClick={handleOpenGroupModal}>
+                <Settings color='primary' />
+                &nbsp; Categories
               </Button>
             </Box>
             <Box my={2}>
@@ -94,15 +96,15 @@ function Dashboard({ user }: { user: string }) {
           <NoticeCard
             title={`Welcome, ${user}!`}
             text="It seems like you don't have any transactions yet."
-            buttonText="Get started"
+            buttonText='Get started'
             onButtonClick={handleOpenTransModal}
           />
         )}
       </Loader>
-      <CustomModal isOpen={openTransModal} title="Add Transaction" handleClose={handleCloseTransModal}>
+      <CustomModal isOpen={openTransModal} title='Add Transaction' handleClose={handleCloseTransModal}>
         <AddTransaction handleClose={handleCloseTransModal} />
       </CustomModal>
-      <CustomModal isOpen={openGroupModal} title="Manage Categories" handleClose={handleCloseGroupModal}>
+      <CustomModal isOpen={openGroupModal} title='Manage Categories' handleClose={handleCloseGroupModal}>
         <ManageGroups handleClose={handleCloseGroupModal} />
       </CustomModal>
     </>
