@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ManageGroupsSteps, Outcome } from '../../../values/enums/form-steps';
 import Manage from './steps/manage';
 import { _void } from '../../../models/common';
@@ -26,7 +26,14 @@ function ManageGroups({ handleClose }: { handleClose: _void }) {
     ? TransactionService.editIncomeGroup
     : TransactionService.deleteExpenseGroup;
 
+  const {
+    data: add,
+    error: errorAdd,
+    loading: loadingadd,
+    fetchData: addData,
+  } = useFetch(isExpense ? TransactionService.addExpenseGroup : TransactionService.addIncomeGroup, path);
   const { data, error, loading, fetchData } = useFetch(apiCall, path);
+  console.log(group);
 
   const handleEdit = (group: TransactionGroup) => {
     setGroup(group);
@@ -42,6 +49,16 @@ function ManageGroups({ handleClose }: { handleClose: _void }) {
     setStep(ManageGroupsSteps.Confirm);
     setMethod(type);
   };
+
+  useEffect(() => {
+    add && setStep(ManageGroupsSteps.Success);
+    errorAdd && setStep(ManageGroupsSteps.Fail);
+  }, [add, errorAdd]);
+
+  useEffect(() => {
+    data && setStep(ManageGroupsSteps.Success);
+    error && setStep(ManageGroupsSteps.Fail);
+  }, [data, error]);
 
   return (
     <Box minHeight={'450px'}>
@@ -81,13 +98,13 @@ function ManageGroups({ handleClose }: { handleClose: _void }) {
               group={group}
               text={`Are you sure you wan't to ${method} this transaction category?`}
               handleBack={handleBack}
-              handleConfirm={() => fetchData()}
+              handleConfirm={method === 'add' ? () => addData({ ...group, type: 'USER_DEFINED' }) : () => fetchData()}
             />
           ),
           [ManageGroupsSteps.Success]: (
             <Notice
               outcome={Outcome.Success}
-              text={`You have successfully ${isEdit ? 'edited' : 'deleted'} transaction group`}
+              text={`You have successfully ${method}ed transaction group`}
               handleClose={handleClose}
             />
           ),

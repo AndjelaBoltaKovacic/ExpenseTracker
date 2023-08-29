@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { User } from '../models/user';
-import { Transaction } from '../models/transactions';
+import { Transaction, TransactionGroup } from '../models/transactions';
 
 
 type FetchState<T> = {
   data: T | null;
   loading: boolean;
   error: any;
-  fetchData: (body?: User | Partial<Transaction>) => void;
+  fetchData: (body?: User | Partial<Transaction> | any) => void;
 };
 
 const useFetch = <T>(dependencyService: any, path?: string): FetchState<T> => {
