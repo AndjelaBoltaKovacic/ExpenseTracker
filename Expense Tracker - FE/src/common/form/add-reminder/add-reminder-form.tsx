@@ -1,4 +1,4 @@
-import { useForm, Controller, SubmitHandler } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { FormControl, InputLabel, Select, MenuItem, Button, FormHelperText, Typography, Box } from '@mui/material';
 import { _void } from '../../../models/common';
 import { DAYS_OF_MONTH, DAYS_OF_WEEK } from '../../../values/constants/menu';
@@ -31,20 +31,20 @@ export const AddReminderForm = ({ onComplete }: { onComplete: _void }) => {
   return (
     <>
       <Typography
-        variant="h5"
-        textAlign="center"
+        variant='h5'
+        textAlign='center'
         sx={{ fontSize: '2rem', '@media (min-width:600px)': { fontSize: '2.5rem' } }}
       >
         Set Reminder
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl fullWidth variant="outlined" error={!!errors.type} margin="normal">
+        <FormControl fullWidth variant='outlined' error={!!errors.type} margin='normal'>
           <InputLabel>Select Interval</InputLabel>
           <Controller
-            name="type"
+            name='type'
             control={control}
             render={({ field }) => (
-              <Select {...field} value={type} label="Select Option">
+              <Select {...field} value={type} label='Select Option'>
                 <MenuItem value={ReminderType.Weekly}>Weekly</MenuItem>
                 <MenuItem value={ReminderType.Monthly}>Monthly</MenuItem>
               </Select>
@@ -53,10 +53,10 @@ export const AddReminderForm = ({ onComplete }: { onComplete: _void }) => {
           {errors?.type && <FormHelperText>{errors?.type?.message as string}</FormHelperText>}
         </FormControl>
 
-        <FormControl disabled={!type} fullWidth variant="outlined" error={!!errors.reminderDay} margin="normal">
+        <FormControl disabled={!type} fullWidth variant='outlined' error={!!errors.reminderDay} margin='normal'>
           <InputLabel>{selectLabel}</InputLabel>
           <Controller
-            name="reminderDay"
+            name='reminderDay'
             control={control}
             render={({ field }) => (
               <Select {...field} label={selectLabel}>
@@ -76,11 +76,11 @@ export const AddReminderForm = ({ onComplete }: { onComplete: _void }) => {
           />
           {errors?.reminderDay && <FormHelperText>{errors?.reminderDay?.message as string}</FormHelperText>}
         </FormControl>
-        <Box display="flex" justifyContent="center" gap={3} mt={3}>
+        <Box display='flex' justifyContent='center' gap={3} mt={3}>
           <Button
-            variant="contained"
-            color="secondary"
-            type="submit"
+            variant='contained'
+            color='secondary'
+            type='submit'
             onClick={() => handleSubmit(onSubmit)}
             disabled={!type || !reminderDay}
           >

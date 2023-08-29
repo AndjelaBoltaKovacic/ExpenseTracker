@@ -84,12 +84,16 @@ function Dashboard({ user }: { user: string }) {
                 &nbsp; Categories
               </Button>
             </Box>
-            <Box my={2}>
-              <TableDisplay data={incomes} error={incmError} type={TransactionType.Income} />
-            </Box>
-            <Box my={2}>
-              <TableDisplay data={expenses} error={expError} type={TransactionType.Expense} />
-            </Box>
+            {incomes.length && (
+              <Box my={2}>
+                <TableDisplay data={incomes} error={incmError} type={TransactionType.Income} />
+              </Box>
+            )}
+            {expenses.length && (
+              <Box my={2}>
+                <TableDisplay data={expenses} error={expError} type={TransactionType.Expense} />
+              </Box>
+            )}
             {isPremium && <Reminder />}
           </Container>
         ) : (

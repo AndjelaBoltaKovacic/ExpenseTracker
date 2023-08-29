@@ -2,23 +2,16 @@ import { UserRole } from '../values/enums/user';
 import { _void } from './common';
 
 export type DecodedToken = {
-  _id: string;
-  email: string;
-  firstname: string;
-  lastname: string;
-  role: UserRole;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-  session: string;
-  iat: number;
-  exp: number;
+  exp: number,
+  firstname: string,
+  iat: number
+  role: UserRole
+  sub: string
 };
 export type User = {
-  id?: string;
+  id?: number;
   email: string;
   firstname: string;
-  lastname: string;
   role: UserRole;
 };
 

@@ -2,14 +2,15 @@ import jwtDecode from 'jwt-decode';
 import { DecodedToken, User } from '../models/user';
 
 export const decodeToken = (token: string): any => {
-  const { _id, firstname, role, email, lastname }: DecodedToken = jwtDecode(token);
+  const { iat, firstname, role, sub }: DecodedToken = jwtDecode(token);
 
+
+  console.log(jwtDecode(token))
   const user: User = {
-    id: _id,
+    id: iat,
     firstname,
     role,
-    email,
-    lastname,
+    email: sub,
   };
   return user;
 };

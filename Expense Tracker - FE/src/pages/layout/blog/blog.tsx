@@ -46,7 +46,7 @@ function Blog() {
           />
         ) : (
           <>
-            {[...MOCK_ARTICLES, ...blogs].map((blog, i) => (
+            {[...blogs].map((blog, i) => (
               <BlogCard blog={blog} key={i} />
             ))}
             <div ref={infiniteScrollTrigger}>bla</div>

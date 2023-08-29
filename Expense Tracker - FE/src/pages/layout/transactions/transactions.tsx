@@ -15,6 +15,7 @@ import TransactionToggler from '../../../common/toggler/transaction-toggler';
 import { FilterBox } from '../../../common/form/filter-box';
 import { DateRange } from '@mui/lab';
 import { Dayjs } from 'dayjs';
+import ReportGenerator from '../../../common/report-generator';
 
 function Transactions() {
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
@@ -80,7 +81,7 @@ function Transactions() {
       <Loader isLoading={loading}>
         {!error ? (
           <>
-            <Box flexGrow={1} mb="3vw">
+            <Box flexGrow={1} mb='3vw'>
               <FilterBox
                 amountTo={amountTo}
                 amountFrom={amountFrom}
@@ -91,7 +92,7 @@ function Transactions() {
               />
             </Box>
 
-            <Box mt="3vw" mb="1vw" display="flex" justifyContent="space-between">
+            <Box mt='3vw' mb='1vw' display='flex' justifyContent='space-between'>
               <TransactionToggler value={isExpense} onChange={() => setIsExpense((prev) => !prev)} />
               <Button onClick={() => handleResetFilters()}>Reset Filters</Button>
             </Box>
@@ -111,12 +112,13 @@ function Transactions() {
           </>
         ) : (
           <NoticeCard
-            title="Opps! Something went wrong!"
-            text="Sorry for the inconvenience. Please try again later."
-            buttonText="Retry"
+            title='Opps! Something went wrong!'
+            text='Sorry for the inconvenience. Please try again later.'
+            buttonText='Retry'
             onButtonClick={() => fetchData()}
           />
         )}
+        <ReportGenerator isExpense={isExpense} />
       </Loader>
     </Container>
   );
