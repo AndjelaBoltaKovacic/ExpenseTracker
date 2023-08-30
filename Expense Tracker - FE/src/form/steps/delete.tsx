@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { DeleteTransactionSteps, Outcome } from '../../../values/enums/form-steps';
-import Loader from '../../loader';
+import { DeleteTransactionSteps, Outcome } from '../../values/enums/form-steps';
+import Loader from '../../common/loader';
 import Confirm from './confirm';
 import Notice from './notice';
-import { _void } from '../../../models/common';
-import TransactionService from '../../../services/transaction.service';
-import { TransactionType } from '../../../values/enums/transactions';
-import useFetch from '../../../hooks/useFetch';
+import { _void } from '../../models/common';
+import TransactionService from '../../services/transaction.service';
+import { TransactionType } from '../../values/enums/transactions';
+import useFetch from '../../hooks/useFetch';
 
 function DeleteTransaction({ transactionToDelete, handleClose }: { transactionToDelete: any; handleClose: _void }) {
   const [step, setStep] = useState<DeleteTransactionSteps>(DeleteTransactionSteps.Confirm);

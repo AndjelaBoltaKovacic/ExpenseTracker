@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import CustomModal from '../../../common/modal/custom-modal';
 import DataTable from '../../../common/table/table';
 import { Expense, Transaction } from '../../../models/transactions';
-import EditTransaction from '../../../common/form/edit-transaction/edit-transaction';
-import DeleteTransaction from '../../../common/form/steps/delete';
+import EditTransaction from '../../../form/edit-transaction/edit-transaction';
+import DeleteTransaction from '../../../form/steps/delete';
 import { TransactionType } from '../../../values/enums/transactions';
 import TransactionService from '../../../services/transaction.service';
 import useFetch from '../../../hooks/useFetch';
@@ -11,11 +11,10 @@ import Loader from '../../../common/loader';
 import NoticeCard from '../../../common/notice-card';
 import { Box, Button, Container, TextField } from '@mui/material';
 import TransactionToggler from '../../../common/toggler/transaction-toggler';
-
-import { FilterBox } from '../../../common/form/filter-box';
+import { FilterBox } from '../../../form/filter-box';
 import { DateRange } from '@mui/lab';
 import { Dayjs } from 'dayjs';
-import ReportGenerator from '../../../common/report-generator';
+import ReportGenerator from '../../../reports/report-generator';
 
 function Transactions() {
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);

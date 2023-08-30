@@ -1,7 +1,7 @@
 import { AppBar, Box, Toolbar, Container } from '@mui/material';
 import { Logo } from '../logo';
 import { ThemeToggler } from '../toggler/theme-toggler';
-import { ProfileMenu } from '../menu/profile-menu';
+import { ProfileMenu } from '../menu/user-menu';
 import { MENU_ITEMS, AUTH_MENU_ITEMS } from '../../values/constants/menu';
 import { NavTabs } from './nav-tabs';
 import BurgerMenu from '../menu/burger-menu';

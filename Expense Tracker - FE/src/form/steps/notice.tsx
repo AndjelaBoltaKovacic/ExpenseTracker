@@ -1,8 +1,8 @@
 import { Box, Button, Typography } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ErrorIcon from '@mui/icons-material/Error';
-import { _void } from '../../../models/common';
-import { Outcome } from '../../../values/enums/form-steps';
+import { _void } from '../../models/common';
+import { Outcome } from '../../values/enums/form-steps';
 
 function Notice({
   outcome,

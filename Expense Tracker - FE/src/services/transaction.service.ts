@@ -1,8 +1,7 @@
-import { baseUrl } from './urls';
-import { axiosApiCall } from './axios-api';
+import { baseUrl } from '../values/urls';
+import { axiosApiCall } from './api/axios-api';
 import { HttpMethod } from '../values/enums/service';
 import { TransactionsDTO } from '../models/transactions';
-
 
 const transactionApiUrl = `${baseUrl}/transaction/`;
 const incomeUrl = transactionApiUrl.concat('income');

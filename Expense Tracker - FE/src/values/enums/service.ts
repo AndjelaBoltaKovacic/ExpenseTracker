@@ -4,3 +4,9 @@ export enum HttpMethod {
     PUT = 'PUT',
     DELETE = 'DELETE',
 }
+
+export enum Action {
+  Add = 'add',
+  Edit = 'edit',
+  Delete = 'delete',
+}

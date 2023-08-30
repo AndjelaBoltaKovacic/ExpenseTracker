@@ -4,7 +4,7 @@ import BlogService from '../../../services/blog.service';
 import Loader from '../../../common/loader';
 import NoticeCard from '../../../common/notice-card';
 import { BlogDTO, Article } from '../../../models/blog';
-import BlogCard from '../../../common/blog-card';
+import BlogCard from './blog-card';
 import { Box } from '@mui/material';
 import { MOCK_ARTICLES } from '../../../services/mocks/blogs';
 import useInfiniteScroll from '../../../hooks/useInfiniteScroll';

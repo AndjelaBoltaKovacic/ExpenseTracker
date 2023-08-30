@@ -7,13 +7,13 @@ import CustomModal from '../../../common/modal/custom-modal';
 import Loader from '../../../common/loader';
 import useFetch from '../../../hooks/useFetch';
 import TransactionService from '../../../services/transaction.service';
-import Reminder from '../../../common/reminder';
+import Reminder from '../../../reminder/reminder';
 import { TransactionType } from '../../../values/enums/transactions';
 import { TableDisplay } from '../../../common/table/table-display';
 import NoticeCard from '../../../common/notice-card';
-import AddTransaction from '../../../common/form/add-transaction/add-transaction';
+import AddTransaction from '../../../form/add-transaction/add-transaction';
 import { Transaction } from '../../../models/transactions';
-import ManageGroups from '../../../common/form/manage-groups/manage-groups';
+import ManageGroups from '../../../form/manage-groups/manage-groups';
 import { Settings } from '@mui/icons-material';
 import { useUserContext } from '../../../contexts/userContext';
 

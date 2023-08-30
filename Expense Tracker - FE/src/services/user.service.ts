@@ -1,6 +1,6 @@
-import { baseUrl } from './urls';
+import { baseUrl } from '../values/urls';
 import { User, UserTokens } from '../models/user';
-import { axiosApiCall } from './axios-api';
+import { axiosApiCall } from './api/axios-api';
 import { HttpMethod } from '../values/enums/service';
 
 const userApiUrl = `${baseUrl}/auth/`;

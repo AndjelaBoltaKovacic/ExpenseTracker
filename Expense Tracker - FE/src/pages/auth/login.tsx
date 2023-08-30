@@ -1,8 +1,8 @@
 import { ReactNode, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { TextField, Button, Typography, Container, Box } from '@mui/material';
-import { emailValidation, passwordValidation } from '../../common/form/validation-patterns';
-import PasswordVisibility from '../../common/form/passwordVisibility';
+import { emailValidation, passwordValidation } from '../../form/validation-patterns';
+import PasswordVisibility from '../../form/passwordVisibility';
 import { ThemeContext } from '@emotion/react';
 import { getInputLabelColor } from '../../theme/overrides';
 import useFetch from '../../hooks/useFetch';

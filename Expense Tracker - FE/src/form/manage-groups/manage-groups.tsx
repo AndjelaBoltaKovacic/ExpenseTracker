@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { ManageGroupsSteps, Outcome } from '../../../values/enums/form-steps';
+import { ManageGroupsSteps, Outcome } from '../../values/enums/form-steps';
 import Manage from './steps/manage';
-import { _void } from '../../../models/common';
+import { _void } from '../../models/common';
 import { Box } from '@mui/material';
-import { TransactionGroup } from '../../../models/transactions';
+import { TransactionGroup } from '../../models/transactions';
 import Edit from './steps/edit';
 import Notice from '../steps/notice';
 import Confirm from './steps/confirm';
-import useFetch from '../../../hooks/useFetch';
-import TransactionService from '../../../services/transaction.service';
+import useFetch from '../../hooks/useFetch';
+import TransactionService from '../../services/transaction.service';
 
 function ManageGroups({ handleClose }: { handleClose: _void }) {
   const [step, setStep] = useState(ManageGroupsSteps.Manage);
@@ -75,7 +75,7 @@ function ManageGroups({ handleClose }: { handleClose: _void }) {
           ),
           [ManageGroupsSteps.Add]: (
             <Edit
-              title='Add Transaction Category'
+              title="Add Transaction Category"
               handleConfirm={handleConfirm}
               handleBack={() => {
                 setStep(ManageGroupsSteps.Manage);
@@ -84,7 +84,7 @@ function ManageGroups({ handleClose }: { handleClose: _void }) {
           ),
           [ManageGroupsSteps.Edit]: (
             <Edit
-              title='Edit Transaction Category'
+              title="Edit Transaction Category"
               group={group}
               handleConfirm={handleConfirm}
               handleBack={() => {
@@ -111,7 +111,7 @@ function ManageGroups({ handleClose }: { handleClose: _void }) {
           [ManageGroupsSteps.Fail]: (
             <Notice
               outcome={Outcome.Fail}
-              text='Oops! Something went wrong. Please try again later'
+              text="Oops! Something went wrong. Please try again later"
               handleClose={handleClose}
             />
           ),

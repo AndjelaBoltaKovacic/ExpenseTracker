@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import useFetch from '../../../hooks/useFetch';
-import ReminderService from '../../../services/reminder.service';
-import { AddReminderSteps, Outcome } from '../../../values/enums/form-steps';
+import useFetch from '../../hooks/useFetch';
+import ReminderService from '../../services/reminder.service';
+import { AddReminderSteps, Outcome } from '../../values/enums/form-steps';
 import Notice from '../steps/notice';
-import { _void } from '../../../models/common';
+import { _void } from '../../models/common';
 import { AddReminderForm } from './add-reminder-form';
 
 export const AddReminder = ({ handleClose }: { handleClose: _void }) => {

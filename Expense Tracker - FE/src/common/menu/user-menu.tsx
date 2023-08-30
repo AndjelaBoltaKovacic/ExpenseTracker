@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Tooltip, IconButton, Avatar, Menu, MenuItem, Typography, Divider } from '@mui/material';
 import { useUserContext } from '../../contexts/userContext';
 import CustomModal from '../modal/custom-modal';
-import { AddReminder } from '../form/add-reminder/add-reminder';
-import Notice from '../form/steps/notice';
+import { AddReminder } from '../../form/add-reminder/add-reminder';
+import Notice from '../../form/steps/notice';
 
 export const ProfileMenu = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);

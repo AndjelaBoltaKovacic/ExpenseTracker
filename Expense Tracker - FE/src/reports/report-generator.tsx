@@ -1,7 +1,7 @@
 import { Box, Button } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import Notice from './form/steps/notice';
-import CustomModal from './modal/custom-modal';
+import { useEffect, useState } from 'react';
+import Notice from '../form/steps/notice';
+import CustomModal from '../common/modal/custom-modal';
 import { Outcome } from '../values/enums/form-steps';
 import ReportService from '../services/report.service';
 import { useUserContext } from '../contexts/userContext';
@@ -25,8 +25,8 @@ function ReportGenerator({ isExpense }: any) {
   }, [data]);
   return (
     <>
-      <Box width='100%' display='flex' justifyContent='end' mt={3}>
-        <Button variant='contained' color='primary' onClick={() => fetchData()}>
+      <Box width="100%" display="flex" justifyContent="end" mt={3}>
+        <Button variant="contained" color="primary" onClick={() => fetchData()}>
           Get Report
         </Button>
       </Box>
@@ -35,7 +35,7 @@ function ReportGenerator({ isExpense }: any) {
         title={'Your report has been generated successfully'}
         handleClose={handleCloseLogout}
       >
-        <Notice handleClose={handleCloseLogout} btnText='Close' outcome={Outcome.Success} />
+        <Notice handleClose={handleCloseLogout} btnText="Close" outcome={Outcome.Success} />
       </CustomModal>
     </>
   );

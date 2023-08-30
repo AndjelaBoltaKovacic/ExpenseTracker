@@ -10,10 +10,10 @@ import {
   Typography,
   Tooltip,
 } from '@mui/material';
-import { TransactionGroup } from '../../../models/transactions';
-import { _void } from '../../../models/common';
-import CategoryIcon from '../../category-icon';
-import SmallTableCell from '../../table/SmallTableCell';
+import { TransactionGroup } from '../../models/transactions';
+import { _void } from '../../models/common';
+import CategoryIcon from '../../common/category-icon';
+import SmallTableCell from '../../common/table/SmallTableCell';
 
 const GroupsTable = ({
   data,
@@ -31,13 +31,13 @@ const GroupsTable = ({
           <TableHead>
             <TableRow>
               <SmallTableCell>
-                <Typography component='span' sx={{ color: 'primary.main' }}>
+                <Typography component="span" sx={{ color: 'primary.main' }}>
                   No.
                 </Typography>
               </SmallTableCell>
 
               <SmallTableCell>
-                <Typography component='span' sx={{ color: 'primary.main' }}>
+                <Typography component="span" sx={{ color: 'primary.main' }}>
                   Category Name
                 </Typography>
               </SmallTableCell>
@@ -53,12 +53,12 @@ const GroupsTable = ({
               <Tooltip title={row.type === 'PREDEFINED' ? 'You can only change user-defined categories' : ''}>
                 <TableRow key={row.id}>
                   <SmallTableCell>
-                    <Typography component='span' sx={{ color: 'primary.main' }}>
+                    <Typography component="span" sx={{ color: 'primary.main' }}>
                       {i + 1}
                     </Typography>
                   </SmallTableCell>
                   <SmallTableCell>
-                    <Box display='flex' alignItems='center' gap={1}>
+                    <Box display="flex" alignItems="center" gap={1}>
                       <CategoryIcon name={row.name} />
                       {row.name}
                     </Box>
@@ -67,8 +67,8 @@ const GroupsTable = ({
                     <>
                       <SmallTableCell>
                         <Button
-                          variant='outlined'
-                          color='primary'
+                          variant="outlined"
+                          color="primary"
                           onClick={onEditClick && (() => onEditClick(row))}
                           disabled={row.type === 'PREDEFINED'}
                         >
@@ -77,8 +77,8 @@ const GroupsTable = ({
                       </SmallTableCell>
                       <SmallTableCell>
                         <Button
-                          variant='outlined'
-                          color='secondary'
+                          variant="outlined"
+                          color="secondary"
                           onClick={onDeleteClick && (() => onDeleteClick(row, 'delete'))}
                           disabled={row.type === 'PREDEFINED'}
                         >

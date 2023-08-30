@@ -5,19 +5,19 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
-import { _void } from '../../../models/common';
+import { _void } from '../../models/common';
 import CurrencyInput from './currency-input';
 import { Box, FormHelperText } from '@mui/material';
-import ModalButtons from '../../modal/modal-buttons';
-import TransactionService from '../../../services/transaction.service';
-import useFetch from '../../../hooks/useFetch';
-import Loader from '../../loader';
+import ModalButtons from '../../common/modal/modal-buttons';
+import TransactionService from '../../services/transaction.service';
+import useFetch from '../../hooks/useFetch';
+import Loader from '../../common/loader';
 import Notice from '../steps/notice';
-import { Outcome } from '../../../values/enums/form-steps';
-import { Expense, Income, TransactionGroup } from '../../../models/transactions';
-import { TransactionType } from '../../../values/enums/transactions';
+import { Outcome } from '../../values/enums/form-steps';
+import { Expense, Income, TransactionGroup } from '../../models/transactions';
+import { TransactionType } from '../../values/enums/transactions';
 import { Settings } from '@mui/icons-material';
-import CategoryIcon from '../../category-icon';
+import CategoryIcon from '../../common/category-icon';
 
 function AddTransactionForm({
   transactionToEdit,
@@ -180,6 +180,6 @@ function AddTransactionForm({
       </form>
     </Loader>
   );
-};
+}
 
 export default AddTransactionForm;

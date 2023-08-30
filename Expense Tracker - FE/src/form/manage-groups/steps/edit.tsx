@@ -1,10 +1,10 @@
 import { TextField, Typography } from '@mui/material';
 import { useEffect, ReactNode, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { _void } from '../../../../models/common';
-import { TransactionGroup } from '../../../../models/transactions';
-import ModalButtons from '../../../modal/modal-buttons';
-import CategoryIcon from '../../../category-icon';
+import { _void } from '../../../models/common';
+import { TransactionGroup } from '../../../models/transactions';
+import ModalButtons from '../../../common/modal/modal-buttons';
+import CategoryIcon from '../../../common/category-icon';
 
 function Edit({
   group,
@@ -40,16 +40,16 @@ function Edit({
 
   return (
     <>
-      <Typography fontSize={20} textAlign='center' padding={2}>
+      <Typography fontSize={20} textAlign="center" padding={2}>
         {title}
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
-          label='Transaction Description'
+          label="Transaction Description"
           fullWidth
           defaultValue={oldName || undefined}
-          variant='outlined'
-          margin='normal'
+          variant="outlined"
+          margin="normal"
           {...register('name', {
             required: 'This field is required',
             minLength: { value: 5, message: 'Description must have at least 5 characters' },
@@ -63,7 +63,7 @@ function Edit({
 
         <ModalButtons
           handleClose={handleBack}
-          cancelButtonText='Back'
+          cancelButtonText="Back"
           handleSubmit={handleSubmit}
           disableSubmit={notChanged}
         />

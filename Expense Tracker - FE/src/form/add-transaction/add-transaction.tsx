@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { AddTransactionSteps, Outcome } from '../../../values/enums/form-steps';
-import AddTransactionForm from '../add-transaction/add-transaction-form';
-import { TransactionFormData } from '../../../models/transactions';
-import { _void } from '../../../models/common';
+import { AddTransactionSteps, Outcome } from '../../values/enums/form-steps';
+import AddTransactionForm from './add-transaction-form';
+import { TransactionFormData } from '../../models/transactions';
+import { _void } from '../../models/common';
 import Confirm from '../steps/confirm';
 import Notice from '../steps/notice';
-import Loader from '../../loader';
-import TransactionService from '../../../services/transaction.service';
-import { TransactionType } from '../../../values/enums/transactions';
-import useFetch from '../../../hooks/useFetch';
+import Loader from '../../common/loader';
+import TransactionService from '../../services/transaction.service';
+import { TransactionType } from '../../values/enums/transactions';
+import useFetch from '../../hooks/useFetch';
 
 function AddTransaction({ handleClose }: { handleClose: _void }) {
   const [step, setStep] = useState<AddTransactionSteps>(AddTransactionSteps.Add);

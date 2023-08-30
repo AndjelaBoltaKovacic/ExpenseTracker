@@ -1,7 +1,7 @@
 import { Paper, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { _void } from '../../../models/common';
-import ModalButtons from '../../modal/modal-buttons';
-import { TransactionFormData } from '../../../models/transactions';
+import { _void } from '../../models/common';
+import ModalButtons from '../../common/modal/modal-buttons';
+import { TransactionFormData } from '../../models/transactions';
 
 function Confirm({
   text,
