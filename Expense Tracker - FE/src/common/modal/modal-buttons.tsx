@@ -13,7 +13,7 @@ function modalButtons({
   cancelButtonText?: string;
 }) {
   return (
-    <Box display="flex" justifyContent="center" gap={3} mt={3}>
+    <Box display="flex" justifyContent="center" gap={3} mt={5}>
       <Button variant="contained" color="primary" onClick={handleClose}>
         {cancelButtonText}
       </Button>

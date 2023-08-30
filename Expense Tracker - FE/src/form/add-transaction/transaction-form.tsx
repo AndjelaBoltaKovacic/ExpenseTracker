@@ -19,7 +19,7 @@ import { TransactionType } from '../../values/enums/transactions';
 import { Settings } from '@mui/icons-material';
 import CategoryIcon from '../../common/category-icon';
 
-function AddTransactionForm({
+function TransactionForm({
   transactionToEdit,
   handleClose,
   handleConfirm,
@@ -182,4 +182,4 @@ function AddTransactionForm({
   );
 }
 
-export default AddTransactionForm;
+export default TransactionForm;

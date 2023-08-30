@@ -1,4 +1,4 @@
-import { TextField, Typography } from '@mui/material';
+import { Box, TextField, Typography } from '@mui/material';
 import { useEffect, ReactNode, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { _void } from '../../../models/common';
@@ -6,7 +6,7 @@ import { TransactionGroup } from '../../../models/transactions';
 import ModalButtons from '../../../common/modal/modal-buttons';
 import CategoryIcon from '../../../common/category-icon';
 
-function Edit({
+function CategoriesForm({
   group,
   handleConfirm,
   handleBack,
@@ -57,7 +57,11 @@ function Edit({
           error={!!errors.name}
           helperText={errors?.name?.message as ReactNode}
           InputProps={{
-            startAdornment: <CategoryIcon name={name || oldName || ''} />,
+            startAdornment: (
+              <Box mr={1}>
+                <CategoryIcon name={name || oldName || ''} />
+              </Box>
+            ),
           }}
         />
 
@@ -72,4 +76,4 @@ function Edit({
   );
 }
 
-export default Edit;
+export default CategoriesForm;

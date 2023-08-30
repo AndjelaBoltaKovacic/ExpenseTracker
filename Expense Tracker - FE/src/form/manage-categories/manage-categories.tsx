@@ -4,36 +4,29 @@ import Manage from './steps/manage';
 import { _void } from '../../models/common';
 import { Box } from '@mui/material';
 import { TransactionGroup } from '../../models/transactions';
-import Edit from './steps/edit';
 import Notice from '../steps/notice';
 import Confirm from './steps/confirm';
 import useFetch from '../../hooks/useFetch';
 import TransactionService from '../../services/transaction.service';
+import CategoriesForm from './steps/form';
+import { Action } from '../../values/enums/service';
+import { TransactionType } from '../../values/enums/transactions';
+import { getApiCall } from '../../helpers/common';
 
 function ManageCategories({ handleClose }: { handleClose: _void }) {
   const [step, setStep] = useState(ManageCategoriesSteps.Manage);
   const [method, setMethod] = useState<any>(null);
   const [isExpense, setIsExpense] = useState<boolean>(true);
   const [group, setGroup] = useState<TransactionGroup>({} as TransactionGroup);
-  const isEdit = method === 'edit';
-  const [path, setPath] = useState();
-
-  const apiCall = isExpense
-    ? isEdit
-      ? TransactionService.editExpenseGroup
-      : TransactionService.deleteExpenseGroup
-    : isEdit
-    ? TransactionService.editIncomeGroup
-    : TransactionService.deleteExpenseGroup;
-
+  const isEdit = method === Action.Edit;
   const {
     data: add,
     error: errorAdd,
-    loading: loadingadd,
+    loading: loadingAdd,
     fetchData: addData,
-  } = useFetch(isExpense ? TransactionService.addExpenseGroup : TransactionService.addIncomeGroup, path);
-  const { data, error, loading, fetchData } = useFetch(apiCall, path);
-  console.log(group);
+  } = useFetch(isExpense ? TransactionService.addExpenseGroup : TransactionService.addIncomeGroup);
+  const { data, error, loading, fetchData } = useFetch(getApiCall(isExpense, isEdit), `${group.id}`);
+  const categoryType = isExpense ? TransactionType.Expense : TransactionType.Expense;
 
   const handleEdit = (group: TransactionGroup) => {
     setGroup(group);
@@ -44,10 +37,17 @@ function ManageCategories({ handleClose }: { handleClose: _void }) {
     isEdit ? setStep(ManageCategoriesSteps.Edit) : setStep(ManageCategoriesSteps.Manage);
   };
 
-  const handleConfirm = (group: TransactionGroup, type?: 'delete' | 'edit' | 'add') => {
+  const handleProceed = (group: TransactionGroup, type?: Action) => {
     setGroup(group);
     setStep(ManageCategoriesSteps.Confirm);
     setMethod(type);
+  };
+
+  const handleConfirm = () => {
+    fetchData(isEdit && { ...group, type: 'USER_DEFINED' });
+  };
+  const handleAdd = () => {
+    addData({ ...group, type: 'USER_DEFINED' });
   };
 
   useEffect(() => {
@@ -56,12 +56,12 @@ function ManageCategories({ handleClose }: { handleClose: _void }) {
   }, [add, errorAdd]);
 
   useEffect(() => {
-    data && setStep(ManageCategoriesSteps.Success);
+    data !== null && setStep(ManageCategoriesSteps.Success);
     error && setStep(ManageCategoriesSteps.Fail);
   }, [data, error]);
 
   return (
-    <Box minHeight={'450px'}>
+    <Box>
       {
         {
           [ManageCategoriesSteps.Manage]: (
@@ -69,24 +69,24 @@ function ManageCategories({ handleClose }: { handleClose: _void }) {
               isExpense={isExpense}
               setIsExpense={setIsExpense}
               onEdit={handleEdit}
-              onDelete={handleConfirm}
+              onDelete={handleProceed}
               onAdd={() => setStep(ManageCategoriesSteps.Add)}
             />
           ),
           [ManageCategoriesSteps.Add]: (
-            <Edit
-              title="Add Transaction Category"
-              handleConfirm={handleConfirm}
+            <CategoriesForm
+              title={`Add ${categoryType} Category`}
+              handleConfirm={handleProceed}
               handleBack={() => {
                 setStep(ManageCategoriesSteps.Manage);
               }}
             />
           ),
           [ManageCategoriesSteps.Edit]: (
-            <Edit
-              title="Edit Transaction Category"
+            <CategoriesForm
+              title={`Edit ${categoryType} Category`}
               group={group}
-              handleConfirm={handleConfirm}
+              handleConfirm={handleProceed}
               handleBack={() => {
                 setStep(ManageCategoriesSteps.Manage);
               }}
@@ -98,13 +98,13 @@ function ManageCategories({ handleClose }: { handleClose: _void }) {
               group={group}
               text={`Are you sure you wan't to ${method} this transaction category?`}
               handleBack={handleBack}
-              handleConfirm={method === 'add' ? () => addData({ ...group, type: 'USER_DEFINED' }) : () => fetchData()}
+              handleConfirm={method === Action.Add ? handleAdd : handleConfirm}
             />
           ),
           [ManageCategoriesSteps.Success]: (
             <Notice
               outcome={Outcome.Success}
-              text={`You have successfully ${method}ed transaction group`}
+              text={`Your ${method} request has been completed successfully`}
               handleClose={handleClose}
             />
           ),

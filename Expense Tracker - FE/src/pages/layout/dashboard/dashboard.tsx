@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import Container from '@mui/material/Container';
 import AmountDisplay from '../../../common/amount-display';
 import Box from '@mui/material/Box';
-import { Button } from '@mui/material';
 import CustomModal from '../../../common/modal/custom-modal';
 import Loader from '../../../common/loader';
 import useFetch from '../../../hooks/useFetch';
@@ -13,9 +12,9 @@ import { TableDisplay } from '../../../common/table/table-display';
 import NoticeCard from '../../../common/notice-card';
 import AddTransaction from '../../../form/add-transaction/add-transaction';
 import { Transaction } from '../../../models/transactions';
-import ManageCategories from '../../../form/manage-groups/manage-categories';
-import { Settings } from '@mui/icons-material';
+import ManageCategories from '../../../form/manage-categories/manage-categories';
 import { useUserContext } from '../../../contexts/userContext';
+import ActionButtons from './action-buttons';
 
 function Dashboard() {
   const { isPremium, user } = useUserContext();
@@ -76,15 +75,7 @@ function Dashboard() {
         {expenses?.length || incomes?.length ? (
           <Container>
             <AmountDisplay />
-            <Box mt={2} display="flex" justifyContent={'center'} gap={2}>
-              <Button variant="contained" color="secondary" onClick={handleOpenTransModal}>
-                Add Transaction
-              </Button>
-              <Button variant="contained" color="secondary" onClick={handleOpenGroupModal}>
-                <Settings color="primary" />
-                &nbsp; Categories
-              </Button>
-            </Box>
+            <ActionButtons onAdd={handleOpenTransModal} onManage={handleOpenGroupModal} />
             {!!incomes.length && (
               <Box my={2}>
                 <TableDisplay data={incomes} error={incmError} type={TransactionType.Income} />

@@ -18,35 +18,34 @@ const CustomModal = ({
 }) => {
   return (
     <Modal open={isOpen} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
-      <Box
-        sx={{
-          position: 'absolute',
-          top: '300px',
-          left: '49%',
-          transform: 'translate(-50%, -50%)',
-          backgroundColor: 'background.default',
-          borderRadius: '7px',
-          padding: '20px',
-          outline: 'none',
-          boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
-          width: { xs: '95%', sm: '80%', md: '60%' },
-          maxWidth: '600px',
-          paddingBottom: '60px',
-        }}
-      >
-        <Box textAlign="end" sx={{ cursor: 'pointer' }}>
-          <CloseIcon onClick={handleClose} />
+      <Box paddingTop="5vw">
+        <Box
+          sx={{
+            margin: 'auto',
+            backgroundColor: 'background.default',
+            borderRadius: '7px',
+            padding: '20px',
+            outline: 'none',
+            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
+            width: { xs: '95%', sm: '80%', md: '60%' },
+            maxWidth: '600px',
+          }}
+        >
+          <Box textAlign="end" sx={{ cursor: 'pointer' }}>
+            <CloseIcon onClick={handleClose} />
+          </Box>
+          {title && (
+            <Typography
+              mb={6}
+              variant="h5"
+              textAlign="center"
+              sx={{ fontSize: '2rem', '@media (min-width:600px)': { fontSize: '2.5rem' } }}
+            >
+              {title}
+            </Typography>
+          )}
+          {children}
         </Box>
-        {title && (
-          <Typography
-            variant="h5"
-            textAlign="center"
-            sx={{ fontSize: '2rem', '@media (min-width:600px)': { fontSize: '2.5rem' } }}
-          >
-            {title}
-          </Typography>
-        )}
-        {children}
       </Box>
     </Modal>
   );

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AddTransactionSteps, Outcome } from '../../values/enums/form-steps';
-import AddTransactionForm from './add-transaction-form';
+import TransactionForm from './transaction-form';
 import { TransactionFormData } from '../../models/transactions';
 import { _void } from '../../models/common';
 import Confirm from '../steps/confirm';
@@ -43,7 +43,7 @@ function AddTransaction({ handleClose }: { handleClose: _void }) {
     <Loader isLoading={loading} size="8vw">
       {
         {
-          [AddTransactionSteps.Add]: <AddTransactionForm handleClose={handleClose} handleConfirm={handleFormConfirm} />,
+          [AddTransactionSteps.Add]: <TransactionForm handleClose={handleClose} handleConfirm={handleFormConfirm} />,
           [AddTransactionSteps.Confirm]: (
             <Confirm
               text="Are you sure you want to add this transaction?"

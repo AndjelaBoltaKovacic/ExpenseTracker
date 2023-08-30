@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { EditTransactionSteps, Outcome } from '../../values/enums/form-steps';
-import AddTransactionForm from '../add-transaction/add-transaction-form';
+import TransactionForm from '../add-transaction/transaction-form';
 import { Expense } from '../../models/transactions';
 import { _void } from '../../models/common';
 import Confirm from '../steps/confirm';
@@ -40,7 +40,7 @@ function EditTransaction({ transactionToEdit, handleClose }: { transactionToEdit
       {
         {
           [EditTransactionSteps.Edit]: (
-            <AddTransactionForm
+            <TransactionForm
               disableType
               handleClose={handleClose}
               handleConfirm={handleFormConfirm}
