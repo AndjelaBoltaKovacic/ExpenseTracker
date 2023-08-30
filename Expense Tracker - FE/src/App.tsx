@@ -20,7 +20,7 @@ function App() {
           </>
         ) : (
           <>
-            <Route path="/dashboard" element={<Dashboard user={user.firstname} />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/blog" element={<Blog />} />
           </>

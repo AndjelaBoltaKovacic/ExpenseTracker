@@ -30,19 +30,23 @@ function AddTransaction({ handleClose }: { handleClose: _void }) {
     fetchData(body);
   };
 
+  const handleCloseAndRefetch = () => {
+    handleClose(transactionData.type);
+  };
+
   useEffect(() => {
     data && setStep(AddTransactionSteps.Success);
     error && setStep(AddTransactionSteps.Fail);
   }, [data, error]);
 
   return (
-    <Loader isLoading={loading} size='8vw'>
+    <Loader isLoading={loading} size="8vw">
       {
         {
           [AddTransactionSteps.Add]: <AddTransactionForm handleClose={handleClose} handleConfirm={handleFormConfirm} />,
           [AddTransactionSteps.Confirm]: (
             <Confirm
-              text='Are you sure you want to add this transaction?'
+              text="Are you sure you want to add this transaction?"
               handleBack={handleBack}
               handleConfirm={handleSubmit}
               data={transactionData}
@@ -51,14 +55,14 @@ function AddTransaction({ handleClose }: { handleClose: _void }) {
           [AddTransactionSteps.Success]: (
             <Notice
               outcome={Outcome.Success}
-              text='You have successfully added the transaction'
-              handleClose={handleClose}
+              text="Your transaction has been added successfully"
+              handleClose={handleCloseAndRefetch}
             />
           ),
           [AddTransactionSteps.Fail]: (
             <Notice
               outcome={Outcome.Fail}
-              text='Oops! Something went wrong. Please try again later'
+              text="Oops! Something went wrong. Please try again later"
               handleClose={handleClose}
             />
           ),

@@ -29,8 +29,8 @@ function Notice({
           )}
         </Box>
       )}
-      <Box display="flex" justifyContent="center" mt={3}>
-        <Button variant="contained" color="primary" onClick={handleClose}>
+      <Box display="flex" justifyContent="center" mt={8}>
+        <Button variant="contained" color="primary" size="large" onClick={handleClose}>
           {btnText}
         </Button>
       </Box>

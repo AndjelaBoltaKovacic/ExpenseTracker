@@ -3,7 +3,6 @@ import Container from '@mui/material/Container';
 import AmountDisplay from '../../../common/amount-display';
 import Box from '@mui/material/Box';
 import { Button } from '@mui/material';
-import { useUserContext } from '../../../contexts/userContext';
 import CustomModal from '../../../common/modal/custom-modal';
 import Loader from '../../../common/loader';
 import useFetch from '../../../hooks/useFetch';
@@ -16,32 +15,35 @@ import AddTransaction from '../../../common/form/add-transaction/add-transaction
 import { Transaction } from '../../../models/transactions';
 import ManageGroups from '../../../common/form/manage-groups/manage-groups';
 import { Settings } from '@mui/icons-material';
+import { useUserContext } from '../../../contexts/userContext';
 
-function Dashboard({ user }: { user: string }) {
-  const { isPremium } = useUserContext();
+function Dashboard() {
+  const { isPremium, user } = useUserContext();
   const [incomes, setIncomes] = useState<Transaction[]>([] as Transaction[]);
   const [expenses, setExpenses] = useState<Transaction[]>([] as Transaction[]);
   const [openTransModal, setOpenTransModal] = useState(false);
   const [openGroupModal, setOpenGroupModal] = useState(false);
-
+  const path = '?page=0&size=5&sort=createdDtm';
   const {
     data: incm,
     error: incmError,
     loading: incmLoading,
     fetchData: fetchIncomes,
-  } = useFetch<Transaction[]>(TransactionService.getIncomes, '?page=0&size=5&sort=createdDtm');
+  } = useFetch<Transaction[]>(TransactionService.getIncomes, path);
 
   const {
     data: exp,
     error: expError,
     loading: expLoading,
     fetchData: fetchExpenses,
-  } = useFetch<Transaction[]>(TransactionService.getExpenses, '?page=0&size=5&sort=createdDtm');
+  } = useFetch<Transaction[]>(TransactionService.getExpenses, path);
 
   useEffect(() => {
-    fetchIncomes();
-    fetchExpenses();
-  }, []);
+    if (user) {
+      fetchIncomes();
+      fetchExpenses();
+    }
+  }, [user]);
 
   useEffect(() => {
     exp && setExpenses(exp);
@@ -55,9 +57,8 @@ function Dashboard({ user }: { user: string }) {
     setOpenTransModal(true);
   };
 
-  const handleCloseTransModal = () => {
-    fetchIncomes();
-    fetchExpenses();
+  const handleCloseTransModal = (type?: TransactionType) => {
+    type === TransactionType.Expense ? fetchExpenses() : fetchIncomes();
     setOpenTransModal(false);
   };
 
@@ -75,21 +76,21 @@ function Dashboard({ user }: { user: string }) {
         {expenses?.length || incomes?.length ? (
           <Container>
             <AmountDisplay />
-            <Box mt={2} display='flex' justifyContent={'center'} gap={2}>
-              <Button variant='contained' color='secondary' onClick={handleOpenTransModal}>
+            <Box mt={2} display="flex" justifyContent={'center'} gap={2}>
+              <Button variant="contained" color="secondary" onClick={handleOpenTransModal}>
                 Add Transaction
               </Button>
-              <Button variant='contained' color='secondary' onClick={handleOpenGroupModal}>
-                <Settings color='primary' />
+              <Button variant="contained" color="secondary" onClick={handleOpenGroupModal}>
+                <Settings color="primary" />
                 &nbsp; Categories
               </Button>
             </Box>
-            {incomes.length && (
+            {!!incomes.length && (
               <Box my={2}>
                 <TableDisplay data={incomes} error={incmError} type={TransactionType.Income} />
               </Box>
             )}
-            {expenses.length && (
+            {!!expenses.length && (
               <Box my={2}>
                 <TableDisplay data={expenses} error={expError} type={TransactionType.Expense} />
               </Box>
@@ -98,17 +99,17 @@ function Dashboard({ user }: { user: string }) {
           </Container>
         ) : (
           <NoticeCard
-            title={`Welcome, ${user}!`}
+            title={`Welcome, ${user?.firstname}!`}
             text="It seems like you don't have any transactions yet."
-            buttonText='Get started'
+            buttonText="Get started"
             onButtonClick={handleOpenTransModal}
           />
         )}
       </Loader>
-      <CustomModal isOpen={openTransModal} title='Add Transaction' handleClose={handleCloseTransModal}>
+      <CustomModal isOpen={openTransModal} title="Add Transaction" handleClose={handleCloseTransModal}>
         <AddTransaction handleClose={handleCloseTransModal} />
       </CustomModal>
-      <CustomModal isOpen={openGroupModal} title='Manage Categories' handleClose={handleCloseGroupModal}>
+      <CustomModal isOpen={openGroupModal} title="Manage Categories" handleClose={handleCloseGroupModal}>
         <ManageGroups handleClose={handleCloseGroupModal} />
       </CustomModal>
     </>

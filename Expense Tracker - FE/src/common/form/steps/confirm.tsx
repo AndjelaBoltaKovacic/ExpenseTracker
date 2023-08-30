@@ -1,4 +1,4 @@
-import { Box, Paper, Typography } from '@mui/material';
+import { Paper, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { _void } from '../../../models/common';
 import ModalButtons from '../../modal/modal-buttons';
 import { TransactionFormData } from '../../../models/transactions';
@@ -21,31 +21,36 @@ function Confirm({
       <Typography fontSize={20} textAlign="center" padding={2}>
         {text}
       </Typography>
-      <Paper elevation={3} sx={{ padding: '16px', maxWidth: '300px', margin: 'auto' }}>
-        <Box>
-          <Typography variant="subtitle1" sx={{ marginBottom: '8px' }}>
-            <b>Type: </b>
-            {type}
-          </Typography>
-        </Box>
-        <Box mt={2}>
-          <Typography variant="subtitle1" sx={{ marginBottom: '8px' }}>
-            <b>Category: </b>
-            {groupName}
-          </Typography>
-        </Box>
-        <Box mt={2}>
-          <Typography variant="subtitle1" sx={{ marginBottom: '8px' }}>
-            <b>Description: </b>
-            {name}
-          </Typography>
-        </Box>
-        <Box mt={2}>
-          <Typography variant="subtitle1" sx={{ marginBottom: '8px' }}>
-            <b>Amount: </b> ${amount.toFixed()}
-          </Typography>
-        </Box>
-      </Paper>
+      <TableContainer component={Paper} elevation={3} sx={{ maxWidth: '350px', margin: 'auto' }}>
+        <Table aria-label="Key Values Table">
+          <TableBody>
+            <TableRow>
+              <TableCell>
+                <b>Type:</b>
+              </TableCell>
+              <TableCell>{type}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <b>Category:</b>
+              </TableCell>
+              <TableCell>{groupName}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <b>Description:</b>
+              </TableCell>
+              <TableCell>{name}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <b>Amount:</b>
+              </TableCell>
+              <TableCell>${amount.toFixed()}</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
       <ModalButtons cancelButtonText={'Back'} handleClose={handleBack} handleSubmit={handleConfirm} />
     </>
   );

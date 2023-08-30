@@ -5,11 +5,9 @@ const apiInstance = axios.create({
   baseURL: baseUrl,
 });
 
-const bearerToken = localStorage.getItem('token');
-
 apiInstance.interceptors.request.use(
   (config) => {
-    config.headers.Authorization = `Bearer ${bearerToken}`;
+    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
     return config;
   },
   (error) => {
