@@ -15,7 +15,7 @@ import { _void } from '../../models/common';
 import CategoryIcon from '../../common/category-icon';
 import SmallTableCell from '../../common/table/SmallTableCell';
 
-const GroupsTable = ({
+const CategoriesTable = ({
   data,
   onEditClick,
   onDeleteClick,
@@ -97,4 +97,4 @@ const GroupsTable = ({
   );
 };
 
-export default GroupsTable;
+export default CategoriesTable;

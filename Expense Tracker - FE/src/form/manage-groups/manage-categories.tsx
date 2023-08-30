@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ManageGroupsSteps, Outcome } from '../../values/enums/form-steps';
+import { ManageCategoriesSteps, Outcome } from '../../values/enums/form-steps';
 import Manage from './steps/manage';
 import { _void } from '../../models/common';
 import { Box } from '@mui/material';
@@ -10,8 +10,8 @@ import Confirm from './steps/confirm';
 import useFetch from '../../hooks/useFetch';
 import TransactionService from '../../services/transaction.service';
 
-function ManageGroups({ handleClose }: { handleClose: _void }) {
-  const [step, setStep] = useState(ManageGroupsSteps.Manage);
+function ManageCategories({ handleClose }: { handleClose: _void }) {
+  const [step, setStep] = useState(ManageCategoriesSteps.Manage);
   const [method, setMethod] = useState<any>(null);
   const [isExpense, setIsExpense] = useState<boolean>(true);
   const [group, setGroup] = useState<TransactionGroup>({} as TransactionGroup);
@@ -37,62 +37,62 @@ function ManageGroups({ handleClose }: { handleClose: _void }) {
 
   const handleEdit = (group: TransactionGroup) => {
     setGroup(group);
-    setStep(ManageGroupsSteps.Edit);
+    setStep(ManageCategoriesSteps.Edit);
   };
 
   const handleBack = () => {
-    isEdit ? setStep(ManageGroupsSteps.Edit) : setStep(ManageGroupsSteps.Manage);
+    isEdit ? setStep(ManageCategoriesSteps.Edit) : setStep(ManageCategoriesSteps.Manage);
   };
 
   const handleConfirm = (group: TransactionGroup, type?: 'delete' | 'edit' | 'add') => {
     setGroup(group);
-    setStep(ManageGroupsSteps.Confirm);
+    setStep(ManageCategoriesSteps.Confirm);
     setMethod(type);
   };
 
   useEffect(() => {
-    add && setStep(ManageGroupsSteps.Success);
-    errorAdd && setStep(ManageGroupsSteps.Fail);
+    add && setStep(ManageCategoriesSteps.Success);
+    errorAdd && setStep(ManageCategoriesSteps.Fail);
   }, [add, errorAdd]);
 
   useEffect(() => {
-    data && setStep(ManageGroupsSteps.Success);
-    error && setStep(ManageGroupsSteps.Fail);
+    data && setStep(ManageCategoriesSteps.Success);
+    error && setStep(ManageCategoriesSteps.Fail);
   }, [data, error]);
 
   return (
     <Box minHeight={'450px'}>
       {
         {
-          [ManageGroupsSteps.Manage]: (
+          [ManageCategoriesSteps.Manage]: (
             <Manage
               isExpense={isExpense}
               setIsExpense={setIsExpense}
               onEdit={handleEdit}
               onDelete={handleConfirm}
-              onAdd={() => setStep(ManageGroupsSteps.Add)}
+              onAdd={() => setStep(ManageCategoriesSteps.Add)}
             />
           ),
-          [ManageGroupsSteps.Add]: (
+          [ManageCategoriesSteps.Add]: (
             <Edit
               title="Add Transaction Category"
               handleConfirm={handleConfirm}
               handleBack={() => {
-                setStep(ManageGroupsSteps.Manage);
+                setStep(ManageCategoriesSteps.Manage);
               }}
             />
           ),
-          [ManageGroupsSteps.Edit]: (
+          [ManageCategoriesSteps.Edit]: (
             <Edit
               title="Edit Transaction Category"
               group={group}
               handleConfirm={handleConfirm}
               handleBack={() => {
-                setStep(ManageGroupsSteps.Manage);
+                setStep(ManageCategoriesSteps.Manage);
               }}
             />
           ),
-          [ManageGroupsSteps.Confirm]: (
+          [ManageCategoriesSteps.Confirm]: (
             <Confirm
               isExpense={isExpense}
               group={group}
@@ -101,14 +101,14 @@ function ManageGroups({ handleClose }: { handleClose: _void }) {
               handleConfirm={method === 'add' ? () => addData({ ...group, type: 'USER_DEFINED' }) : () => fetchData()}
             />
           ),
-          [ManageGroupsSteps.Success]: (
+          [ManageCategoriesSteps.Success]: (
             <Notice
               outcome={Outcome.Success}
               text={`You have successfully ${method}ed transaction group`}
               handleClose={handleClose}
             />
           ),
-          [ManageGroupsSteps.Fail]: (
+          [ManageCategoriesSteps.Fail]: (
             <Notice
               outcome={Outcome.Fail}
               text="Oops! Something went wrong. Please try again later"
@@ -121,4 +121,4 @@ function ManageGroups({ handleClose }: { handleClose: _void }) {
   );
 }
 
-export default ManageGroups;
+export default ManageCategories;

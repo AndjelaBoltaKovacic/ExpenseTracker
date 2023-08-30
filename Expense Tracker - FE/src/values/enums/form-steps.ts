@@ -29,7 +29,7 @@ export enum Outcome {
   Fail = 'fail',
 }
 
-export enum ManageGroupsSteps {
+export enum ManageCategoriesSteps {
   Manage = 'manage',
   Edit = ' edit',
   Add = 'add',

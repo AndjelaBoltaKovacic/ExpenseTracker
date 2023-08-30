@@ -13,7 +13,7 @@ import { TableDisplay } from '../../../common/table/table-display';
 import NoticeCard from '../../../common/notice-card';
 import AddTransaction from '../../../form/add-transaction/add-transaction';
 import { Transaction } from '../../../models/transactions';
-import ManageGroups from '../../../form/manage-groups/manage-groups';
+import ManageCategories from '../../../form/manage-groups/manage-categories';
 import { Settings } from '@mui/icons-material';
 import { useUserContext } from '../../../contexts/userContext';
 
@@ -110,7 +110,7 @@ function Dashboard() {
         <AddTransaction handleClose={handleCloseTransModal} />
       </CustomModal>
       <CustomModal isOpen={openGroupModal} title="Manage Categories" handleClose={handleCloseGroupModal}>
-        <ManageGroups handleClose={handleCloseGroupModal} />
+        <ManageCategories handleClose={handleCloseGroupModal} />
       </CustomModal>
     </>
   );

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import TransactionToggler from '../../../common/toggler/transaction-toggler';
 import TransactionService from '../../../services/transaction.service';
 import useFetch from '../../../hooks/useFetch';
-import GroupsTable from '../groups-table';
+import CategoriesTable from '../categories-table';
 import Loader from '../../../common/loader';
 import { Box, Button } from '@mui/material';
 import { TransactionGroup } from '../../../models/transactions';
@@ -32,7 +32,7 @@ function Manage({ onEdit, onDelete, isExpense, setIsExpense, onAdd }: any) {
         </Button>
       </Box>
       {error && <Notice handleClose={() => fetchData()} btnText="Try again" text="Oops! Something went wrong" />}
-      {data && <GroupsTable data={groups} onDeleteClick={onDelete} onEditClick={onEdit} />}
+      {data && <CategoriesTable data={groups} onDeleteClick={onDelete} onEditClick={onEdit} />}
     </Loader>
   );
 }
