@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { ManageCategoriesSteps, Outcome } from '../../values/enums/form-steps';
-import Manage from './steps/manage';
+import Manage from './steps/categories-display';
 import { _void } from '../../models/common';
 import { Box } from '@mui/material';
 import { TransactionGroup } from '../../models/transactions';
 import Notice from '../steps/notice';
-import Confirm from './steps/confirm';
+import Confirm from './steps/confirm-categories';
 import useFetch from '../../hooks/useFetch';
 import TransactionService from '../../services/transaction.service';
-import CategoriesForm from './steps/form';
+import CategoriesForm from './steps/categories-form';
 import { Action } from '../../values/enums/service';
 import { TransactionType } from '../../values/enums/transactions';
 import { getApiCall } from '../../helpers/common';
@@ -96,7 +96,7 @@ function ManageCategories({ handleClose }: { handleClose: _void }) {
             <Confirm
               isExpense={isExpense}
               group={group}
-              text={`Are you sure you wan't to ${method} this transaction category?`}
+              text={`Are you sure you wan't to ${method} this ${isExpense ? 'expense' : 'income'} category?`}
               handleBack={handleBack}
               handleConfirm={method === Action.Add ? handleAdd : handleConfirm}
             />

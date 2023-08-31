@@ -9,16 +9,19 @@ import TransactionService from '../../../services/transaction.service';
 import useFetch from '../../../hooks/useFetch';
 import Loader from '../../../common/loader';
 import NoticeCard from '../../../common/notice-card';
-import { Box, Button, Container, TextField } from '@mui/material';
+import { Box, Button, Container } from '@mui/material';
 import TransactionToggler from '../../../common/toggler/transaction-toggler';
 import { FilterBox } from '../../../form/filter-box';
 import { DateRange } from '@mui/lab';
 import { Dayjs } from 'dayjs';
 import ReportGenerator from '../../../reports/report-generator';
+import AddTransaction from '../../../form/add-transaction/add-transaction';
+import { useUserContext } from '../../../contexts/userContext';
 
 function Transactions() {
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+  const [openTransModal, setOpenTransModal] = useState(false);
   const [isExpense, setIsExpense] = useState<boolean>(true);
   const [sort, setSort] = useState<string>('updatedDtm');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
@@ -28,6 +31,7 @@ function Transactions() {
   const [dateRange, setDateRange] = useState<DateRange<Dayjs>>([null, null]);
   const [transationToModify, setTransactionToModify] = useState<Expense | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([] as Transaction[]);
+  const { user } = useUserContext();
   const { data, loading, error, fetchData } = useFetch<Transaction[]>(
     isExpense ? TransactionService.getExpenses : TransactionService.getIncomes,
     `?amountFrom=${amountFrom}&amountTo=${amountTo}&dateFrom=${
@@ -55,6 +59,15 @@ function Transactions() {
     setOpenDeleteModal(false);
   };
 
+  const handleOpenTransModal = () => {
+    setOpenTransModal(true);
+  };
+
+  const handleCloseTransModal = (type?: TransactionType) => {
+    type === TransactionType.Expense ? setIsExpense(true) : setIsExpense(false);
+    setOpenTransModal(false);
+  };
+
   useEffect(() => {
     fetchData();
   }, [isExpense]);
@@ -78,9 +91,9 @@ function Transactions() {
   return (
     <Container sx={{ marginTop: '5vw' }}>
       <Loader isLoading={loading}>
-        {!error ? (
+        {data?.length ? (
           <>
-            <Box flexGrow={1} mb='3vw'>
+            <Box flexGrow={1} mb="3vw">
               <FilterBox
                 amountTo={amountTo}
                 amountFrom={amountFrom}
@@ -91,7 +104,7 @@ function Transactions() {
               />
             </Box>
 
-            <Box mt='3vw' mb='1vw' display='flex' justifyContent='space-between'>
+            <Box mt="3vw" mb="1vw" display="flex" justifyContent="space-between">
               <TransactionToggler value={isExpense} onChange={() => setIsExpense((prev) => !prev)} />
               <Button onClick={() => handleResetFilters()}>Reset Filters</Button>
             </Box>
@@ -102,23 +115,34 @@ function Transactions() {
               onEditClick={handleEditOpen}
               onDeleteClick={handleDeleteOpen}
             />
-            <CustomModal isOpen={openEditModal} handleClose={handleEditClose}>
-              <EditTransaction handleClose={handleEditClose} transactionToEdit={transationToModify as Expense} />
-            </CustomModal>
-            <CustomModal isOpen={openDeleteModal} handleClose={handleDeleteClose}>
-              <DeleteTransaction handleClose={handleDeleteClose} transactionToDelete={transationToModify as Expense} />
-            </CustomModal>
+            <ReportGenerator isExpense={isExpense} />
           </>
         ) : (
           <NoticeCard
-            title='Opps! Something went wrong!'
-            text='Sorry for the inconvenience. Please try again later.'
-            buttonText='Retry'
+            title={`Hi, ${user?.firstname}!`}
+            text={`It seems like you don't have any ${isExpense ? 'expenses' : 'incomes'} yet.`}
+            buttonText="Get started"
+            onButtonClick={handleOpenTransModal}
+          />
+        )}
+        {error && (
+          <NoticeCard
+            title="Opps! Something went wrong!"
+            text="Sorry for the inconvenience. Please try again later."
+            buttonText="Retry"
             onButtonClick={() => fetchData()}
           />
         )}
-        <ReportGenerator isExpense={isExpense} />
       </Loader>
+      <CustomModal isOpen={openTransModal} title="Add Transaction" handleClose={handleCloseTransModal}>
+        <AddTransaction handleClose={handleCloseTransModal} />
+      </CustomModal>
+      <CustomModal isOpen={openEditModal} handleClose={handleEditClose}>
+        <EditTransaction handleClose={handleEditClose} transactionToEdit={transationToModify as Expense} />
+      </CustomModal>
+      <CustomModal isOpen={openDeleteModal} handleClose={handleDeleteClose}>
+        <DeleteTransaction handleClose={handleDeleteClose} transactionToDelete={transationToModify as Expense} />
+      </CustomModal>
     </Container>
   );
 }

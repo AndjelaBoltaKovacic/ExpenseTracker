@@ -33,7 +33,7 @@ const DataTable = ({
     setOrderBy(property);
   };
 
-  const sortedData = data.slice().sort((a, b) => {
+  const sortedData = data?.slice().sort((a, b) => {
     const aValue = a[orderBy];
     const bValue = b[orderBy];
 
@@ -83,7 +83,7 @@ const DataTable = ({
                 </SmallTableCell>
                 <SmallTableCell>{row.name}</SmallTableCell>
                 <SmallTableCell>
-                  <Box display="flex" alignItems="center" gap={1}>
+                  <Box display="flex" alignItems="center">
                     <CategoryIcon name={row.groupName} />
                     {row.groupName}
                   </Box>

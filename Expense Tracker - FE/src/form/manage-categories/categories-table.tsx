@@ -58,7 +58,7 @@ const CategoriesTable = ({
                     </Typography>
                   </SmallTableCell>
                   <SmallTableCell>
-                    <Box display="flex" alignItems="center" gap={1}>
+                    <Box display="flex" alignItems="center">
                       <CategoryIcon name={row.name} />
                       {row.name}
                     </Box>

@@ -17,6 +17,7 @@ function AddTransaction({ handleClose }: { handleClose: _void }) {
     transactionData.type === TransactionType.Income ? TransactionService.addIncome : TransactionService.addExpense
   );
 
+  console.log(data);
   const handleFormConfirm = (data: any) => {
     setTransactionData(data);
     setStep(AddTransactionSteps.Confirm);

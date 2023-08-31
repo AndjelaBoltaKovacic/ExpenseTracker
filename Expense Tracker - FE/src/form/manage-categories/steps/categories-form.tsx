@@ -1,10 +1,11 @@
-import { Box, TextField, Typography } from '@mui/material';
+import { TextField, Typography } from '@mui/material';
 import { useEffect, ReactNode, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { _void } from '../../../models/common';
 import { TransactionGroup } from '../../../models/transactions';
 import ModalButtons from '../../../common/modal/modal-buttons';
 import CategoryIcon from '../../../common/category-icon';
+import { Action } from '../../../values/enums/service';
 
 function CategoriesForm({
   group,
@@ -35,7 +36,7 @@ function CategoriesForm({
   }, [name]);
 
   const onSubmit = (data: any) => {
-    handleConfirm({ ...group, ...data }, oldName ? 'edit' : 'add');
+    handleConfirm({ ...group, ...data }, oldName ? Action.Edit : Action.Add);
   };
 
   return (
@@ -57,14 +58,9 @@ function CategoriesForm({
           error={!!errors.name}
           helperText={errors?.name?.message as ReactNode}
           InputProps={{
-            startAdornment: (
-              <Box mr={1}>
-                <CategoryIcon name={name || oldName || ''} />
-              </Box>
-            ),
+            startAdornment: <CategoryIcon name={name || oldName || ''} />,
           }}
         />
-
         <ModalButtons
           handleClose={handleBack}
           cancelButtonText="Back"
