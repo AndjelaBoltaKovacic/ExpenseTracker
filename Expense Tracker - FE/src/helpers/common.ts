@@ -1,22 +1,18 @@
+import { TransactionGroup } from '../models/transactions';
 import TransactionService from '../services/transaction.service';
 import { DAYS_OF_WEEK } from '../values/constants/menu';
 import { ReminderType } from '../values/enums/reminder';
+import { Action } from '../values/enums/service';
+const locationValueMap: { [pathname: string]: number } = {
+  '/dashboard': 0,
+  '/transactions': 1,
+  '/blog': 2,
+  '/login': 0,
+  '/register': 1,
+};
 
-export const getLocationValue = (pathname: string) => {
-  switch (pathname) {
-    case '/dashboard':
-      return 0;
-    case '/transactions':
-      return 1;
-    case '/blog':
-      return 2;
-    case '/login':
-      return 0;
-    case '/register':
-      return 1;
-    default:
-      return 0;
-  }
+export const getLocationValue = (pathname: string): number => {
+  return locationValueMap[pathname] || 0;
 };
 
 const getReminderWeekDay = (day: number) => {
@@ -24,18 +20,24 @@ const getReminderWeekDay = (day: number) => {
 };
 
 const getReminderMonthDay = (day: number) => {
-  return day > 15 ? 'last day of month' : day <= 1 ? 'first day of  month' : 'middle day of month';
+  return (day > 15 ? 'last' : day <= 1 ? 'first' : '15th') + 'day of month';
 };
 export const getReminderText = (reminderType: ReminderType, reminderDay: number) => {
   return reminderType === ReminderType.Weekly ? getReminderWeekDay(reminderDay) : getReminderMonthDay(reminderDay);
 };
 
-export const getApiCall = (isExpense: boolean, isEdit: boolean) => {
-  return isExpense
-    ? isEdit
-      ? TransactionService.editExpenseGroup
-      : TransactionService.deleteExpenseGroup
-    : isEdit
-    ? TransactionService.editIncomeGroup
-    : TransactionService.deleteExpenseGroup;
+export const getApiCall = (isExpense: boolean, action: Action) => {
+  return {
+    [Action.Add]: isExpense ? TransactionService.addExpense : TransactionService.addIncome,
+    [Action.Edit]: isExpense ? TransactionService.editExpenseGroup : TransactionService.editIncome,
+    [Action.Delete]: isExpense ? TransactionService.deleteExpenseGroup : TransactionService.deleteIncome,
+  }[action];
+};
+
+export const getReqBody = (group: TransactionGroup, action: Action) => {
+  return {
+    [Action.Add]: { ...group, type: 'USER_DEFINED' },
+    [Action.Edit]: { name: group.name, type: 'USER_DEFINED' },
+    [Action.Delete]: undefined,
+  }[action];
 };

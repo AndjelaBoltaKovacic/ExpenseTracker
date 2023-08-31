@@ -11,7 +11,7 @@ import TransactionService from '../../services/transaction.service';
 import CategoriesForm from './steps/categories-form';
 import { Action } from '../../values/enums/service';
 import { TransactionType } from '../../values/enums/transactions';
-import { getApiCall } from '../../helpers/common';
+import { getApiCall, getReqBody } from '../../helpers/common';
 
 function ManageCategories({ handleClose }: { handleClose: _void }) {
   const [step, setStep] = useState(ManageCategoriesSteps.Manage);
@@ -19,19 +19,11 @@ function ManageCategories({ handleClose }: { handleClose: _void }) {
   const [isExpense, setIsExpense] = useState<boolean>(true);
   const [group, setGroup] = useState<TransactionGroup>({} as TransactionGroup);
   const isEdit = method === Action.Edit;
-  const {
-    data: add,
-    error: errorAdd,
-    loading: loadingAdd,
-    fetchData: addData,
-  } = useFetch(isExpense ? TransactionService.addExpenseGroup : TransactionService.addIncomeGroup);
-  const { data, error, loading, fetchData } = useFetch(getApiCall(isExpense, isEdit), `${group.id}`);
-  const categoryType = isExpense ? TransactionType.Expense : TransactionType.Expense;
-
-  const handleEdit = (group: TransactionGroup) => {
-    setGroup(group);
-    setStep(ManageCategoriesSteps.Edit);
-  };
+  const { data, error, loading, fetchData } = useFetch(
+    getApiCall(isExpense, method),
+    method !== Action.Add ? `${group.id}` : ''
+  );
+  const categoryType = isExpense ? TransactionType.Expense : TransactionType.Income;
 
   const handleBack = () => {
     isEdit ? setStep(ManageCategoriesSteps.Edit) : setStep(ManageCategoriesSteps.Manage);
@@ -42,18 +34,14 @@ function ManageCategories({ handleClose }: { handleClose: _void }) {
     setStep(ManageCategoriesSteps.Confirm);
     setMethod(type);
   };
+  const handleEdit = (group: TransactionGroup) => {
+    setGroup(group);
+    setStep(ManageCategoriesSteps.Edit);
+  };
 
   const handleConfirm = () => {
-    fetchData(isEdit && { ...group, type: 'USER_DEFINED' });
+    fetchData(getReqBody(group, method));
   };
-  const handleAdd = () => {
-    addData({ ...group, type: 'USER_DEFINED' });
-  };
-
-  useEffect(() => {
-    add && setStep(ManageCategoriesSteps.Success);
-    errorAdd && setStep(ManageCategoriesSteps.Fail);
-  }, [add, errorAdd]);
 
   useEffect(() => {
     data !== null && setStep(ManageCategoriesSteps.Success);
@@ -77,9 +65,7 @@ function ManageCategories({ handleClose }: { handleClose: _void }) {
             <CategoriesForm
               title={`Add ${categoryType} Category`}
               handleConfirm={handleProceed}
-              handleBack={() => {
-                setStep(ManageCategoriesSteps.Manage);
-              }}
+              handleBack={handleBack}
             />
           ),
           [ManageCategoriesSteps.Edit]: (
@@ -87,9 +73,7 @@ function ManageCategories({ handleClose }: { handleClose: _void }) {
               title={`Edit ${categoryType} Category`}
               group={group}
               handleConfirm={handleProceed}
-              handleBack={() => {
-                setStep(ManageCategoriesSteps.Manage);
-              }}
+              handleBack={handleBack}
             />
           ),
           [ManageCategoriesSteps.Confirm]: (
@@ -98,7 +82,7 @@ function ManageCategories({ handleClose }: { handleClose: _void }) {
               group={group}
               text={`Are you sure you wan't to ${method} this ${isExpense ? 'expense' : 'income'} category?`}
               handleBack={handleBack}
-              handleConfirm={method === Action.Add ? handleAdd : handleConfirm}
+              handleConfirm={handleConfirm}
             />
           ),
           [ManageCategoriesSteps.Success]: (
