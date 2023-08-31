@@ -5,6 +5,7 @@ import { AddReminderSteps, Outcome } from '../../values/enums/form-steps';
 import Notice from '../steps/notice';
 import { _void } from '../../models/common';
 import { AddReminderForm } from './add-reminder-form';
+import Loader from '../../common/loader';
 
 export const AddReminder = ({ handleClose }: { handleClose: _void }) => {
   const [step, setStep] = useState(AddReminderSteps.Add);
@@ -15,17 +16,27 @@ export const AddReminder = ({ handleClose }: { handleClose: _void }) => {
     error && setStep(AddReminderSteps.Fail);
   }, [data, error]);
 
-  return {
-    [AddReminderSteps.Add]: <AddReminderForm onComplete={fetchData} />,
-    [AddReminderSteps.Success]: (
-      <Notice outcome={Outcome.Success} text="You have successfully added the reminder" handleClose={handleClose} />
-    ),
-    [AddReminderSteps.Fail]: (
-      <Notice
-        outcome={Outcome.Fail}
-        text="Oops! Something went wrong. Please try again later"
-        handleClose={handleClose}
-      />
-    ),
-  }[step];
+  return (
+    <Loader isLoading={loading}>
+      {
+        {
+          [AddReminderSteps.Add]: <AddReminderForm onComplete={fetchData} />,
+          [AddReminderSteps.Success]: (
+            <Notice
+              outcome={Outcome.Success}
+              text="You have successfully added the reminder"
+              handleClose={handleClose}
+            />
+          ),
+          [AddReminderSteps.Fail]: (
+            <Notice
+              outcome={Outcome.Fail}
+              text="Oops! Something went wrong. Please try again later"
+              handleClose={handleClose}
+            />
+          ),
+        }[step]
+      }
+    </Loader>
+  );
 };

@@ -8,13 +8,14 @@ import { Transaction } from '../../models/transactions';
 import CategoryIcon from '../category-icon';
 import { TransactionType } from '../../values/enums/transactions';
 import { formatDate } from '../../helpers/date-formatter';
+import TableButtonCell from './table-button';
 
 const DataTable = ({
   disableSort,
   hideButtons,
   data,
-  onEditClick,
-  onDeleteClick,
+  onEditClick = () => {},
+  onDeleteClick = () => {},
   type,
 }: {
   disableSort?: boolean;
@@ -44,26 +45,25 @@ const DataTable = ({
 
   return (
     <>
-      <TableContainer component={Paper} sx={{ borderRadius: '7px' }}>
+      <TableContainer component={Paper} sx={{ borderRadius: '7px', padding: '10px' }}>
         <Table aria-label="Sortable table">
           <TableHead>
             <TableRow>
-              <SmallTableCell>
-                <Typography component="span" sx={{ color: 'primary.main' }}>
-                  No.
-                </Typography>
-              </SmallTableCell>
+              <SmallTableCell color="primary.main" content="No." />
               {TABLE_HEADERS.map(({ title, property }, i) => (
-                <SmallTableCell key={`${title}_${i}`}>
-                  <SortLabel
-                    disabled={disableSort}
-                    propertyName={property}
-                    title={title}
-                    handleSort={handleSort}
-                    order={order}
-                    orderBy={orderBy}
-                  />
-                </SmallTableCell>
+                <SmallTableCell
+                  key={`${title}_${i}`}
+                  content={
+                    <SortLabel
+                      disabled={disableSort}
+                      propertyName={property}
+                      title={title}
+                      handleSort={handleSort}
+                      order={order}
+                      orderBy={orderBy}
+                    />
+                  }
+                />
               ))}
               {!hideButtons && (
                 <>
@@ -76,45 +76,26 @@ const DataTable = ({
           <TableBody>
             {sortedData.map((row, i) => (
               <TableRow key={row.id}>
-                <SmallTableCell>
-                  <Typography component="span" sx={{ color: 'primary.main' }}>
-                    {i + 1}
-                  </Typography>
-                </SmallTableCell>
-                <SmallTableCell>{row.name}</SmallTableCell>
-                <SmallTableCell>
-                  <Box display="flex" alignItems="center">
-                    <CategoryIcon name={row.groupName} />
-                    {row.groupName}
-                  </Box>
-                </SmallTableCell>
-                <SmallTableCell>
-                  <Typography component="small" sx={{ color: 'primary.main' }}>
-                    ${' '}
-                  </Typography>
-                  {row.amount.toFixed(2)}
-                </SmallTableCell>
-                <SmallTableCell>{formatDate(row.updatedDtm)}</SmallTableCell>
+                <SmallTableCell color="primary.main" content={i + 1} />
+                <SmallTableCell content={row.name} />
+                <SmallTableCell
+                  content={
+                    <Box display="flex" alignItems="center">
+                      <CategoryIcon name={row.groupName} />
+                      {row.groupName}
+                    </Box>
+                  }
+                />
+                <SmallTableCell content={`$ ${row.amount.toFixed(2)}`} />
+                <SmallTableCell content={formatDate(row.updatedDtm)} />
                 {!hideButtons && (
                   <>
-                    <SmallTableCell>
-                      <Button
-                        variant="outlined"
-                        color="primary"
-                        onClick={onEditClick && (() => onEditClick({ ...row, type }))}
-                      >
-                        Edit
-                      </Button>
-                    </SmallTableCell>
-                    <SmallTableCell>
-                      <Button
-                        variant="outlined"
-                        color="secondary"
-                        onClick={onDeleteClick && (() => onDeleteClick({ ...row, type }))}
-                      >
-                        Delete
-                      </Button>
-                    </SmallTableCell>
+                    <TableButtonCell
+                      color="primary"
+                      onClick={onEditClick && (() => onEditClick({ ...row, type }))}
+                      text="Edit"
+                    />
+                    <TableButtonCell color="secondary" onClick={() => onDeleteClick({ ...row, type })} text="Delete" />
                   </>
                 )}
               </TableRow>

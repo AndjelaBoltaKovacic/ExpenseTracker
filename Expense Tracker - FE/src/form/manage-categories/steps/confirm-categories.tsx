@@ -38,7 +38,7 @@ function Confirm({
                 <b>Category Name:</b>
               </TableCell>
               <TableCell>
-                <Box display="flex" alignItems="center" gap={1}>
+                <Box display="flex" alignItems="center">
                   <CategoryIcon name={name} />
                   {name}
                 </Box>

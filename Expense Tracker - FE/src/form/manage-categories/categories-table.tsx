@@ -1,19 +1,9 @@
-import {
-  Table,
-  TableBody,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Button,
-  Paper,
-  Box,
-  Typography,
-  Tooltip,
-} from '@mui/material';
+import { Table, TableBody, TableContainer, TableHead, TableRow, Paper, Box, Tooltip } from '@mui/material';
 import { TransactionGroup } from '../../models/transactions';
 import { _void } from '../../models/common';
 import CategoryIcon from '../../common/category-icon';
 import SmallTableCell from '../../common/table/SmallTableCell';
+import TableButtonCell from '../../common/table/table-button';
 
 const CategoriesTable = ({
   data,
@@ -30,18 +20,8 @@ const CategoriesTable = ({
         <Table>
           <TableHead>
             <TableRow>
-              <SmallTableCell>
-                <Typography component="span" sx={{ color: 'primary.main' }}>
-                  No.
-                </Typography>
-              </SmallTableCell>
-
-              <SmallTableCell>
-                <Typography component="span" sx={{ color: 'primary.main' }}>
-                  Category Name
-                </Typography>
-              </SmallTableCell>
-
+              <SmallTableCell content="No." />
+              <SmallTableCell content="Category Name" color="primary.main" />
               <>
                 <SmallTableCell />
                 <SmallTableCell />
@@ -52,39 +32,29 @@ const CategoriesTable = ({
             {data.map((row, i) => (
               <Tooltip title={row.type === 'PREDEFINED' ? 'You can only change user-defined categories' : ''}>
                 <TableRow key={row.id}>
-                  <SmallTableCell>
-                    <Typography component="span" sx={{ color: 'primary.main' }}>
-                      {i + 1}
-                    </Typography>
-                  </SmallTableCell>
-                  <SmallTableCell>
-                    <Box display="flex" alignItems="center">
-                      <CategoryIcon name={row.name} />
-                      {row.name}
-                    </Box>
-                  </SmallTableCell>
+                  <SmallTableCell color="primary.main" content={i + 1} />
+                  <SmallTableCell
+                    content={
+                      <Box display="flex" alignItems="center">
+                        <CategoryIcon name={row.name} />
+                        {row.name}
+                      </Box>
+                    }
+                  />
                   <>
                     <>
-                      <SmallTableCell>
-                        <Button
-                          variant="outlined"
-                          color="primary"
-                          onClick={onEditClick && (() => onEditClick(row))}
-                          disabled={row.type === 'PREDEFINED'}
-                        >
-                          Edit
-                        </Button>
-                      </SmallTableCell>
-                      <SmallTableCell>
-                        <Button
-                          variant="outlined"
-                          color="secondary"
-                          onClick={onDeleteClick && (() => onDeleteClick(row, 'delete'))}
-                          disabled={row.type === 'PREDEFINED'}
-                        >
-                          Delete
-                        </Button>
-                      </SmallTableCell>
+                      <TableButtonCell
+                        color="primary"
+                        onClick={() => onEditClick(row)}
+                        disabled={row.type === 'PREDEFINED'}
+                        text="Edit"
+                      />
+                      <TableButtonCell
+                        color="secondary"
+                        onClick={onDeleteClick && (() => onDeleteClick(row, 'delete'))}
+                        disabled={row.type === 'PREDEFINED'}
+                        text="Delete"
+                      />
                     </>
                   </>
                 </TableRow>
