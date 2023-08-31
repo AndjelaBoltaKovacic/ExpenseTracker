@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Table, TableBody, TableContainer, TableHead, TableRow, Button, Paper, Box, Typography } from '@mui/material';
 import { DataEntry, _void } from '../../models/common';
 import SortLabel from './sort-label';
@@ -17,6 +17,8 @@ const DataTable = ({
   onEditClick = () => {},
   onDeleteClick = () => {},
   type,
+  orderBy = 'updatedDtm',
+  setOrderBy,
 }: {
   disableSort?: boolean;
   hideButtons?: boolean;
@@ -24,19 +26,20 @@ const DataTable = ({
   onEditClick?: _void;
   onDeleteClick?: _void;
   type?: TransactionType;
+  orderBy?: string;
+  setOrderBy?: Dispatch<SetStateAction<string>>;
 }) => {
-  const [orderBy, setOrderBy] = useState<keyof DataEntry>('createdDtm');
   const [order, setOrder] = useState<'asc' | 'desc'>('desc');
 
   const handleSort = (property: keyof DataEntry) => {
     const isAscending = orderBy === property && order === 'asc';
     setOrder(isAscending ? 'desc' : 'asc');
-    setOrderBy(property);
+    setOrderBy && setOrderBy(property);
   };
 
   const sortedData = data?.slice().sort((a, b) => {
-    const aValue = a[orderBy];
-    const bValue = b[orderBy];
+    const aValue = a[orderBy as keyof Transaction];
+    const bValue = b[orderBy as keyof Transaction];
 
     if (aValue < bValue) return order === 'asc' ? -1 : 1;
     if (aValue > bValue) return order === 'asc' ? 1 : -1;

@@ -39,9 +39,9 @@ export function FilterBox({
         >
           Filters
         </legend>
-        <Box display="flex" justifyContent="space-between" gap={2} width="100%">
+        <Box display="flex" justifyContent="space-between" gap={{ xs: 3, md: 2 }} width="100%" flexWrap="wrap-reverse">
           <Tooltip title="Filter by amount">
-            <Box display="flex" alignItems="center" width={{ xs: '100%', md: '50%' }} gap={2}>
+            <Box display="flex" alignItems="center" width={{ xs: '100%', md: '48%' }} gap={2}>
               <span>${minMax[0]}</span>
               <Slider
                 value={[amountFrom, amountTo]}
@@ -55,10 +55,20 @@ export function FilterBox({
               <span>${minMax[1]}</span>
             </Box>
           </Tooltip>
-          <BasicDateRangePicker dateRange={dateRange} setDateRange={setDateRange} />
-          <Button variant="contained" color="primary" onClick={() => handleSubmit()}>
-            Find
-          </Button>
+          <Box
+            display="flex"
+            alignItems="center"
+            width={{ xs: '100%', md: '48%' }}
+            gap={2}
+            justifyContent={{ xs: 'space-between' }}
+          >
+            <BasicDateRangePicker dateRange={dateRange} setDateRange={setDateRange} />
+            <Box width={'20%'}>
+              <Button fullWidth variant="contained" color="primary" onClick={() => handleSubmit()}>
+                Find
+              </Button>
+            </Box>
+          </Box>
         </Box>
       </fieldset>
     </>

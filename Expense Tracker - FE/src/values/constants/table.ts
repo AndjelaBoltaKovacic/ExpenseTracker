@@ -1,6 +1,6 @@
 export const TABLE_HEADERS = [
-  { title: 'Description', property: 'description' },
-  { title: 'Category', property: 'category' },
+  { title: 'Description', property: 'name' },
+  { title: 'Category', property: 'groupName' },
   { title: 'Amount', property: 'amount' },
-  { title: 'Date', property: 'creationTime' },
+  { title: 'Date', property: 'updatedDtm' },
 ];

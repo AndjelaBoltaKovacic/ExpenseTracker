@@ -16,7 +16,6 @@ import { DateRange } from '@mui/lab';
 import { Dayjs } from 'dayjs';
 import ReportGenerator from '../../../reports/report-generator';
 import AddTransaction from '../../../form/add-transaction/add-transaction';
-import { useUserContext } from '../../../contexts/userContext';
 
 function Transactions() {
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
@@ -24,15 +23,14 @@ function Transactions() {
   const [openTransModal, setOpenTransModal] = useState(false);
   const [isExpense, setIsExpense] = useState<boolean>(true);
   const [minMax, setMinMax] = useState<number[]>([0, 1000]);
+  const [reset, setReset] = useState(false);
   const [sort, setSort] = useState<string>('updatedDtm');
-  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const [page, setPage] = useState<number>(0);
   const [amountFrom, setAmountFrom] = useState<number>(0);
   const [amountTo, setAmountTo] = useState<number>(10000);
   const [dateRange, setDateRange] = useState<DateRange<Dayjs>>([null, null]);
   const [transationToModify, setTransactionToModify] = useState<Expense | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([] as Transaction[]);
-  const { user } = useUserContext();
   const { data, loading, error, fetchData } = useFetch<TransactionsDTO<Transaction[]>>(
     isExpense ? TransactionService.getExpenses : TransactionService.getIncomes,
     `?amountFrom=${amountFrom}&amountTo=${amountTo}&dateFrom=${
@@ -71,7 +69,7 @@ function Transactions() {
 
   useEffect(() => {
     fetchData();
-  }, [isExpense]);
+  }, [isExpense, reset, sort]);
 
   useEffect(() => {
     if (data) {
@@ -89,7 +87,7 @@ function Transactions() {
     setAmountTo(1000);
     setAmountFrom(0);
     setDateRange([null, null]);
-    fetchData();
+    setReset((prevVal) => !prevVal);
   };
 
   return (
@@ -114,6 +112,8 @@ function Transactions() {
           </Box>
 
           <DataTable
+            orderBy={sort}
+            setOrderBy={setSort}
             type={TransactionType.Expense}
             data={transactions}
             onEditClick={handleEditOpen}
