@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AddTransactionSteps, Outcome } from '../../values/enums/form-steps';
 import TransactionForm from './transaction-form';
-import { TransactionFormData } from '../../models/transactions';
+import { Transaction, TransactionFormData } from '../../models/transactions';
 import { _void } from '../../models/common';
 import Confirm from '../steps/confirm';
 import Notice from '../steps/notice';
@@ -17,8 +17,7 @@ function AddTransaction({ handleClose }: { handleClose: _void }) {
     transactionData.type === TransactionType.Income ? TransactionService.addIncome : TransactionService.addExpense
   );
 
-  console.log(data);
-  const handleFormConfirm = (data: any) => {
+  const handleFormConfirm = (data: Transaction) => {
     setTransactionData(data);
     setStep(AddTransactionSteps.Confirm);
   };

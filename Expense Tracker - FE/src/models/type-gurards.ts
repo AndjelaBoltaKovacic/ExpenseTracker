@@ -1,3 +1,3 @@
 export const getContent = (data: any) => {
-  return data?.data?.content ?? data?.content ?? data;
+  return data?.data ?? data?.content ?? data;
 };

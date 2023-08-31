@@ -86,7 +86,7 @@ const DataTable = ({
                     </Box>
                   }
                 />
-                <SmallTableCell content={`$ ${row.amount.toFixed(2)}`} />
+                <SmallTableCell content={`$ ${row.amount?.toFixed(2)}`} />
                 <SmallTableCell content={formatDate(row.updatedDtm)} />
                 {!hideButtons && (
                   <>

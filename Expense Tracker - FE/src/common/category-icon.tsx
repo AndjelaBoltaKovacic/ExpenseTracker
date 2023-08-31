@@ -62,7 +62,7 @@ const categories = [
 ];
 
 const getIcon = (name: string, keywords: string[]) => {
-  return !!keywords.find((keyword) => name.toLowerCase().includes(keyword));
+  return !!keywords.find((keyword) => name?.toLowerCase().includes(keyword));
 };
 
 function CategoryIcon({ name }: { name: string }) {

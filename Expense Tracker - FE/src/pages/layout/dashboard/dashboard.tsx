@@ -11,7 +11,7 @@ import { TransactionType } from '../../../values/enums/transactions';
 import { TableDisplay } from '../../../common/table/table-display';
 import NoticeCard from '../../../common/notice-card';
 import AddTransaction from '../../../form/add-transaction/add-transaction';
-import { Transaction } from '../../../models/transactions';
+import { Transaction, TransactionsDTO } from '../../../models/transactions';
 import ManageCategories from '../../../form/manage-categories/manage-categories';
 import { useUserContext } from '../../../contexts/userContext';
 import ActionButtons from './action-buttons';
@@ -28,14 +28,14 @@ function Dashboard() {
     error: incmError,
     loading: incmLoading,
     fetchData: fetchIncomes,
-  } = useFetch<Transaction[]>(TransactionService.getIncomes, path);
+  } = useFetch<TransactionsDTO<Transaction[]>>(TransactionService.getIncomes, path);
 
   const {
     data: exp,
     error: expError,
     loading: expLoading,
     fetchData: fetchExpenses,
-  } = useFetch<Transaction[]>(TransactionService.getExpenses, path);
+  } = useFetch<TransactionsDTO<Transaction[]>>(TransactionService.getExpenses, path);
 
   useEffect(() => {
     if (user) {
@@ -45,11 +45,11 @@ function Dashboard() {
   }, [user]);
 
   useEffect(() => {
-    exp && setExpenses(exp);
+    exp && setExpenses(exp.data.content);
   }, [exp]);
 
   useEffect(() => {
-    incm && setIncomes(incm);
+    incm && setIncomes(incm.data.content);
   }, [incm]);
 
   const handleOpenTransModal = () => {
@@ -73,7 +73,7 @@ function Dashboard() {
     <>
       <Loader isLoading={incmLoading || expLoading}>
         {expenses?.length || incomes?.length ? (
-          <Container>
+          <Container sx={{ paddingBottom: '60px' }}>
             <AmountDisplay />
             <ActionButtons onAdd={handleOpenTransModal} onManage={handleOpenGroupModal} />
             {!!incomes.length && (

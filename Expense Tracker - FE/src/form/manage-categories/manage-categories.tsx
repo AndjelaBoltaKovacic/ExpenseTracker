@@ -7,7 +7,6 @@ import { TransactionGroup } from '../../models/transactions';
 import Notice from '../steps/notice';
 import Confirm from './steps/confirm-categories';
 import useFetch from '../../hooks/useFetch';
-import TransactionService from '../../services/transaction.service';
 import CategoriesForm from './steps/categories-form';
 import { Action } from '../../values/enums/service';
 import { TransactionType } from '../../values/enums/transactions';

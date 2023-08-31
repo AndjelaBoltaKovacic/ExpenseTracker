@@ -10,8 +10,8 @@ import Notice from '../../steps/notice';
 import { _void } from '../../../models/common';
 
 function Manage({ onEdit, onDelete, isExpense, setIsExpense, onAdd }: any) {
-  const [groups, setGroups] = useState<TransactionGroup[]>([] as TransactionGroup[]);
-  const { data, error, loading, fetchData } = useFetch<TransactionGroup[]>(
+  const [groups, setGroups] = useState<any>([] as TransactionGroup[]);
+  const { data, error, loading, fetchData } = useFetch<any>(
     isExpense ? TransactionService.getExpenseGroups : TransactionService.getIncomeGroups
   );
 
@@ -20,7 +20,7 @@ function Manage({ onEdit, onDelete, isExpense, setIsExpense, onAdd }: any) {
   }, [isExpense]);
 
   useEffect(() => {
-    data && setGroups(data);
+    data && setGroups(data.content);
   }, [data]);
 
   return (

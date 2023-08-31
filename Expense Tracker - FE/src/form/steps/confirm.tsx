@@ -46,7 +46,7 @@ function Confirm({
               <TableCell>
                 <b>Amount:</b>
               </TableCell>
-              <TableCell>${amount.toFixed()}</TableCell>
+              <TableCell>${amount?.toFixed()}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

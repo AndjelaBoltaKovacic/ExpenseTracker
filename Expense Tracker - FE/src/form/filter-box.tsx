@@ -1,7 +1,26 @@
-import { Box, Button, Slider, Toolbar, Tooltip } from '@mui/material';
+import { Box, Button, Slider, Tooltip } from '@mui/material';
 import BasicDateRangePicker from './datepciker';
+import { DateRange } from '@mui/x-date-pickers-pro';
+import { Dayjs } from 'dayjs';
 
-export function FilterBox({ amountFrom, amountTo, handleAmountChange, dateRange, setDateRange, handleSubmit }: any) {
+interface FilterBoxProps {
+  amountFrom: number;
+  amountTo: number;
+  handleAmountChange: (event: Event, value: number | number[], activeThumb: number) => void;
+  dateRange: DateRange<Dayjs>;
+  setDateRange: (dateRange: DateRange<Dayjs>) => void;
+  handleSubmit: () => void;
+  minMax: number[];
+}
+export function FilterBox({
+  amountFrom,
+  amountTo,
+  handleAmountChange,
+  dateRange,
+  setDateRange,
+  handleSubmit,
+  minMax,
+}: FilterBoxProps) {
   return (
     <>
       <fieldset
@@ -23,17 +42,17 @@ export function FilterBox({ amountFrom, amountTo, handleAmountChange, dateRange,
         <Box display="flex" justifyContent="space-between" gap={2} width="100%">
           <Tooltip title="Filter by amount">
             <Box display="flex" alignItems="center" width={{ xs: '100%', md: '50%' }} gap={2}>
-              <span>$0</span>
+              <span>${minMax[0]}</span>
               <Slider
                 value={[amountFrom, amountTo]}
                 onChange={handleAmountChange}
-                min={0}
-                max={1000}
+                min={minMax[0]}
+                max={minMax[1]}
                 size="small"
                 valueLabelDisplay="auto"
                 aria-labelledby="range-slider"
               />
-              <span>$1000</span>
+              <span>${minMax[1]}</span>
             </Box>
           </Tooltip>
           <BasicDateRangePicker dateRange={dateRange} setDateRange={setDateRange} />

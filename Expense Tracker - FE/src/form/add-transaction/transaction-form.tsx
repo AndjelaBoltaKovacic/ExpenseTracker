@@ -47,13 +47,7 @@ function TransactionForm({
   const amount = watch('amount');
   const [notChanged, setNotChanged] = useState(true);
 
-  //API VALUES
-  const {
-    data: transGroups,
-    error: tgError,
-    loading: tgLoading,
-    fetchData: fetchTransGroups,
-  } = useFetch<TransactionGroup[]>(
+  const { data, error, loading, fetchData } = useFetch<any>(
     transactionType === TransactionType.Income
       ? TransactionService.getIncomeGroups
       : TransactionService.getExpenseGroups
@@ -66,14 +60,14 @@ function TransactionForm({
   } = transactionToEdit ? transactionToEdit : ({} as any);
 
   useEffect(() => {
-    transactionType && fetchTransGroups();
+    transactionType && fetchData();
   }, [transactionType]);
 
   useEffect(() => {
-    if (transGroups?.length) {
-      setTransactionGroups(transGroups);
+    if (data?.content?.length) {
+      setTransactionGroups(data.content);
     }
-  }, [transGroups]);
+  }, [data]);
 
   useEffect(() => {
     setNotChanged(
@@ -89,14 +83,14 @@ function TransactionForm({
     handleConfirm({ ...data, groupName });
   };
 
-  return tgError ? (
+  return error ? (
     <Notice
       outcome={Outcome.Fail}
       text="Oops! Something went wrong. Please try again later"
       handleClose={handleClose}
     />
   ) : (
-    <Loader isLoading={tgLoading}>
+    <Loader isLoading={loading}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl fullWidth variant="outlined" error={!!errors.type} margin="normal" disabled={disableType}>
           <InputLabel>Transaction Type</InputLabel>

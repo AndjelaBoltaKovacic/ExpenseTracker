@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import CustomModal from '../../../common/modal/custom-modal';
 import DataTable from '../../../common/table/table';
-import { Expense, Transaction } from '../../../models/transactions';
+import { Expense, Transaction, TransactionsDTO } from '../../../models/transactions';
 import EditTransaction from '../../../form/edit-transaction/edit-transaction';
 import DeleteTransaction from '../../../form/steps/delete';
 import { TransactionType } from '../../../values/enums/transactions';
@@ -23,6 +23,7 @@ function Transactions() {
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [openTransModal, setOpenTransModal] = useState(false);
   const [isExpense, setIsExpense] = useState<boolean>(true);
+  const [minMax, setMinMax] = useState<number[]>([0, 1000]);
   const [sort, setSort] = useState<string>('updatedDtm');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const [page, setPage] = useState<number>(0);
@@ -32,7 +33,7 @@ function Transactions() {
   const [transationToModify, setTransactionToModify] = useState<Expense | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([] as Transaction[]);
   const { user } = useUserContext();
-  const { data, loading, error, fetchData } = useFetch<Transaction[]>(
+  const { data, loading, error, fetchData } = useFetch<TransactionsDTO<Transaction[]>>(
     isExpense ? TransactionService.getExpenses : TransactionService.getIncomes,
     `?amountFrom=${amountFrom}&amountTo=${amountTo}&dateFrom=${
       dateRange[0] ? dateRange[0].format('YYYY-MM-DD') : ''
@@ -73,7 +74,10 @@ function Transactions() {
   }, [isExpense]);
 
   useEffect(() => {
-    data && setTransactions(data);
+    if (data) {
+      setTransactions(data.data.content);
+      setMinMax([Math.floor(data.minAmount), Math.ceil(data.maxAmount)]);
+    }
   }, [data]);
 
   const handleAmountChange = (event: any, newValue: any) => {
@@ -91,40 +95,32 @@ function Transactions() {
   return (
     <Container sx={{ marginTop: '5vw' }}>
       <Loader isLoading={loading}>
-        {data?.length ? (
-          <>
-            <Box flexGrow={1} mb="3vw">
-              <FilterBox
-                amountTo={amountTo}
-                amountFrom={amountFrom}
-                dateRange={dateRange}
-                setDateRange={setDateRange}
-                handleAmountChange={handleAmountChange}
-                handleSubmit={() => fetchData()}
-              />
-            </Box>
-
-            <Box mt="3vw" mb="1vw" display="flex" justifyContent="space-between">
-              <TransactionToggler value={isExpense} onChange={() => setIsExpense((prev) => !prev)} />
-              <Button onClick={() => handleResetFilters()}>Reset Filters</Button>
-            </Box>
-
-            <DataTable
-              type={TransactionType.Expense}
-              data={transactions}
-              onEditClick={handleEditOpen}
-              onDeleteClick={handleDeleteOpen}
+        <>
+          <Box flexGrow={1} mb="3vw">
+            <FilterBox
+              minMax={minMax}
+              amountTo={amountTo}
+              amountFrom={amountFrom}
+              dateRange={dateRange}
+              setDateRange={setDateRange}
+              handleAmountChange={handleAmountChange}
+              handleSubmit={() => fetchData()}
             />
-            <ReportGenerator isExpense={isExpense} />
-          </>
-        ) : (
-          <NoticeCard
-            title={`Hi, ${user?.firstname}!`}
-            text={`It seems like you don't have any ${isExpense ? 'expenses' : 'incomes'} yet.`}
-            buttonText="Get started"
-            onButtonClick={handleOpenTransModal}
+          </Box>
+
+          <Box mt="3vw" mb="1vw" display="flex" justifyContent="space-between">
+            <TransactionToggler value={isExpense} onChange={() => setIsExpense((prev) => !prev)} />
+            <Button onClick={() => handleResetFilters()}>Reset Filters</Button>
+          </Box>
+
+          <DataTable
+            type={TransactionType.Expense}
+            data={transactions}
+            onEditClick={handleEditOpen}
+            onDeleteClick={handleDeleteOpen}
           />
-        )}
+          <ReportGenerator isExpense={isExpense} />
+        </>
         {error && (
           <NoticeCard
             title="Opps! Something went wrong!"
