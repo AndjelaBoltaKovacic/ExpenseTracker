@@ -45,8 +45,8 @@ function ReportGenerator({ isExpense }: any) {
   };
 
   useEffect(() => {
-    data && setStep(ReportSteps.Success);
-    error && setStep(ReportSteps.Fail);
+    data !== null && setStep(ReportSteps.Success);
+    error !== null && setStep(ReportSteps.Fail);
   }, [data, error]);
 
   return (
@@ -63,7 +63,7 @@ function ReportGenerator({ isExpense }: any) {
               [ReportSteps.Select]: <ReportOptionSelect handleChoice={handleChoice} />,
               [ReportSteps.Confirm]: (
                 <ConfirmReport
-                  text={`You are about to send an ${isExpense ? 'expenses' : 'incomes'} ${
+                  text={`You are about to send  ${isExpense ? 'expenses' : 'incomes'} ${
                     strategy === ReportStrategy.PDF ? 'PDF' : ''
                   } report to your email: ${user?.email}`}
                   onConfirm={fetchData}
