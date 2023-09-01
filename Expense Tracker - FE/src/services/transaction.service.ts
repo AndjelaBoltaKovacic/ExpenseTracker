@@ -9,6 +9,8 @@ const expenseUrl = transactionApiUrl.concat('expense');
 const incomeGroupUrl = transactionApiUrl.concat('income-group');
 const expenseGroupUrl = transactionApiUrl.concat('expense-group');
 const totalAmountUrl = transactionApiUrl.concat('total-amount');
+const totalIncomeUrl = transactionApiUrl.concat('total-income-amount');
+const totalExpenseUrl = transactionApiUrl.concat('total-expense-amount');
 
 const TransactionService = {
   //INCOMES
@@ -77,6 +79,13 @@ const TransactionService = {
   //TOTAL AMOUNT
   getTotalAmount<T>() {
     return axiosApiCall<TransactionsDTO<T>>(HttpMethod.GET, totalAmountUrl);
+  },
+  getIncomeAmount<T>() {
+    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.GET, totalIncomeUrl);
+  },
+
+  getExpenseAmount<T>() {
+    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.GET, totalExpenseUrl);
   },
 };
 

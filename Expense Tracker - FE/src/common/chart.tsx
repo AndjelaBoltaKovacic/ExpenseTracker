@@ -17,34 +17,35 @@ const Chart: React.FC<ChartProps> = ({ totalIncome, totalExpense }) => {
   const theme = useTheme();
 
   const chartData = [
-    { name: 'Total Income', value: totalIncome },
     { name: 'Total Expense', value: totalExpense },
+    { name: 'Total Income', value: totalIncome },
   ];
 
   const COLORS = [theme.palette.primary.main, theme.palette.secondary.main];
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" p={2}>
+    <Box display='flex' flexDirection='column' alignItems='center' p={2}>
       <div style={{ display: 'flex', justifyContent: 'center', width: '100%', maxWidth: 300, margin: '0 auto' }}>
         <PieChart width={300} height={300}>
           <Pie
-            dataKey="value"
-            isAnimationActive={false}
+            dataKey='value'
+            isAnimationActive={true}
             data={chartData}
-            cx="50%" // Center the pie chart horizontally
-            cy="50%" // Center the pie chart vertically
-            innerRadius={60}
+            cx='50%' // Center the pie chart horizontally
+            cy='50%' // Center the pie chart vertically
+            innerRadius={30}
             outerRadius={80}
-            fill="#8884d8"
+            fill='#8884d8'
             label
+            stroke='none'
           >
             {chartData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
           <Tooltip />
-          <Label content={<CustomLabel value={0} />} position="center" />
-          <Legend iconType="circle" layout="horizontal" verticalAlign="bottom" align="center" />
+          <Label content={<CustomLabel value={0} />} position='center' />
+          <Legend iconType='circle' layout='horizontal' verticalAlign='bottom' align='center' />
         </PieChart>
       </div>
     </Box>

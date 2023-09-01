@@ -10,24 +10,45 @@ import Carousel from './carousel';
 
 const AmountDisplay = () => {
   const [totalAmount, setTotalAmount] = useState<number | null>(null);
-  const { data, error, loading, fetchData } = useFetch<any>(TransactionService.getTotalAmount);
+  const [totalIncome, setTotalIncome] = useState<number | null>(null);
+  const [totalExpense, setTotalExpense] = useState<number | null>(null);
 
+  const {
+    data: incm,
+    error: incmError,
+    loading: incmLoading,
+    fetchData: fetchIncomes,
+  } = useFetch<any>(TransactionService.getIncomeAmount);
+
+  const {
+    data: exp,
+    error: expError,
+    loading: expLoading,
+    fetchData: fetchExpenses,
+  } = useFetch<any>(TransactionService.getExpenseAmount);
 
   useEffect(() => {
-    fetchData();
+    fetchIncomes();
+    fetchExpenses();
   }, []);
 
   useEffect(() => {
-    data && setTotalAmount(data.totalAmount);
-  }, [data]);
+    if (incm && exp) {
+      setTotalIncome(incm.totalAmount);
+      setTotalExpense(exp.totalAmount);
+      setTotalAmount(incm.totalAmount - exp.totalAmount);
+    }
+  }, [incm, exp]);
+
   return (
     <Box>
-      <Loader isLoading={loading}>
-        {error && (
-          <Typography variant="body1" mx={5} borderTop={1} borderColor="primary.main">
-            An error occured
-          </Typography>
-        )}
+      <Loader isLoading={incmLoading || expLoading}>
+        {incmError ||
+          (expError && (
+            <Typography variant='body1' mx={5} borderTop={1} borderColor='primary.main'>
+              An error occured
+            </Typography>
+          ))}
         <Carousel
           content1={<Chart totalIncome={7890} totalExpense={789} />}
           content2={<AmountCard totalAmount={totalAmount} />}
