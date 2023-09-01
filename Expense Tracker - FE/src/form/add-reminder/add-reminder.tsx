@@ -29,16 +29,12 @@ export const AddReminder = ({ handleClose }: { handleClose: _void }) => {
         {
           [AddReminderSteps.Add]: <AddReminderForm onComplete={fetchData} />,
           [AddReminderSteps.Success]: (
-            <Notice
-              outcome={Outcome.Success}
-              text="You have successfully added the reminder"
-              handleClose={handleClose}
-            />
+            <Notice outcome={Outcome.Success} text='You have successfully added the reminder' handleClose={onSuccess} />
           ),
           [AddReminderSteps.Fail]: (
             <Notice
               outcome={Outcome.Fail}
-              text="Oops! Something went wrong. Please try again later"
+              text='Oops! Something went wrong. Please try again later'
               handleClose={handleClose}
             />
           ),
