@@ -12,7 +12,7 @@ const locationValueMap: { [pathname: string]: number } = {
 };
 
 export const getLocationValue = (pathname: string): number => {
-  return locationValueMap[pathname] || 0;
+  return locationValueMap[pathname] || pathname.includes('/blog/') ? 2 : 0;
 };
 
 const getReminderWeekDay = (day: number) => {

@@ -3,6 +3,7 @@ export type Article = {
   author: string;
   text: string;
   image?: string;
+  id: string;
 };
 
 type Meta = {

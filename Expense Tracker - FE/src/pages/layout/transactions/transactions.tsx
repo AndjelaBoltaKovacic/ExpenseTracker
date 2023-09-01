@@ -40,7 +40,6 @@ function Transactions() {
   );
 
   const handleEditOpen = (transaction: Transaction) => {
-    console.log(transaction);
     setTransactionToModify(transaction);
     setOpenEditModal(true);
   };
