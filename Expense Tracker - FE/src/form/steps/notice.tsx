@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from '@mui/material';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import ErrorIcon from '@mui/icons-material/Error';
 import { _void } from '../../models/common';
 import { Outcome } from '../../values/enums/form-steps';
@@ -23,9 +23,9 @@ function Notice({
       {outcome && (
         <Box marginY={3}>
           {outcome === Outcome.Success ? (
-            <CheckCircleOutlineIcon color="success" sx={{ fontSize: '100px' }} />
+            <CheckCircleRoundedIcon color="success" sx={{ fontSize: '120px' }} />
           ) : (
-            <ErrorIcon color="error" sx={{ fontSize: '100px' }} />
+            <ErrorIcon color="error" sx={{ fontSize: '120px' }} />
           )}
         </Box>
       )}

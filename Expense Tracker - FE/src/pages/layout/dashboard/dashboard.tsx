@@ -15,6 +15,7 @@ import { Transaction, TransactionsDTO } from '../../../models/transactions';
 import ManageCategories from '../../../form/manage-categories/manage-categories';
 import { useUserContext } from '../../../contexts/userContext';
 import ActionButtons from './action-buttons';
+import useReminderContext from '../../../contexts/reminder.context';
 
 function Dashboard() {
   const { isPremium, user } = useUserContext();
@@ -22,6 +23,7 @@ function Dashboard() {
   const [expenses, setExpenses] = useState<Transaction[]>([] as Transaction[]);
   const [openTransModal, setOpenTransModal] = useState(false);
   const [openGroupModal, setOpenGroupModal] = useState(false);
+  const { reminder } = useReminderContext();
   const path = '?page=0&size=5&sort=createdDtm';
   const {
     data: incm,
@@ -51,6 +53,8 @@ function Dashboard() {
   useEffect(() => {
     incm && setIncomes(incm.data.content);
   }, [incm]);
+
+  useEffect(() => {}, [reminder]);
 
   const handleOpenTransModal = () => {
     setOpenTransModal(true);
@@ -86,7 +90,6 @@ function Dashboard() {
                 <TableDisplay data={expenses} error={expError} type={TransactionType.Expense} />
               </Box>
             )}
-            {isPremium && <Reminder />}
           </Container>
         ) : (
           <NoticeCard
@@ -97,6 +100,7 @@ function Dashboard() {
           />
         )}
       </Loader>
+      {isPremium && <Reminder />}
       <CustomModal isOpen={openTransModal} title="Add Transaction" handleClose={handleCloseTransModal}>
         <AddTransaction handleClose={handleCloseTransModal} />
       </CustomModal>

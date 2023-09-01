@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import useFetch from '../../hooks/useFetch';
 import ReminderService from '../../services/reminder.service';
 import { AddReminderSteps, Outcome } from '../../values/enums/form-steps';
@@ -6,8 +6,10 @@ import Notice from '../steps/notice';
 import { _void } from '../../models/common';
 import { AddReminderForm } from './add-reminder-form';
 import Loader from '../../common/loader';
+import useReminderContext from '../../contexts/reminder.context';
 
 export const AddReminder = ({ handleClose }: { handleClose: _void }) => {
+  const { getReminder } = useReminderContext();
   const [step, setStep] = useState(AddReminderSteps.Add);
   const { data, error, loading, fetchData } = useFetch(ReminderService.setReminder);
 
@@ -15,6 +17,11 @@ export const AddReminder = ({ handleClose }: { handleClose: _void }) => {
     data && setStep(AddReminderSteps.Success);
     error && setStep(AddReminderSteps.Fail);
   }, [data, error]);
+
+  const onSuccess = () => {
+    getReminder();
+    handleClose();
+  };
 
   return (
     <Loader isLoading={loading}>

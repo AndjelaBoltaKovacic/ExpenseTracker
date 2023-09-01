@@ -6,33 +6,20 @@ import NoticeCard from '../common/notice-card';
 import { ReminderDTO } from '../models/reminder';
 import { ReminderType } from '../values/enums/reminder';
 import { getReminderText } from '../helpers/common';
+import useReminderContext from '../contexts/reminder.context';
 
 function Reminder() {
-  const [reminder, setReminder] = useState<ReminderDTO>();
-  const { data, error, loading, fetchData } = useFetch<ReminderDTO>(ReminderService.getReminder);
+  const { reminder } = useReminderContext();
 
   const { reminderType, reminderDay } = reminder ? reminder : ({} as ReminderDTO);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-      setReminder(data);
-    }
-  }, [data]);
-
-  return !error ? (
-    <Loader isLoading={loading}>
-      <NoticeCard
-        title={`You have a ${
-          reminderType && reminderType.charAt(0).toUpperCase() + reminderType.slice(1).toLowerCase()
-        } reminder.`}
-        text={`You are set to get a reminder every ${getReminderText(reminderType, reminderDay)}.`}
-      />
-    </Loader>
+  return reminder.reminderDay ? (
+    <NoticeCard
+      title={`You have a ${
+        reminderType && reminderType.charAt(0).toUpperCase() + reminderType.slice(1).toLowerCase()
+      } reminder.`}
+      text={`You are set to get a reminder every ${getReminderText(reminderType, reminderDay)}.`}
+    />
   ) : null;
 }
 
