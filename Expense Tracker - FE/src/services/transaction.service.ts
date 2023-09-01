@@ -40,7 +40,7 @@ const TransactionService = {
   },
 
   deleteExpense<T>({ path }: { path: string }) {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.DELETE, `${incomeUrl}/${path}`);
+    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.DELETE, `${expenseUrl}/${path}`);
   },
 
   //INCOME GROUPS

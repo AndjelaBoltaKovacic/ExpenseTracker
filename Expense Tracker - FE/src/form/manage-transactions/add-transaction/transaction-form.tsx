@@ -5,19 +5,19 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
-import { _void } from '../../models/common';
+import { _void } from '../../../models/common';
 import CurrencyInput from './currency-input';
 import { Box, FormHelperText } from '@mui/material';
-import ModalButtons from '../../common/modal/modal-buttons';
-import TransactionService from '../../services/transaction.service';
-import useFetch from '../../hooks/useFetch';
-import Loader from '../../common/loader';
-import Notice from '../steps/notice';
-import { Outcome } from '../../values/enums/form-steps';
-import { Expense, Income, TransactionGroup } from '../../models/transactions';
-import { TransactionType } from '../../values/enums/transactions';
+import ModalButtons from '../../../common/modal/modal-buttons';
+import TransactionService from '../../../services/transaction.service';
+import useFetch from '../../../hooks/useFetch';
+import Loader from '../../../common/loader';
+import Notice from '../../steps/notice';
+import { Outcome } from '../../../values/enums/form-steps';
+import { Expense, Income, Transaction, TransactionGroup } from '../../../models/transactions';
+import { TransactionType } from '../../../values/enums/transactions';
 import { Settings } from '@mui/icons-material';
-import CategoryIcon from '../../common/category-icon';
+import CategoryIcon from '../../../common/category-icon';
 
 function TransactionForm({
   transactionToEdit,
@@ -25,7 +25,7 @@ function TransactionForm({
   handleConfirm,
   disableType,
 }: {
-  transactionToEdit?: Expense | Income;
+  transactionToEdit?: Transaction;
   handleClose: _void;
   handleConfirm: _void;
   disableType?: boolean;
@@ -86,22 +86,22 @@ function TransactionForm({
   return error ? (
     <Notice
       outcome={Outcome.Fail}
-      text="Oops! Something went wrong. Please try again later"
+      text='Oops! Something went wrong. Please try again later'
       handleClose={handleClose}
     />
   ) : (
     <Loader isLoading={loading}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl fullWidth variant="outlined" error={!!errors.type} margin="normal" disabled={disableType}>
+        <FormControl fullWidth variant='outlined' error={!!errors.type} margin='normal' disabled={disableType}>
           <InputLabel>Transaction Type</InputLabel>
           <Controller
-            name="type"
+            name='type'
             control={control}
             defaultValue={type || undefined}
             rules={{ required: 'This field is required' }}
             render={({ field }) => (
               <>
-                <Select {...field} label="Transaction Type">
+                <Select {...field} label='Transaction Type'>
                   {transactionTypes.map((type, index) => (
                     <MenuItem key={index} value={type}>
                       {type}
@@ -113,26 +113,26 @@ function TransactionForm({
             )}
           />
         </FormControl>
-        <FormControl fullWidth variant="outlined" error={!!errors.groupId} margin="normal">
+        <FormControl fullWidth variant='outlined' error={!!errors.groupId} margin='normal'>
           <InputLabel>Transaction Category</InputLabel>
           <Controller
-            name="groupId"
+            name='groupId'
             control={control}
             defaultValue={groupID || undefined}
             rules={{ required: 'This field is required' }}
             render={({ field }) => (
               <>
-                <Select {...field} label="Transaction Category">
+                <Select {...field} label='Transaction Category'>
                   {transactionGroups?.map(({ name, id }) => (
                     <MenuItem key={id} value={id}>
-                      <Box display="flex" alignItems="end">
+                      <Box display='flex' alignItems='end'>
                         <CategoryIcon name={name} /> &nbsp;{name}
                       </Box>
                     </MenuItem>
                   ))}
                   <MenuItem value={'settings'}>
-                    <Box display="flex" alignItems="end">
-                      <Settings color="primary" />
+                    <Box display='flex' alignItems='end'>
+                      <Settings color='primary' />
                       &nbsp; Manage Categories
                     </Box>
                   </MenuItem>
@@ -144,11 +144,11 @@ function TransactionForm({
         </FormControl>
 
         <TextField
-          label="Transaction Description"
+          label='Transaction Description'
           fullWidth
           defaultValue={transactionToEditName || undefined}
-          variant="outlined"
-          margin="normal"
+          variant='outlined'
+          margin='normal'
           {...register('name', {
             required: 'This field is required',
             minLength: { value: 5, message: 'Description must have at least 5 characters' },
@@ -156,17 +156,17 @@ function TransactionForm({
           error={!!errors.name}
           helperText={errors?.name?.message as ReactNode}
         />
-        <FormControl fullWidth variant="outlined" error={!!errors.amount} margin="normal">
+        <FormControl fullWidth variant='outlined' error={!!errors.amount} margin='normal'>
           <Controller
             defaultValue={transactionToEditAmount || undefined}
-            name="amount"
+            name='amount'
             control={control}
             rules={{
               required: 'This field is required',
             }}
             render={({ field }) => (
               <>
-                <CurrencyInput {...field} label="Amount" name="amount" fullWidth />
+                <CurrencyInput {...field} label='Amount' name='amount' fullWidth />
                 {errors?.amount && <FormHelperText>{errors?.amount?.message as string}</FormHelperText>}
               </>
             )}

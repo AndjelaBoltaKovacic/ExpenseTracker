@@ -79,7 +79,7 @@ function ManageCategories({ handleClose }: { handleClose: _void }) {
             <Confirm
               isExpense={isExpense}
               group={group}
-              text={`Are you sure you wan't to ${method} this ${isExpense ? 'expense' : 'income'} category?`}
+              text={`Are you sure you want to ${method} this ${isExpense ? 'expense' : 'income'} category?`}
               handleBack={handleBack}
               handleConfirm={handleConfirm}
             />
@@ -94,7 +94,7 @@ function ManageCategories({ handleClose }: { handleClose: _void }) {
           [ManageCategoriesSteps.Fail]: (
             <Notice
               outcome={Outcome.Fail}
-              text="Oops! Something went wrong. Please try again later"
+              text='Oops! Something went wrong. Please try again later'
               handleClose={handleClose}
             />
           ),

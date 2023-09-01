@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { EditTransactionSteps, Outcome } from '../../values/enums/form-steps';
+import { EditTransactionSteps, Outcome } from '../../../values/enums/form-steps';
 import TransactionForm from '../add-transaction/transaction-form';
-import { Expense } from '../../models/transactions';
-import { _void } from '../../models/common';
-import Confirm from '../steps/confirm';
-import Notice from '../steps/notice';
-import Loader from '../../common/loader';
-import useFetch from '../../hooks/useFetch';
-import TransactionService from '../../services/transaction.service';
-import { TransactionType } from '../../values/enums/transactions';
+import { Expense, Transaction } from '../../../models/transactions';
+import { _void } from '../../../models/common';
+import Confirm from '../../steps/confirm';
+import Notice from '../../steps/notice';
+import Loader from '../../../common/loader';
+import useFetch from '../../../hooks/useFetch';
+import TransactionService from '../../../services/transaction.service';
+import { TransactionType } from '../../../values/enums/transactions';
 
 function EditTransaction({ transactionToEdit, handleClose }: { transactionToEdit: Expense; handleClose: _void }) {
   const [step, setStep] = useState<EditTransactionSteps>(EditTransactionSteps.Edit);
@@ -36,7 +36,7 @@ function EditTransaction({ transactionToEdit, handleClose }: { transactionToEdit
   }, [data, error]);
 
   return (
-    <Loader isLoading={loading} size="8vw">
+    <Loader isLoading={loading} size='8vw'>
       {
         {
           [EditTransactionSteps.Edit]: (
@@ -44,12 +44,12 @@ function EditTransaction({ transactionToEdit, handleClose }: { transactionToEdit
               disableType
               handleClose={handleClose}
               handleConfirm={handleFormConfirm}
-              transactionToEdit={transactionToEdit as Expense}
+              transactionToEdit={transactionToEdit as Transaction}
             />
           ),
           [EditTransactionSteps.Confirm]: (
             <Confirm
-              text="Are you sure you want to edit this transaction?"
+              text='Are you sure you want to edit this transaction?'
               handleBack={handleBack}
               handleConfirm={handleSubmit}
               data={transactionData}
@@ -58,14 +58,14 @@ function EditTransaction({ transactionToEdit, handleClose }: { transactionToEdit
           [EditTransactionSteps.Success]: (
             <Notice
               outcome={Outcome.Success}
-              text="You have successfully edited the transaction"
+              text='You have successfully edited the transaction'
               handleClose={handleClose}
             />
           ),
           [EditTransactionSteps.Fail]: (
             <Notice
               outcome={Outcome.Fail}
-              text="Oops! Something went wrong. Please try again later"
+              text='Oops! Something went wrong. Please try again later'
               handleClose={handleClose}
             />
           ),

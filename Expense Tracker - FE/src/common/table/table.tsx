@@ -1,5 +1,5 @@
-import { Dispatch, SetStateAction, useState } from 'react';
-import { Table, TableBody, TableContainer, TableHead, TableRow, Button, Paper, Box, Typography } from '@mui/material';
+import { Dispatch, SetStateAction } from 'react';
+import { Table, TableBody, TableContainer, TableHead, TableRow, Paper, Box } from '@mui/material';
 import { DataEntry, _void } from '../../models/common';
 import SortLabel from './sort-label';
 import SmallTableCell from './SmallTableCell';
@@ -19,6 +19,8 @@ const DataTable = ({
   type,
   orderBy = 'updatedDtm',
   setOrderBy,
+  order = 'desc',
+  setOrder,
 }: {
   disableSort?: boolean;
   hideButtons?: boolean;
@@ -28,12 +30,12 @@ const DataTable = ({
   type?: TransactionType;
   orderBy?: string;
   setOrderBy?: Dispatch<SetStateAction<string>>;
+  order?: 'asc' | 'desc';
+  setOrder?: Dispatch<SetStateAction<'asc' | 'desc'>>;
 }) => {
-  const [order, setOrder] = useState<'asc' | 'desc'>('desc');
-
   const handleSort = (property: keyof DataEntry) => {
     const isAscending = orderBy === property && order === 'asc';
-    setOrder(isAscending ? 'desc' : 'asc');
+    setOrder && setOrder(isAscending ? 'desc' : 'asc');
     setOrderBy && setOrderBy(property);
   };
 
@@ -49,10 +51,10 @@ const DataTable = ({
   return (
     <>
       <TableContainer component={Paper} sx={{ borderRadius: '7px', padding: '10px' }}>
-        <Table aria-label="Sortable table">
+        <Table aria-label='Sortable table'>
           <TableHead>
             <TableRow>
-              <SmallTableCell color="primary.main" content="No." />
+              <SmallTableCell color='primary.main' content='No.' />
               {TABLE_HEADERS.map(({ title, property }, i) => (
                 <SmallTableCell
                   key={`${title}_${i}`}
@@ -79,11 +81,11 @@ const DataTable = ({
           <TableBody>
             {sortedData.map((row, i) => (
               <TableRow key={row.id}>
-                <SmallTableCell color="primary.main" content={i + 1} />
+                <SmallTableCell color='primary.main' content={i + 1} />
                 <SmallTableCell content={row.name} />
                 <SmallTableCell
                   content={
-                    <Box display="flex" alignItems="center">
+                    <Box display='flex' alignItems='center'>
                       <CategoryIcon name={row.groupName} />
                       {row.groupName}
                     </Box>
@@ -93,12 +95,8 @@ const DataTable = ({
                 <SmallTableCell content={formatDate(row.updatedDtm)} />
                 {!hideButtons && (
                   <>
-                    <TableButtonCell
-                      color="primary"
-                      onClick={onEditClick && (() => onEditClick({ ...row, type }))}
-                      text="Edit"
-                    />
-                    <TableButtonCell color="secondary" onClick={() => onDeleteClick({ ...row, type })} text="Delete" />
+                    <TableButtonCell color='primary' onClick={() => onEditClick({ ...row, type })} text='Edit' />
+                    <TableButtonCell color='secondary' onClick={() => onDeleteClick({ ...row, type })} text='Delete' />
                   </>
                 )}
               </TableRow>

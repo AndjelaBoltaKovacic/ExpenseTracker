@@ -12,6 +12,7 @@ const AmountDisplay = () => {
   const [totalAmount, setTotalAmount] = useState<number | null>(null);
   const { data, error, loading, fetchData } = useFetch<any>(TransactionService.getTotalAmount);
 
+
   useEffect(() => {
     fetchData();
   }, []);

@@ -8,29 +8,34 @@ function Notice({
   outcome,
   handleClose,
   text,
+  details,
   btnText = 'Close',
 }: {
   outcome?: Outcome;
   text?: string;
+  details?: string;
   handleClose: _void;
   btnText?: string;
 }) {
   return (
-    <Box textAlign="center">
-      <Typography margin={3} variant="h5">
+    <Box textAlign='center'>
+      <Typography margin={3} variant='h5'>
         {text}
+      </Typography>
+      <Typography margin={3} variant='body1'>
+        {details}
       </Typography>
       {outcome && (
         <Box marginY={3}>
           {outcome === Outcome.Success ? (
-            <CheckCircleRoundedIcon color="success" sx={{ fontSize: '120px' }} />
+            <CheckCircleRoundedIcon color='success' sx={{ fontSize: '120px' }} />
           ) : (
-            <ErrorIcon color="error" sx={{ fontSize: '120px' }} />
+            <ErrorIcon color='error' sx={{ fontSize: '120px' }} />
           )}
         </Box>
       )}
-      <Box display="flex" justifyContent="center" mt={8}>
-        <Button variant="contained" color="primary" size="large" onClick={handleClose}>
+      <Box display='flex' justifyContent='center' mt={8}>
+        <Button variant='contained' color='primary' size='large' onClick={handleClose}>
           {btnText}
         </Button>
       </Box>

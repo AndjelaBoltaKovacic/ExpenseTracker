@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { AddTransactionSteps, Outcome } from '../../values/enums/form-steps';
+import { AddTransactionSteps, Outcome } from '../../../values/enums/form-steps';
 import TransactionForm from './transaction-form';
-import { Transaction, TransactionFormData } from '../../models/transactions';
-import { _void } from '../../models/common';
-import Confirm from '../steps/confirm';
-import Notice from '../steps/notice';
-import Loader from '../../common/loader';
-import TransactionService from '../../services/transaction.service';
-import { TransactionType } from '../../values/enums/transactions';
-import useFetch from '../../hooks/useFetch';
+import { Transaction, TransactionFormData } from '../../../models/transactions';
+import { _void } from '../../../models/common';
+import Confirm from '../../steps/confirm';
+import Notice from '../../steps/notice';
+import Loader from '../../../common/loader';
+import TransactionService from '../../../services/transaction.service';
+import { TransactionType } from '../../../values/enums/transactions';
+import useFetch from '../../../hooks/useFetch';
 
 function AddTransaction({ handleClose }: { handleClose: _void }) {
   const [step, setStep] = useState<AddTransactionSteps>(AddTransactionSteps.Add);
@@ -40,13 +40,13 @@ function AddTransaction({ handleClose }: { handleClose: _void }) {
   }, [data, error]);
 
   return (
-    <Loader isLoading={loading} size="8vw">
+    <Loader isLoading={loading} size='8vw'>
       {
         {
           [AddTransactionSteps.Add]: <TransactionForm handleClose={handleClose} handleConfirm={handleFormConfirm} />,
           [AddTransactionSteps.Confirm]: (
             <Confirm
-              text="Are you sure you want to add this transaction?"
+              text='Are you sure you want to add this transaction?'
               handleBack={handleBack}
               handleConfirm={handleSubmit}
               data={transactionData}
@@ -55,14 +55,14 @@ function AddTransaction({ handleClose }: { handleClose: _void }) {
           [AddTransactionSteps.Success]: (
             <Notice
               outcome={Outcome.Success}
-              text="Your transaction has been added successfully"
+              text='Your transaction has been added successfully'
               handleClose={handleCloseAndRefetch}
             />
           ),
           [AddTransactionSteps.Fail]: (
             <Notice
               outcome={Outcome.Fail}
-              text="Oops! Something went wrong. Please try again later"
+              text='Oops! Something went wrong. Please try again later'
               handleClose={handleClose}
             />
           ),

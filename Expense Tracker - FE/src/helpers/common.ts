@@ -29,8 +29,8 @@ export const getReminderText = (reminderType: ReminderType, reminderDay: number)
 export const getApiCall = (isExpense: boolean, action: Action) => {
   return {
     [Action.Add]: isExpense ? TransactionService.addExpenseGroup : TransactionService.addIncomeGroup,
-    [Action.Edit]: isExpense ? TransactionService.editExpenseGroup : TransactionService.editIncome,
-    [Action.Delete]: isExpense ? TransactionService.deleteExpenseGroup : TransactionService.deleteIncome,
+    [Action.Edit]: isExpense ? TransactionService.editExpenseGroup : TransactionService.editIncomeGroup,
+    [Action.Delete]: isExpense ? TransactionService.deleteExpenseGroup : TransactionService.deleteIncomeGroup,
   }[action];
 };
 

@@ -10,7 +10,7 @@ import Reminder from '../../../reminder/reminder';
 import { TransactionType } from '../../../values/enums/transactions';
 import { TableDisplay } from '../../../common/table/table-display';
 import NoticeCard from '../../../common/notice-card';
-import AddTransaction from '../../../form/add-transaction/add-transaction';
+import AddTransaction from '../../../form/manage-transactions/add-transaction/add-transaction';
 import { Transaction, TransactionsDTO } from '../../../models/transactions';
 import ManageCategories from '../../../form/manage-categories/manage-categories';
 import { useUserContext } from '../../../contexts/userContext';
