@@ -9,7 +9,7 @@ interface CarouselProps {
 }
 
 const Carousel: React.FC<CarouselProps> = ({ content1, content2 }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const handleSlideChange = (index: number) => {
     setActiveIndex(index);

@@ -78,14 +78,14 @@ const TransactionService = {
 
   //TOTAL AMOUNT
   getTotalAmount<T>() {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.GET, totalAmountUrl);
+    return axiosApiCall<{ totalAmount: number }>(HttpMethod.GET, totalAmountUrl);
   },
   getIncomeAmount<T>() {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.GET, totalIncomeUrl);
+    return axiosApiCall<{ totalAmount: number }>(HttpMethod.GET, totalIncomeUrl);
   },
 
   getExpenseAmount<T>() {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.GET, totalExpenseUrl);
+    return axiosApiCall<{ totalAmount: number }>(HttpMethod.GET, totalExpenseUrl);
   },
 };
 

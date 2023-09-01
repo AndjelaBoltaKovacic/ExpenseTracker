@@ -21,8 +21,8 @@ function Dashboard() {
   const { isPremium, user } = useUserContext();
   const [incomes, setIncomes] = useState<Transaction[]>([] as Transaction[]);
   const [expenses, setExpenses] = useState<Transaction[]>([] as Transaction[]);
-  const [openTransModal, setOpenTransModal] = useState(false);
-  const [openGroupModal, setOpenGroupModal] = useState(false);
+  const [openTransModal, setOpenTransModal] = useState<boolean>(false);
+  const [openGroupModal, setOpenGroupModal] = useState<boolean>(false);
   const { reminder } = useReminderContext();
   const path = '?page=0&size=5&sort=createdDtm';
   const {
@@ -48,11 +48,8 @@ function Dashboard() {
 
   useEffect(() => {
     exp && setExpenses(exp.data.content);
-  }, [exp]);
-
-  useEffect(() => {
     incm && setIncomes(incm.data.content);
-  }, [incm]);
+  }, [exp, incm]);
 
   useEffect(() => {}, [reminder]);
 

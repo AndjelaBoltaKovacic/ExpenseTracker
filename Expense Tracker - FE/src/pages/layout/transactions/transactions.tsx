@@ -23,7 +23,7 @@ function Transactions() {
   const [openTransModal, setOpenTransModal] = useState(false);
   const [isExpense, setIsExpense] = useState<boolean>(true);
   const [minMax, setMinMax] = useState<number[]>([0, 1000]);
-  const [reset, setReset] = useState(false);
+  const [reset, setReset] = useState<boolean>(false);
   const [sort, setSort] = useState<string>('updatedDtm');
   const [order, setOrder] = useState<'asc' | 'desc'>('desc');
   const [page, setPage] = useState<number>(0);

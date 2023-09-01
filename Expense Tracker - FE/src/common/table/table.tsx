@@ -51,10 +51,10 @@ const DataTable = ({
   return (
     <>
       <TableContainer component={Paper} sx={{ borderRadius: '7px', padding: '10px' }}>
-        <Table aria-label='Sortable table'>
+        <Table aria-label="Sortable table">
           <TableHead>
             <TableRow>
-              <SmallTableCell color='primary.main' content='No.' />
+              <SmallTableCell color="primary.main" content="No." />
               {TABLE_HEADERS.map(({ title, property }, i) => (
                 <SmallTableCell
                   key={`${title}_${i}`}
@@ -81,12 +81,13 @@ const DataTable = ({
           <TableBody>
             {sortedData.map((row, i) => (
               <TableRow key={row.id}>
-                <SmallTableCell color='primary.main' content={i + 1} />
+                <SmallTableCell color="primary.main" content={i + 1} />
                 <SmallTableCell content={row.name} />
                 <SmallTableCell
                   content={
-                    <Box display='flex' alignItems='center'>
+                    <Box display="flex" alignItems="center">
                       <CategoryIcon name={row.groupName} />
+                      &nbsp;
                       {row.groupName}
                     </Box>
                   }
@@ -95,8 +96,8 @@ const DataTable = ({
                 <SmallTableCell content={formatDate(row.updatedDtm)} />
                 {!hideButtons && (
                   <>
-                    <TableButtonCell color='primary' onClick={() => onEditClick({ ...row, type })} text='Edit' />
-                    <TableButtonCell color='secondary' onClick={() => onDeleteClick({ ...row, type })} text='Delete' />
+                    <TableButtonCell color="primary" onClick={() => onEditClick({ ...row, type })} text="Edit" />
+                    <TableButtonCell color="secondary" onClick={() => onDeleteClick({ ...row, type })} text="Delete" />
                   </>
                 )}
               </TableRow>

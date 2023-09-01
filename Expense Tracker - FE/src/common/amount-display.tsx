@@ -40,18 +40,21 @@ const AmountDisplay = () => {
     }
   }, [incm, exp]);
 
+  useEffect(() => {
+    setLoading(incmLoading || expLoading);
+  }, [incmLoading, expLoading]);
+
   return (
     <Box>
       <Loader isLoading={incmLoading || expLoading}>
-        {incmError ||
-          (expError && (
-            <Typography variant='body1' mx={5} borderTop={1} borderColor='primary.main'>
-              An error occured
-            </Typography>
-          ))}
+        {(incmError || expError) && (
+          <Typography variant="body1" mx={5} borderTop={1} borderColor="primary.main">
+            An error occured
+          </Typography>
+        )}
         <Carousel
-          content1={<Chart totalIncome={7890} totalExpense={789} />}
-          content2={<AmountCard totalAmount={totalAmount} />}
+          content2={<Chart totalIncome={totalIncome || 0} totalExpense={totalExpense || 0} />}
+          content1={totalAmount && <AmountCard totalAmount={totalAmount} />}
         />
       </Loader>
     </Box>

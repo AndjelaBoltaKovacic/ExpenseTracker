@@ -67,7 +67,7 @@ const getIcon = (name: string, keywords: string[]) => {
 
 function CategoryIcon({ name }: { name: string }) {
   return (
-    <Box mr={1} display="flex" alignItems="end">
+    <Box display="flex" alignItems="end">
       {categories.find((category) => getIcon(name, category?.keywords))?.icon ?? (
         <DashboardCustomizeRounded fontSize="small" color="primary" />
       )}

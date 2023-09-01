@@ -1,4 +1,4 @@
-import { TextField, Typography } from '@mui/material';
+import { Box, TextField, Typography } from '@mui/material';
 import { useEffect, ReactNode, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { _void } from '../../../models/common';
@@ -18,6 +18,7 @@ function CategoriesForm({
   handleBack: any;
   title: string;
 }) {
+  const [notChanged, setNotChanged] = useState<boolean>(true);
   const {
     handleSubmit,
     register,
@@ -26,50 +27,51 @@ function CategoriesForm({
   } = useForm();
 
   const name = watch('name');
+    const { name: oldName } = group ? group : ({} as TransactionGroup);
 
-  const [notChanged, setNotChanged] = useState(true);
+    useEffect(() => {
+      setNotChanged(name === oldName);
+    }, [name]);
 
-  const { name: oldName } = group ? group : ({} as TransactionGroup);
+    const onSubmit = (data: any) => {
+      handleConfirm({ ...group, ...data }, oldName ? Action.Edit : Action.Add);
+    };
 
-  useEffect(() => {
-    setNotChanged(name === oldName);
-  }, [name]);
-
-  const onSubmit = (data: any) => {
-    handleConfirm({ ...group, ...data }, oldName ? Action.Edit : Action.Add);
-  };
-
-  return (
-    <>
-      <Typography fontSize={20} textAlign="center" padding={2}>
-        {title}
-      </Typography>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <TextField
-          label="Transaction Description"
-          fullWidth
-          defaultValue={oldName || undefined}
-          variant="outlined"
-          margin="normal"
-          {...register('name', {
-            required: 'This field is required',
-            minLength: { value: 5, message: 'Description must have at least 5 characters' },
-          })}
-          error={!!errors.name}
-          helperText={errors?.name?.message as ReactNode}
-          InputProps={{
-            startAdornment: <CategoryIcon name={name || oldName || ''} />,
-          }}
-        />
-        <ModalButtons
-          handleClose={handleBack}
-          cancelButtonText="Back"
-          handleSubmit={handleSubmit}
-          disableSubmit={notChanged}
-        />
-      </form>
-    </>
-  );
+    return (
+      <>
+        <Typography fontSize={20} textAlign="center" padding={2}>
+          {title}
+        </Typography>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <TextField
+            label="Transaction Description"
+            fullWidth
+            defaultValue={oldName || undefined}
+            variant="outlined"
+            margin="normal"
+            {...register('name', {
+              required: 'This field is required',
+              minLength: { value: 5, message: 'Description must have at least 5 characters' },
+            })}
+            error={!!errors.name}
+            helperText={errors?.name?.message as ReactNode}
+            InputProps={{
+              startAdornment: (
+                <Box mr={1}>
+                  <CategoryIcon name={name || oldName || ''} />
+                </Box>
+              ),
+            }}
+          />
+          <ModalButtons
+            handleClose={handleBack}
+            cancelButtonText="Back"
+            handleSubmit={handleSubmit}
+            disableSubmit={notChanged}
+          />
+        </form>
+      </>
+    );
 }
 
 export default CategoriesForm;

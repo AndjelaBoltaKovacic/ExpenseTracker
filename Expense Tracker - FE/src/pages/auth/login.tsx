@@ -13,7 +13,7 @@ import UserService from '../../services/user.service';
 import { User, UserTokens } from '../../models/user';
 
 const LoginForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const { palette }: any = useContext(ThemeContext);
   const inputLabelColorOverride = getInputLabelColor(palette.mode);
   const { data, loading, error, fetchData } = useFetch<UserTokens>(UserService.login);
