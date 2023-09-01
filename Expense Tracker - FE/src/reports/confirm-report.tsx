@@ -4,7 +4,7 @@ import { _void } from '../models/common';
 
 const ConfirmReport = ({ text, onConfirm, onClose }: { text: string; onConfirm: _void; onClose: _void }) => {
   return (
-    <Box textAlign='center' pb={4}>
+    <Box textAlign='center' p={2} pb={4}>
       <Typography variant='h5' mb={6}>
         {text}
       </Typography>

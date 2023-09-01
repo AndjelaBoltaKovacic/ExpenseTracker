@@ -33,8 +33,8 @@ const Chart: React.FC<ChartProps> = ({ totalIncome, totalExpense }) => {
             data={chartData}
             cx='50%' // Center the pie chart horizontally
             cy='50%' // Center the pie chart vertically
-            innerRadius={30}
-            outerRadius={80}
+            innerRadius={20}
+            outerRadius={90}
             fill='#8884d8'
             label
             stroke='none'

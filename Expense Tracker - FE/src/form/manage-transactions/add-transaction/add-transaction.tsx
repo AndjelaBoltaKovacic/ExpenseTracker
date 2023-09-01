@@ -9,6 +9,7 @@ import Loader from '../../../common/loader';
 import TransactionService from '../../../services/transaction.service';
 import { TransactionType } from '../../../values/enums/transactions';
 import useFetch from '../../../hooks/useFetch';
+import cashRegisterSound from '../../../assets/audio/cash-register-purchase-87313.mp3';
 
 function AddTransaction({ handleClose }: { handleClose: _void }) {
   const [step, setStep] = useState<AddTransactionSteps>(AddTransactionSteps.Add);
@@ -16,6 +17,7 @@ function AddTransaction({ handleClose }: { handleClose: _void }) {
   const { data, error, loading, fetchData } = useFetch(
     transactionData.type === TransactionType.Income ? TransactionService.addIncome : TransactionService.addExpense
   );
+  const audio = new Audio(cashRegisterSound);
 
   const handleFormConfirm = (data: Transaction) => {
     setTransactionData(data);
@@ -27,7 +29,10 @@ function AddTransaction({ handleClose }: { handleClose: _void }) {
 
   const handleSubmit = () => {
     const { groupName, type, ...body } = transactionData;
-    fetchData(body);
+    audio.play();
+    setTimeout(() => {
+      fetchData(body);
+    }, 500);
   };
 
   const handleCloseAndRefetch = () => {
