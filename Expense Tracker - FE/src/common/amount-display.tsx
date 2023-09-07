@@ -40,9 +40,6 @@ const AmountDisplay = () => {
     }
   }, [incm, exp]);
 
-  useEffect(() => {
-    setLoading(incmLoading || expLoading);
-  }, [incmLoading, expLoading]);
 
   return (
     <Box>
