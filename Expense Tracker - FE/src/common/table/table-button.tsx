@@ -1,5 +1,4 @@
 import { Button } from '@mui/material';
-import React from 'react';
 import SmallTableCell from './SmallTableCell';
 import { _void } from '../../models/common';
 

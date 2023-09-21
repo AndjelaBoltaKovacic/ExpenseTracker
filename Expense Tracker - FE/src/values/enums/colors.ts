@@ -33,35 +33,35 @@
 // export { DarkTheme, LightTheme };
 
 enum DarkTheme {
-  Primary = '#F7E987',         // Updated Primary Color
-  PrimaryVariant = '#445069',  // Darker Variant of Primary
-  Secondary = '#5B9A8B',      // Main Secondary Color
-  SecondaryVariant = '#F7E987',// Lighter Variant of Secondary
-  Background = '#1A1A1A',     // Dark Gray for Background
-  Surface = '#292929',        // Darker Gray for Surface
-  Error = '#FF5B5B',          // Bright Red for Error
-  Success = '#A2C579',        // Teal for Success
-  OnPrimary = '#000000',      // White for Text on Primary
-  OnSecondary = '#FFFFFF',    // White for Text on Secondary
-  OnBackground = '#FFFFFF',   // White for Text on Background
-  OnSurface = '#FFFFFF',      // White for Text on Surface
-  OnError = '#FFFFFF',        // White for Text on Error
+  Primary = '#F7E987',
+  PrimaryVariant = '#445069',
+  Secondary = '#5B9A8B',
+  SecondaryVariant = '#F7E987',
+  Background = '#1A1A1A',
+  Surface = '#292929',
+  Error = '#FF5B5B',
+  Success = '#A2C579',
+  OnPrimary = '#000000',
+  OnSecondary = '#FFFFFF',
+  OnBackground = '#FFFFFF',
+  OnSurface = '#FFFFFF',
+  OnError = '#FFFFFF',
 }
 
 enum LightTheme {
-  Primary = '#252B48',        // Main Primary Color
-  PrimaryVariant = '#445069', // Darker Variant of Primary
-  Secondary = '#5B9A8B',     // Main Secondary Color
-  SecondaryVariant = '#F7E987',// Lighter Variant of Secondary
-  Background = '#E8F6EF',     // Light Gray for Background
-  Surface = '#bcd1c7',        // White for Surface
-  Error = '#FF5B5B',          // Bright Red for Error
-  Success = '#A2C579',        // Teal for Success
-  OnPrimary = '#FFFFFF',      // White for Text on Primary
-  OnSecondary = '#FFFFFF',    // White for Text on Secondary
-  OnBackground = '#000000',   // Black for Text on Background
-  OnSurface = '#000000',      // Black for Text on Surface
-  OnError = '#FFFFFF',        // White for Text on Error
+  Primary = '#252B48',
+  PrimaryVariant = '#445069',
+  Secondary = '#5B9A8B',
+  SecondaryVariant = '#F7E987',
+  Background = '#E8F6EF',
+  Surface = '#bcd1c7',
+  Error = '#FF5B5B',
+  Success = '#A2C579',
+  OnPrimary = '#FFFFFF',
+  OnSecondary = '#FFFFFF',
+  OnBackground = '#000000',
+  OnSurface = '#000000',
+  OnError = '#FFFFFF',
 }
 
 export { DarkTheme, LightTheme };

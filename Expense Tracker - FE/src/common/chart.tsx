@@ -1,6 +1,5 @@
-import React from 'react';
-import { PieChart, Pie, Tooltip, Cell, Label, Legend } from 'recharts';
-import { Box, Paper, Typography, useTheme } from '@mui/material';
+import { PieChart, Pie, Tooltip, Cell, Legend } from 'recharts';
+import { Box, useTheme } from '@mui/material';
 
 interface ChartProps {
   totalIncome: number;

@@ -1,5 +1,4 @@
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
-import React from 'react';
 import { _void } from '../../models/common';
 
 function TransactionToggler({ value, onChange }: { value: boolean; onChange: _void }) {

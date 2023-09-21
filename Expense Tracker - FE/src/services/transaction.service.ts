@@ -4,13 +4,14 @@ import { HttpMethod } from '../values/enums/service';
 import { TransactionsDTO } from '../models/transactions';
 
 const transactionApiUrl = `${baseUrl}/transaction/`;
-const incomeUrl = transactionApiUrl.concat('income');
-const expenseUrl = transactionApiUrl.concat('expense');
-const incomeGroupUrl = transactionApiUrl.concat('income-group');
-const expenseGroupUrl = transactionApiUrl.concat('expense-group');
-const totalAmountUrl = transactionApiUrl.concat('total-amount');
-const totalIncomeUrl = transactionApiUrl.concat('total-income-amount');
-const totalExpenseUrl = transactionApiUrl.concat('total-expense-amount');
+const incomeUrl = `${transactionApiUrl}income`;
+const expenseUrl = `${transactionApiUrl}expense`;
+const incomeGroupUrl = `${transactionApiUrl}income-group`;
+const expenseGroupUrl = `${transactionApiUrl}expense-group`;
+const totalAmountUrl = `${transactionApiUrl}total-amount`;
+const totalIncomeUrl = `${transactionApiUrl}total-income-amount`;
+const totalExpenseUrl = `${transactionApiUrl}total-expense-amount`;
+
 
 const TransactionService = {
   //INCOMES
