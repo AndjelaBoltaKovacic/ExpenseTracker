@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
 import { TableDisplay } from '../../../common/table/table-display';
 import { TransactionType } from '../../../values/enums/transactions';
@@ -5,7 +6,7 @@ import useFetch from '../../../hooks/useFetch';
 import { Transaction } from '../../../models/transactions';
 import TransactionService from '../../../services/transaction.service';
 import Loader from '../../../common/loader';
-import { useState, useEffect } from 'react';
+
 
 function TransactionsTable({ type }: { type: TransactionType }) {
   const [transactions, setTransaction] = useState<Transaction[]>([] as Transaction[]);

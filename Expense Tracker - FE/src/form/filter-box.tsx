@@ -4,8 +4,7 @@ import { DateRange } from '@mui/x-date-pickers-pro';
 import { Dayjs } from 'dayjs';
 
 interface FilterBoxProps {
-  amountFrom: number;
-  amountTo: number;
+  priceRange: { from: number, to: number }
   handleAmountChange: (event: Event, value: number | number[], activeThumb: number) => void;
   dateRange: DateRange<Dayjs>;
   setDateRange: (dateRange: DateRange<Dayjs>) => void;
@@ -13,8 +12,7 @@ interface FilterBoxProps {
   minMax: number[];
 }
 export function FilterBox({
-  amountFrom,
-  amountTo,
+  priceRange,
   handleAmountChange,
   dateRange,
   setDateRange,
@@ -44,7 +42,7 @@ export function FilterBox({
             <Box display="flex" alignItems="center" width={{ xs: '100%', md: '48%' }} gap={2}>
               <span>${minMax[0]}</span>
               <Slider
-                value={[amountFrom, amountTo]}
+                value={[priceRange.from, priceRange.to]}
                 onChange={handleAmountChange}
                 min={minMax[0]}
                 max={minMax[1]}
