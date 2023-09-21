@@ -78,7 +78,7 @@ const LoginForm = () => {
             Login
           </Button>
           <Box display="flex" justifyContent="center" mt={3}>
-            <Link to="/">Forgot password?</Link>
+            <Typography>Don't have an account? <Link to="/register">Click here to register.</Link> </Typography>
           </Box>
         </form>
       </Container>

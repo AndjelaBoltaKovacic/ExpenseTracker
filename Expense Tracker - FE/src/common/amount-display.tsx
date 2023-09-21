@@ -9,8 +9,8 @@ import AmountCard from './amount-card';
 import Carousel from './carousel';
 
 const AmountDisplay = () => {
-  const [totalIncome, setTotalIncome] = useState<number | null>(null);
-  const [totalExpense, setTotalExpense] = useState<number | null>(null);
+  const [totalIncome, setTotalIncome] = useState<number>(0);
+  const [totalExpense, setTotalExpense] = useState<number>(0);
 
   const {
     data: incm,
@@ -50,7 +50,7 @@ const AmountDisplay = () => {
         )}
         <Carousel
           content2={<Chart totalIncome={totalIncome || 0} totalExpense={totalExpense || 0} />}
-          content1={totalIncome && totalExpense && <AmountCard totalAmount={totalIncome - totalExpense} />}
+          content1={<AmountCard totalAmount={totalIncome - totalExpense} />}
         />
       </Loader>
     </Box>

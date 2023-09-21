@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Typography, Card, CardContent, CardMedia } from '@mui/material';
+import { Container, Typography, CardMedia } from '@mui/material';
 import useFetch from '../../../hooks/useFetch';
 import { Article } from '../../../models/blog';
 import BlogService from '../../../services/blog.service';
 import Loader from '../../../common/loader';
 import dummy from '../../../assets/images/dummy-img.webp';
-import NoticeCard from '../../../common/notice-card';
+import ErrorCard from '../../../common/error-card';
 
 const BlogPage = () => {
   const { id } = useParams();
@@ -25,11 +25,8 @@ const BlogPage = () => {
   return (
     <Loader isLoading={loading}>
       {error && (
-        <NoticeCard
-          title='Opps! Something went wrong!'
-          text='Sorry for the inconvenience. Please try again later.'
-          buttonText='Get articles'
-          onButtonClick={() => fetchData()}
+        <ErrorCard
+          onClick={fetchData}
         />
       )}
       <Container maxWidth='md'>

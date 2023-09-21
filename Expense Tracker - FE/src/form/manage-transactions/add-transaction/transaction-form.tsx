@@ -130,12 +130,7 @@ function TransactionForm({
                       </Box>
                     </MenuItem>
                   ))}
-                  <MenuItem value={'settings'}>
-                    <Box display="flex" alignItems="end">
-                      <Settings color="primary" fontSize="small" />
-                      &nbsp; Manage Categories
-                    </Box>
-                  </MenuItem>
+
                 </Select>
                 {errors?.groupId && <FormHelperText>{errors?.groupId?.message as string}</FormHelperText>}
               </>

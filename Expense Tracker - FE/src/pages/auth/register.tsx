@@ -1,8 +1,8 @@
 import { ReactNode, useContext, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
-import { TextField, Button, Grid, Container, Typography, FormControlLabel, Checkbox } from '@mui/material';
+import { TextField, Button, Grid, Container, Typography, FormControlLabel, Checkbox, Box } from '@mui/material';
 import { ThemeContext } from '@emotion/react';
 import { getInputLabelColor } from '../../theme/overrides';
 import { emailValidation, passwordValidation } from '../../form/validation-patterns';
@@ -129,9 +129,13 @@ function RegistrationForm() {
             )}
             <Button sx={{ marginTop: 2 }} type="submit" fullWidth variant="contained" color="primary">
               Register
-            </Button>
-          </form>
-        </Container>
+              </Button>
+              <Box display="flex" justifyContent="center" mt={3}>
+                <Typography>Already have an account? <Link to="/login">Click here to login.</Link> </Typography>
+              </Box>
+            </form>
+          </Container>
+
       )}
     </Loader>
   );

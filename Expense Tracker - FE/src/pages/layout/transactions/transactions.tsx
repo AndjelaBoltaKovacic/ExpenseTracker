@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { DateRange } from '@mui/lab';
+import { Dayjs } from 'dayjs';
 import CustomModal from '../../../common/modal/custom-modal';
 import DataTable from '../../../common/table/table';
 import { Expense, Transaction, TransactionsDTO } from '../../../models/transactions';
@@ -8,19 +10,15 @@ import { TransactionType } from '../../../values/enums/transactions';
 import TransactionService from '../../../services/transaction.service';
 import useFetch from '../../../hooks/useFetch';
 import Loader from '../../../common/loader';
-import NoticeCard from '../../../common/notice-card';
 import { Box, Button, Container } from '@mui/material';
 import TransactionToggler from '../../../common/toggler/transaction-toggler';
 import { FilterBox } from '../../../form/filter-box';
-import { DateRange } from '@mui/lab';
-import { Dayjs } from 'dayjs';
 import ReportGenerator from '../../../reports/report-generator';
-import AddTransaction from '../../../form/manage-transactions/add-transaction/add-transaction';
+import ErrorCard from '../../../common/error-card';
 
 function Transactions() {
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
-  const [openTransModal, setOpenTransModal] = useState(false);
   const [isExpense, setIsExpense] = useState<boolean>(true);
   const [minMax, setMinMax] = useState<number[]>([0, 1000]);
   const [reset, setReset] = useState<boolean>(false);
@@ -59,15 +57,6 @@ function Transactions() {
     setOpenDeleteModal(false);
   };
 
-  const handleOpenTransModal = () => {
-    setOpenTransModal(true);
-  };
-
-  const handleCloseTransModal = (type?: TransactionType) => {
-    type === TransactionType.Expense ? setIsExpense(true) : setIsExpense(false);
-    setOpenTransModal(false);
-  };
-
   useEffect(() => {
     fetchData();
   }, [isExpense, reset, sort]);
@@ -95,6 +84,10 @@ function Transactions() {
     <Container sx={{ marginTop: '5vw' }}>
       <Loader isLoading={loading}>
         <>
+          <Box mt='3vw' mb='1vw' display='flex' justifyContent='space-between'>
+            <TransactionToggler value={isExpense} onChange={() => setIsExpense((prev) => !prev)} />
+            <Button onClick={() => handleResetFilters()}>Reset Filters</Button>
+          </Box>
           <Box flexGrow={1} mb='3vw'>
             <FilterBox
               minMax={minMax}
@@ -106,12 +99,6 @@ function Transactions() {
               handleSubmit={() => fetchData()}
             />
           </Box>
-
-          <Box mt='3vw' mb='1vw' display='flex' justifyContent='space-between'>
-            <TransactionToggler value={isExpense} onChange={() => setIsExpense((prev) => !prev)} />
-            <Button onClick={() => handleResetFilters()}>Reset Filters</Button>
-          </Box>
-
           <DataTable
             order={order}
             setOrder={setOrder}
@@ -125,17 +112,11 @@ function Transactions() {
           <ReportGenerator isExpense={isExpense} />
         </>
         {error && (
-          <NoticeCard
-            title='Opps! Something went wrong!'
-            text='Sorry for the inconvenience. Please try again later.'
-            buttonText='Retry'
-            onButtonClick={() => fetchData()}
+          <ErrorCard
+            onClick={fetchData}
           />
         )}
       </Loader>
-      <CustomModal isOpen={openTransModal} title='Add Transaction' handleClose={handleCloseTransModal}>
-        <AddTransaction handleClose={handleCloseTransModal} />
-      </CustomModal>
       <CustomModal isOpen={openEditModal} handleClose={handleEditClose}>
         <EditTransaction handleClose={handleEditClose} transactionToEdit={transationToModify as Expense} />
       </CustomModal>
