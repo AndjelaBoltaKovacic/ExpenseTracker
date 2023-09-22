@@ -13,6 +13,10 @@ import PremiumRoutes from './routes/premium-routes';
 import Blogs from './pages/layout/blog/blogs';
 import BlogPage from './pages/layout/blog/blog';
 import TransactionsContainer from './pages/layout/transactions/transactions-container';
+import AddTransactionModal from './form/manage-transactions/add-transaction/add-transaction-modal';
+import ManageCategoriesModal from './form/manage-categories/manage-categories-modal';
+import EditTransactionModal from './form/manage-transactions/edit-transaction/edit-transaction-modal';
+import DeleteTransactionModal from './form/steps/delete-transaction-modal';
 
 
 function App() {
@@ -39,6 +43,11 @@ function App() {
         </Route>
         <Route path="/*" element={<Navigate to={!!user ? '/dashboard' : '/login'} />} />
       </Routes>
+
+      <AddTransactionModal />
+      <ManageCategoriesModal />
+      <EditTransactionModal />
+      <DeleteTransactionModal />
     </Box>
   );
 }

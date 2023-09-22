@@ -16,8 +16,8 @@ const Chart: React.FC<ChartProps> = ({ totalIncome, totalExpense }) => {
   const theme = useTheme();
 
   const chartData = [
-    { name: `Total Expense: ${totalExpense}`, value: totalExpense },
-    { name: `Total Income: ${totalIncome}`, value: totalIncome },
+    { name: `Total Expense: ${totalExpense.toFixed(2)}`, value: totalExpense },
+    { name: `Total Income: ${totalIncome.toFixed(2)}`, value: totalIncome },
   ];
 
   const COLORS = [theme.palette.primary.main, theme.palette.secondary.main];

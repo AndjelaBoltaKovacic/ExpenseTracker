@@ -5,17 +5,20 @@ import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from './contexts/userContext';
 import { ReminderProvider } from './contexts/reminder.context';
 import App from './App';
+import ModalProvider from './contexts/modals.context';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <StyledEngineProvider injectFirst>
     <MyThemeProvider>
       <UserProvider>
+        <ModalProvider>
         <ReminderProvider>
           <BrowserRouter>
             <App />
           </BrowserRouter>
-        </ReminderProvider>
+          </ReminderProvider>
+        </ModalProvider>
       </UserProvider>
     </MyThemeProvider>
   </StyledEngineProvider>

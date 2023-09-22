@@ -9,7 +9,6 @@ import Loader from '../../../common/loader';
 import { FilterBox } from '../../../form/filter-box';
 import ReportGenerator from '../../../reports/report-generator';
 import ErrorCard from '../../../common/cards/error-card';
-import TransactionsModals from './transactions-modals';
 import { useLocation } from 'react-router-dom';
 import GetStartedCard from '../../../common/cards/get-started-card';
 
@@ -87,8 +86,6 @@ export const Transactions = () => {
                         setParams={setParams}
                         type={type}
                         data={transactions}
-                        onEditClick={handleEditOpen}
-                        onDeleteClick={handleDeleteOpen}
                     />
                     <ReportGenerator type={type} />
                 </> : <GetStartedCard onClick={handleOpenTransModal} />
@@ -99,7 +96,6 @@ export const Transactions = () => {
                     />
                 )}
             </Loader>
-            <TransactionsModals openEdit={setOpenEditModal} openDelete={setOpenDeleteModal} isEditOpen={openEditModal} isDeleteOpen={openDeleteModal} transactionToModify={transationToModify} fetchData={fetchData} />
     </Container>
     );
 }

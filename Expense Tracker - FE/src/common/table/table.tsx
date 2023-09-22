@@ -8,40 +8,46 @@ import CategoryIcon from '../category-icon';
 import { TransactionType } from '../../values/enums/transactions';
 import { formatDate } from '../../helpers/date-formatter';
 import TableButtonCell from './table-button';
+import { useModalContext } from '../../contexts/modals.context';
 
 const DataTable = ({
   disableSort,
   hideButtons,
   data,
-  onEditClick = () => {},
-  onDeleteClick = () => {},
   type,
   params,
-  setParams
+  setParams,
 }: {
   disableSort?: boolean;
   hideButtons?: boolean;
     data: Transaction[];
-  onEditClick?: _void;
-  onDeleteClick?: _void;
   type?: TransactionType;
     params?: any;
     setParams?: any;
 }) => {
-
+  const { openEditTransactionModal, openDeleteTransactionModal } = useModalContext();
   const handleSort = (property: keyof DataEntry) => {
-    const isAscending = params.orderBy === property && params.order === 'asc';
-    setParams((prevVal: any) => { return { ...prevVal, order: isAscending ? 'desc' : 'asc', orderBy: property } })
-
+    const isAscending = params?.orderBy === property && params?.order === 'asc';
+    setParams((prevVal: any) => {
+      return { ...prevVal, order: isAscending ? 'desc' : 'asc', orderBy: property };
+    });
   };
 
   const sortedData = data?.slice().sort((a, b) => {
-    const aValue = a[params.orderBy as keyof Transaction];
-    const bValue = b[params.orderBy as keyof Transaction];
-    if (aValue < bValue) return params.order === 'asc' ? -1 : 1;
-    if (aValue > bValue) return params.order === 'asc' ? 1 : -1;
+    const aValue = a[params?.orderBy as keyof Transaction];
+    const bValue = b[params?.orderBy as keyof Transaction];
+    if (aValue < bValue) return params?.order === 'asc' ? -1 : 1;
+    if (aValue > bValue) return params?.order === 'asc' ? 1 : -1;
     return 0;
   });
+
+  const handleEdit = (transaction: any) => {
+    openEditTransactionModal(transaction);
+  };
+
+  const handleDelete = (transaction: any) => {
+    openDeleteTransactionModal(transaction);
+  };
 
   return (
     <>
@@ -49,9 +55,10 @@ const DataTable = ({
         <Table aria-label="Sortable table">
           <TableHead>
             <TableRow>
-              <SmallTableCell color="primary.main" content="No." />
+              <SmallTableCell color="primary.main" content="No." width='10%' />
               {TABLE_HEADERS.map(({ title, property }, i) => (
                 <SmallTableCell
+                  width='20%'
                   key={`${title}_${i}`}
                   content={
                     <SortLabel
@@ -91,8 +98,8 @@ const DataTable = ({
                 <SmallTableCell content={formatDate(row.updatedDtm)} />
                 {!hideButtons && (
                   <>
-                    <TableButtonCell color="primary" onClick={() => onEditClick({ ...row, type })} text="Edit" />
-                    <TableButtonCell color="secondary" onClick={() => onDeleteClick({ ...row, type })} text="Delete" />
+                    <TableButtonCell color="primary" onClick={() => handleEdit({ ...row, type })} text="Edit" />
+                    <TableButtonCell color="secondary" onClick={() => handleDelete({ ...row, type })} text="Delete" />
                   </>
                 )}
               </TableRow>

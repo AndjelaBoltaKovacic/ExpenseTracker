@@ -2,28 +2,25 @@ import { useEffect, useState } from 'react';
 import Container from '@mui/material/Container';
 import AmountDisplay from '../../../common/amount-display/amount-display';
 import Box from '@mui/material/Box';
-import CustomModal from '../../../common/modal/custom-modal';
 import Loader from '../../../common/loader';
 import useFetch from '../../../hooks/useFetch';
 import TransactionService from '../../../services/transaction.service';
 import Reminder from '../../../reminder/reminder';
 import { TransactionType } from '../../../values/enums/transactions';
 import { TableDisplay } from '../../../common/table/table-display';
-import AddTransaction from '../../../form/manage-transactions/add-transaction/add-transaction';
 import { Transaction, TransactionsDTO } from '../../../models/transactions';
-import ManageCategories from '../../../form/manage-categories/manage-categories';
 import { useUserContext } from '../../../contexts/userContext';
 import ActionButtons from './action-buttons';
 import useReminderContext from '../../../contexts/reminder.context';
 import GetStartedCard from '../../../common/cards/get-started-card';
+import { useModalContext } from '../../../contexts/modals.context';
 
 function Dashboard() {
   const { isPremium, user } = useUserContext();
   const [incomes, setIncomes] = useState<Transaction[]>([] as Transaction[]);
   const [expenses, setExpenses] = useState<Transaction[]>([] as Transaction[]);
-  const [openTransModal, setOpenTransModal] = useState<boolean>(false);
-  const [openGroupModal, setOpenGroupModal] = useState<boolean>(false);
   const { reminder } = useReminderContext();
+  const { openAddTransactionModal, openManageGroupModal, addTransactionModalOpen, closeAddTransactionModal } = useModalContext();
   const path = '?page=0&size=5&sort=createdDtm';
   const {
     data: incm,
@@ -40,11 +37,12 @@ function Dashboard() {
   } = useFetch<TransactionsDTO<Transaction[]>>(TransactionService.getExpenses, path);
 
   useEffect(() => {
-    if (user) {
+    if (user && !addTransactionModalOpen) {
       fetchIncomes();
       fetchExpenses();
     }
-  }, [user]);
+  }, [user, addTransactionModalOpen]);
+
 
   useEffect(() => {
     exp && setExpenses(exp.data.content);
@@ -53,22 +51,6 @@ function Dashboard() {
 
   useEffect(() => {}, [reminder]);
 
-  const handleOpenTransModal = () => {
-    setOpenTransModal(true);
-  };
-
-  const handleCloseTransModal = (type?: TransactionType) => {
-    type === TransactionType.Expense ? fetchExpenses() : fetchIncomes();
-    setOpenTransModal(false);
-  };
-
-  const handleOpenGroupModal = () => {
-    setOpenGroupModal(true);
-  };
-
-  const handleCloseGroupModal = () => {
-    setOpenGroupModal(false);
-  };
 
   return (
     <>
@@ -76,7 +58,7 @@ function Dashboard() {
         {expenses?.length || incomes?.length ? (
           <Container sx={{ paddingBottom: '60px' }}>
             <AmountDisplay />
-            <ActionButtons onAdd={handleOpenTransModal} onManage={handleOpenGroupModal} />
+            <ActionButtons onAdd={openAddTransactionModal} onManage={openManageGroupModal} />
             {!!incomes.length && (
               <Box my={2}>
                 <TableDisplay data={incomes} error={incmError} type={TransactionType.Income} />
@@ -89,16 +71,10 @@ function Dashboard() {
             )}
           </Container>
         ) : (
-            <GetStartedCard onClick={handleOpenTransModal} />
+            <GetStartedCard onClick={openAddTransactionModal} />
         )}
       </Loader>
       {isPremium && <Reminder />}
-      <CustomModal isOpen={openTransModal} title="Add Transaction" handleClose={handleCloseTransModal}>
-        <AddTransaction handleClose={handleCloseTransModal} />
-      </CustomModal>
-      <CustomModal isOpen={openGroupModal} title="Manage Categories" handleClose={handleCloseGroupModal}>
-        <ManageCategories handleClose={handleCloseGroupModal} />
-      </CustomModal>
     </>
   );
 }
