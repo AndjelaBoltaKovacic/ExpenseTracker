@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import ReminderService from '../services/reminder.service';
 import useFetch from '../hooks/useFetch';
 import Loader from '../common/loader';
-import NoticeCard from '../common/notice-card';
+import NoticeCard from '../common/cards/notice-card';
 import { ReminderDTO } from '../models/reminder';
 import { ReminderType } from '../values/enums/reminder';
 import { getReminderText } from '../helpers/common';

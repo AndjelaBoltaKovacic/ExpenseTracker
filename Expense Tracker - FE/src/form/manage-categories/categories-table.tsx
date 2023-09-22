@@ -2,7 +2,7 @@ import { Table, TableBody, TableContainer, TableHead, TableRow, Paper, Box, Tool
 import { TransactionGroup } from '../../models/transactions';
 import { _void } from '../../models/common';
 import CategoryIcon from '../../common/category-icon';
-import SmallTableCell from '../../common/table/SmallTableCell';
+import SmallTableCell from '../../common/table/small-table-cell';
 import TableButtonCell from '../../common/table/table-button';
 
 const CategoriesTable = ({

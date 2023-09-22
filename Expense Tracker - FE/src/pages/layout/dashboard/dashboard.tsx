@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Container from '@mui/material/Container';
-import AmountDisplay from '../../../common/amount-display';
+import AmountDisplay from '../../../common/amount-display/amount-display';
 import Box from '@mui/material/Box';
 import CustomModal from '../../../common/modal/custom-modal';
 import Loader from '../../../common/loader';
@@ -9,13 +9,13 @@ import TransactionService from '../../../services/transaction.service';
 import Reminder from '../../../reminder/reminder';
 import { TransactionType } from '../../../values/enums/transactions';
 import { TableDisplay } from '../../../common/table/table-display';
-import NoticeCard from '../../../common/notice-card';
 import AddTransaction from '../../../form/manage-transactions/add-transaction/add-transaction';
 import { Transaction, TransactionsDTO } from '../../../models/transactions';
 import ManageCategories from '../../../form/manage-categories/manage-categories';
 import { useUserContext } from '../../../contexts/userContext';
 import ActionButtons from './action-buttons';
 import useReminderContext from '../../../contexts/reminder.context';
+import GetStartedCard from '../../../common/cards/get-started-card';
 
 function Dashboard() {
   const { isPremium, user } = useUserContext();
@@ -89,12 +89,7 @@ function Dashboard() {
             )}
           </Container>
         ) : (
-          <NoticeCard
-            title={`Welcome, ${user?.firstname}!`}
-            text="It seems like you don't have any transactions yet."
-            buttonText="Get started"
-            onButtonClick={handleOpenTransModal}
-          />
+            <GetStartedCard onClick={handleOpenTransModal} />
         )}
       </Loader>
       {isPremium && <Reminder />}

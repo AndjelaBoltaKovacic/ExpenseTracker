@@ -3,16 +3,22 @@ import TransactionService from '../services/transaction.service';
 import { DAYS_OF_WEEK } from '../values/constants/menu';
 import { ReminderType } from '../values/enums/reminder';
 import { Action } from '../values/enums/service';
+
+
 const locationValueMap: { [pathname: string]: number } = {
   '/dashboard': 0,
-  '/transactions': 1,
+  '/transactions/incomes': 1,
+  '/transactions/expenses': 1,
   '/blog': 2,
-  '/login': 0,
-  '/register': 1,
 };
 
-export const getLocationValue = (pathname: string): number => {
-  return locationValueMap[pathname];
+const childRouteValueMap: { [pathname: string]: number } = {
+  '/transactions/incomes': 0,
+  '/transactions/expenses': 1,
+};
+
+export const getLocationValue = (pathname: string, isChildNav: boolean = false): number => {
+  return !isChildNav ? locationValueMap[pathname] : childRouteValueMap[pathname]
 };
 
 const getReminderWeekDay = (day: number) => {

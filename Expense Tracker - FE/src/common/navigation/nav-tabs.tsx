@@ -6,24 +6,24 @@ import { Theme } from '../../values/enums/theme';
 import { MenuItem } from '../../models/common';
 import { getLocationValue } from '../../helpers/common';
 
-export const NavTabs = ({ items }: { items: MenuItem[] }) => {
+export const NavTabs = ({ items, isChildRoute }: { items: MenuItem[], isChildRoute?: boolean }) => {
   const [value, setValue] = useState<number>(0);
   const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    setValue(getLocationValue(location.pathname));
+    setValue(getLocationValue(location.pathname, isChildRoute));
   }, [location.pathname]);
 
   const themeOverride = theme.palette.mode === Theme.Light ? 'secondary' : 'primary';
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
   return (
     <Tabs
-      value={value}
+      value={value || 0}
       onChange={handleChange}
       aria-label="nav tabs"
       textColor={themeOverride}

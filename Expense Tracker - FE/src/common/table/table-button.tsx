@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import SmallTableCell from './SmallTableCell';
+import SmallTableCell from './small-table-cell';
 import { _void } from '../../models/common';
 
 function TableButtonCell({

@@ -12,7 +12,8 @@ import { UserRole } from './values/enums/user';
 import PremiumRoutes from './routes/premium-routes';
 import Blogs from './pages/layout/blog/blogs';
 import BlogPage from './pages/layout/blog/blog';
-import { TransactionType } from './values/enums/transactions';
+import TransactionsContainer from './pages/layout/transactions/transactions-container';
+
 
 function App() {
   const { user } = useUserContext();
@@ -27,7 +28,10 @@ function App() {
         </Route>
         <Route element={<ProtectedRoutes isAuthenticated={!!user} />}>
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/transactions" element={<TransactionsContainer />}>
+            <Route path="incomes" element={<Transactions />} />
+            <Route path="expenses" element={<Transactions />} />
+          </Route>
         </Route>
         <Route element={<PremiumRoutes isPremium={user?.role === UserRole.Premium} />}>
           <Route path="/blog" element={<Blogs />} />

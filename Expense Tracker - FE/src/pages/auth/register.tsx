@@ -7,7 +7,7 @@ import { ThemeContext } from '@emotion/react';
 import { getInputLabelColor } from '../../theme/overrides';
 import { emailValidation, passwordValidation } from '../../form/validation-patterns';
 import PasswordVisibility from '../../form/passwordVisibility';
-import NoticeCard from '../../common/notice-card';
+import NoticeCard from '../../common/cards/notice-card';
 import Loader from '../../common/loader';
 import { User, UserTokens } from '../../models/user';
 import UserService from '../../services/user.service';

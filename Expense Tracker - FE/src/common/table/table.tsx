@@ -1,8 +1,7 @@
-import { Dispatch, SetStateAction } from 'react';
 import { Table, TableBody, TableContainer, TableHead, TableRow, Paper, Box } from '@mui/material';
 import { DataEntry, _void } from '../../models/common';
 import SortLabel from './sort-label';
-import SmallTableCell from './SmallTableCell';
+import SmallTableCell from './small-table-cell';
 import { TABLE_HEADERS } from '../../values/constants/table';
 import { Transaction } from '../../models/transactions';
 import CategoryIcon from '../category-icon';
@@ -17,34 +16,30 @@ const DataTable = ({
   onEditClick = () => {},
   onDeleteClick = () => {},
   type,
-  orderBy = 'updatedDtm',
-  setOrderBy,
-  order = 'desc',
-  setOrder,
+  params,
+  setParams
 }: {
   disableSort?: boolean;
   hideButtons?: boolean;
-  data: Transaction[];
+    data: Transaction[];
   onEditClick?: _void;
   onDeleteClick?: _void;
   type?: TransactionType;
-  orderBy?: string;
-  setOrderBy?: Dispatch<SetStateAction<string>>;
-  order?: 'asc' | 'desc';
-  setOrder?: Dispatch<SetStateAction<'asc' | 'desc'>>;
+    params?: any;
+    setParams?: any;
 }) => {
+
   const handleSort = (property: keyof DataEntry) => {
-    const isAscending = orderBy === property && order === 'asc';
-    setOrder && setOrder(isAscending ? 'desc' : 'asc');
-    setOrderBy && setOrderBy(property);
+    const isAscending = params.orderBy === property && params.order === 'asc';
+    setParams((prevVal: any) => { return { ...prevVal, order: isAscending ? 'desc' : 'asc', orderBy: property } })
+
   };
 
   const sortedData = data?.slice().sort((a, b) => {
-    const aValue = a[orderBy as keyof Transaction];
-    const bValue = b[orderBy as keyof Transaction];
-
-    if (aValue < bValue) return order === 'asc' ? -1 : 1;
-    if (aValue > bValue) return order === 'asc' ? 1 : -1;
+    const aValue = a[params.orderBy as keyof Transaction];
+    const bValue = b[params.orderBy as keyof Transaction];
+    if (aValue < bValue) return params.order === 'asc' ? -1 : 1;
+    if (aValue > bValue) return params.order === 'asc' ? 1 : -1;
     return 0;
   });
 
@@ -64,8 +59,8 @@ const DataTable = ({
                       propertyName={property}
                       title={title}
                       handleSort={handleSort}
-                      order={order}
-                      orderBy={orderBy}
+                      order={params?.order}
+                      orderBy={params?.orderBy}
                     />
                   }
                 />

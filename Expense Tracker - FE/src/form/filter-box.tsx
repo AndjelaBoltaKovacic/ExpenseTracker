@@ -12,13 +12,24 @@ interface FilterBoxProps {
   minMax: number[];
 }
 export function FilterBox({
-  priceRange,
-  handleAmountChange,
-  dateRange,
-  setDateRange,
+  params,
+  setParams,
   handleSubmit,
-  minMax,
-}: FilterBoxProps) {
+}: any) {
+
+  const handleAmountChange = (event: any, newValue: any) => {
+    setParams({ ...params, priceRange: { from: newValue[0], to: newValue[1] } });
+  };
+
+  const handleSetDateRange = (dateValues: any) => {
+    console.log(dateValues)
+    setParams({
+      ...params, dateRange: dateValues.map((value: any) => value ? value.
+        format('YYYY-MM-DD') : value)
+    });
+  };
+
+
   return (
     <>
       <fieldset
@@ -40,17 +51,17 @@ export function FilterBox({
         <Box display="flex" justifyContent="space-between" gap={{ xs: 3, md: 2 }} width="100%" flexWrap="wrap-reverse">
           <Tooltip title="Filter by amount">
             <Box display="flex" alignItems="center" width={{ xs: '100%', md: '48%' }} gap={2}>
-              <span>${minMax[0]}</span>
+              <span>${params.minMax[0]}</span>
               <Slider
-                value={[priceRange.from, priceRange.to]}
+                value={[params.priceRange.from, params.priceRange.to]}
                 onChange={handleAmountChange}
-                min={minMax[0]}
-                max={minMax[1]}
+                min={params.minMax[0]}
+                max={params.minMax[1]}
                 size="small"
                 valueLabelDisplay="auto"
                 aria-labelledby="range-slider"
               />
-              <span>${minMax[1]}</span>
+              <span>${params.minMax[1]}</span>
             </Box>
           </Tooltip>
           <Box
@@ -60,9 +71,9 @@ export function FilterBox({
             gap={2}
             justifyContent={{ xs: 'space-between' }}
           >
-            <BasicDateRangePicker dateRange={dateRange} setDateRange={setDateRange} />
+            <BasicDateRangePicker dateRange={params.dateRange} setDateRange={handleSetDateRange} />
             <Box width={'20%'}>
-              <Button fullWidth variant="contained" color="primary" onClick={() => handleSubmit()}>
+              <Button fullWidth variant="contained" color="primary" onClick={handleSubmit}>
                 Find
               </Button>
             </Box>

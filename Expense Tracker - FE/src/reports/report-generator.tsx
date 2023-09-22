@@ -9,6 +9,7 @@ import useFetch from '../hooks/useFetch';
 import ReportOptionSelect from './report-option-select';
 import ConfirmReport from './confirm-report';
 import Loader from '../common/loader';
+import { TransactionType } from '../values/enums/transactions';
 
 export enum ReportSteps {
   Select,
@@ -21,14 +22,14 @@ export enum ReportStrategy {
   PDF = 'PDFReportStrategy',
   Email = 'emailReportStrategy',
 }
-function ReportGenerator({ isExpense }: any) {
+function ReportGenerator({ type }: { type: TransactionType }) {
   const [modal, setOpenModal] = useState<boolean>(false);
   const [strategy, setStrategy] = useState<ReportStrategy>(ReportStrategy.PDF);
   const [step, setStep] = useState<ReportSteps>(ReportSteps.Select);
   const { user } = useUserContext();
   const { data, error, loading, fetchData } = useFetch(
     ReportService.sendReport,
-    `transactionType=${isExpense ? 'EXPENSE' : 'INCOME'}&reportStrategy=${strategy}&email=${user?.email}`
+    `transactionType=${type.toUpperCase()}&reportStrategy=${strategy}&email=${user?.email}`
   );
 
   const handleCloseModal = () => {
@@ -63,7 +64,7 @@ function ReportGenerator({ isExpense }: any) {
               [ReportSteps.Select]: <ReportOptionSelect handleChoice={handleChoice} />,
               [ReportSteps.Confirm]: (
                 <ConfirmReport
-                  text={`You are about to send  ${isExpense ? 'expenses' : 'incomes'} ${
+                  text={`You are about to send  ${type.toLowerCase()} ${
                     strategy === ReportStrategy.PDF ? 'PDF' : ''
                   } report to your email: ${user?.email}`}
                   onConfirm={fetchData}
@@ -72,7 +73,7 @@ function ReportGenerator({ isExpense }: any) {
               ),
               [ReportSteps.Success]: (
                 <Notice
-                  text={'Your report has been generated successfully'}
+                  text='Your report has been generated successfully'
                   details='Please check your email.'
                   handleClose={handleCloseModal}
                   btnText='Close'

@@ -6,7 +6,7 @@ import { Article } from '../../../models/blog';
 import BlogService from '../../../services/blog.service';
 import Loader from '../../../common/loader';
 import dummy from '../../../assets/images/dummy-img.webp';
-import ErrorCard from '../../../common/error-card';
+import ErrorCard from '../../../common/cards/error-card';
 
 const BlogPage = () => {
   const { id } = useParams();

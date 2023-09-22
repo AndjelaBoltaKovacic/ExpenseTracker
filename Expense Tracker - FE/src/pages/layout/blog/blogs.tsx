@@ -6,7 +6,7 @@ import { BlogDTO, Article } from '../../../models/blog';
 import BlogCard from './blog-card';
 import { Box } from '@mui/material';
 import useInfiniteScroll from '../../../hooks/useInfiniteScroll';
-import ErrorCard from '../../../common/error-card';
+import ErrorCard from '../../../common/cards/error-card';
 
 function Blogs() {
   const [page, setPage] = useState<number>(0);

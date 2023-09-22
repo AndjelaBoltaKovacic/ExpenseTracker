@@ -1,5 +1,5 @@
 import { Typography, Button, Box } from '@mui/material';
-import { _void } from '../models/common';
+import { _void } from '../../models/common';
 
 const NoticeCard = ({
   title,

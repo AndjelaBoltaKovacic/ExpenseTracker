@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import TransactionService from '../services/transaction.service';
-import useFetch from '../hooks/useFetch';
-import Loader from './loader';
-import Chart from './chart';
+import TransactionService from '../../services/transaction.service';
+import useFetch from '../../hooks/useFetch';
+import Loader from '../loader';
+import Chart from '../chart';
 import AmountCard from './amount-card';
-import Carousel from './carousel';
+import Carousel from '../carousel';
 
 const AmountDisplay = () => {
   const [totalIncome, setTotalIncome] = useState<number>(0);

@@ -1,4 +1,4 @@
-import { _void } from "../models/common"
+import { _void } from "../../models/common"
 import NoticeCard from "./notice-card"
 
 const ErrorCard = ({ onClick }: { onClick: _void }) => {
