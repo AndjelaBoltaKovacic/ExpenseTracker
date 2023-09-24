@@ -5,7 +5,7 @@ import { ProfileMenu } from '../menu/user-menu';
 import { MENU_ITEMS } from '../../values/constants/menu';
 import { NavTabs } from './nav-tabs';
 import BurgerMenu from '../menu/burger-menu';
-import { useUserContext } from '../../contexts/userContext';
+import { useUserContext } from '../../contexts/user.context';
 
 function NavigationBar() {
   const { isPremium, user } = useUserContext();

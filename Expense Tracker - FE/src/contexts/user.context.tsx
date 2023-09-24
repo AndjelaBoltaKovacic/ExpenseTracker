@@ -19,8 +19,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const login = useCallback(({ access_token }: UserTokens) => {
     localStorage.setItem('token', access_token);
-    const decodedToken = decodeToken(access_token);
-    setUser(decodedToken);
+    const { user } = decodeToken(access_token);
+    setUser(user);
   }, []);
 
   const logout = useCallback(() => {
@@ -31,8 +31,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      const decodedToken = decodeToken(token);
-      setUser(decodedToken);
+      const { user, isExpired } = decodeToken(token);
+      if (!isExpired) {
+        user && setUser(user)
+      } else {
+        logout()
+      }
     }
   }, []);
 

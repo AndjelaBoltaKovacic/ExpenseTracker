@@ -4,7 +4,7 @@ import Dashboard from './pages/layout/dashboard/dashboard';
 import Transactions from './pages/layout/transactions/transactions';
 import NavigationBar from './common/navigation/navigation-bar';
 import Register from './pages/auth/register';
-import { useUserContext } from './contexts/userContext';
+import { useUserContext } from './contexts/user.context';
 import { Box } from '@mui/material';
 import AuthRoutes from './routes/auth-routes';
 import ProtectedRoutes from './routes/protected-routes';

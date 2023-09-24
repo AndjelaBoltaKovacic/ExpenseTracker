@@ -12,7 +12,7 @@ import { TableDisplay } from '../../../common/table/table-display';
 import AddTransaction from '../../../form/manage-transactions/add-transaction/add-transaction';
 import { Transaction, TransactionsDTO } from '../../../models/transactions';
 import ManageCategories from '../../../form/manage-categories/manage-categories';
-import { useUserContext } from '../../../contexts/userContext';
+import { useUserContext } from '../../../contexts/user.context';
 import ActionButtons from './action-buttons';
 import useReminderContext from '../../../contexts/reminder.context';
 import GetStartedCard from '../../../common/cards/get-started-card';

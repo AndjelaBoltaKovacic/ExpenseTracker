@@ -4,7 +4,7 @@ import Notice from '../form/steps/notice';
 import CustomModal from '../common/modal/custom-modal';
 import { Outcome } from '../values/enums/form-steps';
 import ReportService from '../services/report.service';
-import { useUserContext } from '../contexts/userContext';
+import { useUserContext } from '../contexts/user.context';
 import useFetch from '../hooks/useFetch';
 import ReportOptionSelect from './report-option-select';
 import ConfirmReport from './confirm-report';

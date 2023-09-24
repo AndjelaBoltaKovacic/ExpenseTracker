@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Tooltip, Switch } from '@mui/material';
-import { ThemeContext } from '../../contexts/themeContext';
+import { ThemeContext } from '../../contexts/theme.context';
 import { Theme } from '../../values/enums/theme';
 
 export const ThemeToggler = () => {
