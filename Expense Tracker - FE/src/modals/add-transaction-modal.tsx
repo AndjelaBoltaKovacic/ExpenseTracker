@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-import { AddTransactionSteps, Outcome } from '../../../values/enums/form-steps';
-import TransactionForm from './transaction-form';
-import { Transaction, TransactionFormData } from '../../../models/transactions';
-import { _void } from '../../../models/common';
-import Confirm from '../../steps/confirm';
-import Notice from '../../steps/notice';
-import Loader from '../../../common/loader';
-import TransactionService from '../../../services/transaction.service';
-import { TransactionType } from '../../../values/enums/transactions';
-import useFetch from '../../../hooks/useFetch';
-import cashRegisterSound from '../../../assets/audio/cash-register-purchase-87313.mp3';
-import CustomModal from '../../../common/modal/custom-modal';
-import { useModalContext } from '../../../contexts/modals.context';
+import { AddTransactionSteps, Outcome } from '../values/enums/form-steps';
+import TransactionForm from '../form/manage-transactions/steps/transaction-form';
+import { Transaction, TransactionFormData } from '../models/transactions';
+import { _void } from '../models/common';
+import Confirm from '../form/manage-transactions/steps/confirm';
+
+import Loader from '../common/loader';
+import TransactionService from '../services/transaction.service';
+import { TransactionType } from '../values/enums/transactions';
+import useFetch from '../hooks/useFetch';
+import CustomModal from '../common/modal/custom-modal';
+import { useModalContext } from '../contexts/modals.context';
+import Notice from '../form/common-steps/notice';
 
 function AddTransactionModal() {
   const { addTransactionModalOpen, closeAddTransactionModal } = useModalContext();
@@ -20,7 +20,7 @@ function AddTransactionModal() {
   const { data, error, loading, fetchData } = useFetch(
     transactionData.type === TransactionType.Income ? TransactionService.addIncome : TransactionService.addExpense
   );
-  const audio = new Audio(cashRegisterSound);
+
 
   const handleFormConfirm = (data: Transaction) => {
     setTransactionData(data);
@@ -32,10 +32,7 @@ function AddTransactionModal() {
 
   const handleSubmit = () => {
     const { groupName, type, ...body } = transactionData;
-    audio.play();
-    setTimeout(() => {
-      fetchData(body);
-    }, 500);
+    fetchData(body);
   };
 
   useEffect(() => {

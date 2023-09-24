@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import { EditTransactionSteps, Outcome } from '../../../values/enums/form-steps';
-import TransactionForm from '../add-transaction/transaction-form';
-import { Expense, Transaction } from '../../../models/transactions';
-import { _void } from '../../../models/common';
-import Confirm from '../../steps/confirm';
-import Notice from '../../steps/notice';
-import Loader from '../../../common/loader';
-import useFetch from '../../../hooks/useFetch';
-import TransactionService from '../../../services/transaction.service';
-import { TransactionType } from '../../../values/enums/transactions';
-import CustomModal from '../../../common/modal/custom-modal';
-import { useModalContext } from '../../../contexts/modals.context';
+import { EditTransactionSteps, Outcome } from '../values/enums/form-steps';
+import TransactionForm from '../form/manage-transactions/steps/transaction-form';
+import { Expense, Transaction } from '../models/transactions';
+import { _void } from '../models/common';
+import Confirm from '../form/manage-transactions/steps/confirm';
+import Notice from '../form/common-steps/notice';
+import Loader from '../common/loader';
+import useFetch from '../hooks/useFetch';
+import TransactionService from '../services/transaction.service';
+import { TransactionType } from '../values/enums/transactions';
+import CustomModal from '../common/modal/custom-modal';
+import { useModalContext } from '../contexts/modals.context';
 
 function EditTransactionModal() {
 
@@ -35,12 +35,21 @@ function EditTransactionModal() {
   };
 
   useEffect(() => {
-    data && setStep(EditTransactionSteps.Success);
-    error && setStep(EditTransactionSteps.Fail);
+    if (data || error) {
+      data && setStep(EditTransactionSteps.Success);
+      error && setStep(EditTransactionSteps.Fail);
+    }
+
   }, [data, error]);
 
+
+  const handleClose = () => {
+    setStep(EditTransactionSteps.Edit)
+    closeEditTransactionModal()
+  }
+
   return (
-    <CustomModal isOpen={editTransactionModalOpen} handleClose={closeEditTransactionModal}>
+    <CustomModal isOpen={editTransactionModalOpen} handleClose={handleClose}>
       <Loader isLoading={loading} size="8vw">
         {
           {
@@ -64,14 +73,14 @@ function EditTransactionModal() {
               <Notice
                 outcome={Outcome.Success}
                 text="You have successfully edited the transaction"
-                handleClose={closeEditTransactionModal}
+                handleClose={handleClose}
               />
             ),
             [EditTransactionSteps.Fail]: (
               <Notice
                 outcome={Outcome.Fail}
                 text="Oops! Something went wrong. Please try again later"
-                handleClose={closeEditTransactionModal}
+                handleClose={handleClose}
               />
             ),
           }[step]

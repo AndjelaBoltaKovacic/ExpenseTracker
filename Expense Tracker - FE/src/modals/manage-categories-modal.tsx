@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
-import { ManageCategoriesSteps, Outcome } from '../../values/enums/form-steps';
-import Manage from './steps/categories-display';
-import { _void } from '../../models/common';
+import { ManageCategoriesSteps, Outcome } from '../values/enums/form-steps';
+import Manage from '../form/manage-categories/steps/categories-display';
+import { _void } from '../models/common';
 import { Box } from '@mui/material';
-import { TransactionGroup } from '../../models/transactions';
-import Notice from '../steps/notice';
-import Confirm from './steps/confirm-categories';
-import useFetch from '../../hooks/useFetch';
-import CategoriesForm from './steps/categories-form';
-import { Action } from '../../values/enums/service';
-import { TransactionType } from '../../values/enums/transactions';
-import { getApiCall, getReqBody } from '../../helpers/common';
-import { useModalContext } from '../../contexts/modals.context';
-import CustomModal from '../../common/modal/custom-modal';
-import Loader from '../../common/loader';
+import { TransactionGroup } from '../models/transactions';
+import Notice from '../form/common-steps/notice';
+import Confirm from '../form/manage-categories/steps/confirm-categories';
+import useFetch from '../hooks/useFetch';
+import CategoriesForm from '../form/manage-categories/steps/categories-form';
+import { Action } from '../values/enums/service';
+import { TransactionType } from '../values/enums/transactions';
+import { getApiCall, getReqBody } from '../helpers/common';
+import { useModalContext } from '../contexts/modals.context';
+import CustomModal from '../common/modal/custom-modal';
+import Loader from '../common/loader';
 
 function ManageCategoriesModal() {
   const {
@@ -48,21 +48,22 @@ function ManageCategoriesModal() {
 
   const handleConfirm = () => {
     fetchData(getReqBody(group, method));
+
+
   };
 
   useEffect(() => {
-    console.log('called')
-    console.log(error)
     data !== null && setStep(ManageCategoriesSteps.Success);
     error && setStep(ManageCategoriesSteps.Fail);
   }, [data, error]);
 
   const handleClose = () => {
+    setStep(ManageCategoriesSteps.Manage);
     closeManageGroupModal();
   }
 
   return (
-    <CustomModal isOpen={manageGroupModalOpen} handleClose={() => handleClose()}>
+    <CustomModal isOpen={manageGroupModalOpen} handleClose={handleClose}>
       <Box>
         <Loader isLoading={loading}>
           {
@@ -104,14 +105,14 @@ function ManageCategoriesModal() {
                 <Notice
                   outcome={Outcome.Success}
                   text={`Your ${method} request has been completed successfully`}
-                  handleClose={() => handleClose()}
+                  handleClose={handleClose}
                 />
               ),
               [ManageCategoriesSteps.Fail]: (
                 <Notice
                   outcome={Outcome.Fail}
                   text='Oops! Something went wrong. Please try again later'
-                  handleClose={() => handleClose()}
+                  handleClose={handleClose}
                 />
               ),
             }[step]

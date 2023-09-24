@@ -1,6 +1,6 @@
 import { Box, Button } from '@mui/material';
 import { useEffect, useState } from 'react';
-import Notice from '../form/steps/notice';
+import Notice from '../form/common-steps/notice';
 import CustomModal from '../common/modal/custom-modal';
 import { Outcome } from '../values/enums/form-steps';
 import ReportService from '../services/report.service';

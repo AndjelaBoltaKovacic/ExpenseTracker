@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { DeleteTransactionSteps, Outcome } from '../../values/enums/form-steps';
-import Loader from '../../common/loader';
-import Confirm from './confirm';
-import Notice from './notice';
-import { _void } from '../../models/common';
-import TransactionService from '../../services/transaction.service';
-import { TransactionType } from '../../values/enums/transactions';
-import useFetch from '../../hooks/useFetch';
-import { useModalContext } from '../../contexts/modals.context';
-import CustomModal from '../../common/modal/custom-modal';
+import { DeleteTransactionSteps, Outcome } from '../values/enums/form-steps';
+import Loader from '../common/loader';
+import Confirm from '../form/manage-transactions/steps/confirm';
+import Notice from '../form/common-steps/notice';
+import { _void } from '../models/common';
+import TransactionService from '../services/transaction.service';
+import { TransactionType } from '../values/enums/transactions';
+import useFetch from '../hooks/useFetch';
+import { useModalContext } from '../contexts/modals.context';
+import CustomModal from '../common/modal/custom-modal';
 
 function DeleteTransactionModal() {
   const {
@@ -33,8 +33,14 @@ function DeleteTransactionModal() {
     error && setStep(DeleteTransactionSteps.Fail);
   }, [error, data]);
 
+
+  const handleClose = () => {
+    setStep(DeleteTransactionSteps.Confirm)
+    closeDeleteTransactionModal()
+  }
+
   return (
-    <CustomModal isOpen={deleteTransactionModalOpen} handleClose={closeDeleteTransactionModal}>
+    <CustomModal isOpen={deleteTransactionModalOpen} handleClose={handleClose}>
       <Loader isLoading={loading} size="8vw">
         {
           {
@@ -50,14 +56,14 @@ function DeleteTransactionModal() {
               <Notice
                 outcome={Outcome.Success}
                 text="You have successfully deleted the transaction"
-                handleClose={closeDeleteTransactionModal}
+                handleClose={handleClose}
               />
             ),
             [DeleteTransactionSteps.Fail]: (
               <Notice
                 outcome={Outcome.Fail}
                 text="Oops! Something went wrong. Please try again later"
-                handleClose={closeDeleteTransactionModal}
+                handleClose={handleClose}
               />
             ),
           }[step]

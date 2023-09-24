@@ -15,7 +15,7 @@ function ModalProvider({ children }: { children: ReactNode }) {
     const [manageGroupModalOpen, setManageGroupModalOpen] = useState(false);
     const [transactionToModify, setTransactionToModify] = useState(null);
 
-    const openAddTransactionModal = () => {
+    const openAddTransactionModal = (callback: any) => {
         setAddTransactionModalOpen(true);
     };
 

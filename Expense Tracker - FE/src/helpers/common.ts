@@ -3,6 +3,7 @@ import TransactionService from '../services/transaction.service';
 import { DAYS_OF_WEEK } from '../values/constants/menu';
 import { ReminderType } from '../values/enums/reminder';
 import { Action } from '../values/enums/service';
+import { TransactionType } from '../values/enums/transactions';
 
 
 const locationValueMap: { [pathname: string]: number } = {
@@ -46,4 +47,12 @@ export const getReqBody = (group: TransactionGroup, action: Action) => {
     [Action.Edit]: { name: group.name, type: 'USER_DEFINED' },
     [Action.Delete]: undefined,
   }[action];
+};
+
+export const getType = (pathname: string) => {
+  return pathname.includes('incomes') ? TransactionType.Income : TransactionType.Expense;
+};
+
+export const getService = (pathname: string) => {
+  return getType(pathname) === TransactionType.Income ? TransactionService.getIncomes : TransactionService.getExpenses;
 };

@@ -6,7 +6,7 @@ import CategoriesTable from '../categories-table';
 import Loader from '../../../common/loader';
 import { Box, Button } from '@mui/material';
 import { TransactionGroup } from '../../../models/transactions';
-import Notice from '../../steps/notice';
+import Notice from '../../common-steps/notice';
 import { _void } from '../../../models/common';
 
 function Manage({ onEdit, onDelete, isExpense, setIsExpense, onAdd }: any) {

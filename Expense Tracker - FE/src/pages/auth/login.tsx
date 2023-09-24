@@ -1,8 +1,7 @@
 import { ReactNode, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { TextField, Button, Typography, Container, Box } from '@mui/material';
-import { emailValidation, passwordValidation } from '../../form/validation-patterns';
-import PasswordVisibility from '../../form/passwordVisibility';
+import { emailValidation, passwordValidation } from './validation-patterns';
 import { ThemeContext } from '@emotion/react';
 import { getInputLabelColor } from '../../theme/overrides';
 import useFetch from '../../hooks/useFetch';
@@ -11,6 +10,7 @@ import Loader from '../../common/loader';
 import { Link, useNavigate } from 'react-router-dom';
 import UserService from '../../services/user.service';
 import { User, UserTokens } from '../../models/user';
+import PasswordVisibility from './passwordVisibility';
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);

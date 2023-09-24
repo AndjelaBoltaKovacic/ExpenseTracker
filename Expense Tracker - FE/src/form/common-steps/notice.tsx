@@ -3,6 +3,9 @@ import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import ErrorIcon from '@mui/icons-material/Error';
 import { _void } from '../../models/common';
 import { Outcome } from '../../values/enums/form-steps';
+import { useEffect } from 'react';
+import cashRegisterSound from '../../assets/audio/cash-register-purchase-87313.mp3';
+
 
 function Notice({
   outcome,
@@ -17,6 +20,17 @@ function Notice({
   handleClose: _void;
   btnText?: string;
 }) {
+
+  const audio = new Audio(cashRegisterSound);
+
+
+  useEffect(() => {
+    if (outcome === Outcome.Success) {
+      audio.play();
+    }
+  }, [outcome])
+
+
   return (
     <Box textAlign='center'>
       <Typography margin={3} variant='h5'>

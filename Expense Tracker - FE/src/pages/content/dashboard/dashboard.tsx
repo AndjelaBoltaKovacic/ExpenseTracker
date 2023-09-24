@@ -20,7 +20,7 @@ function Dashboard() {
   const [incomes, setIncomes] = useState<Transaction[]>([] as Transaction[]);
   const [expenses, setExpenses] = useState<Transaction[]>([] as Transaction[]);
   const { reminder } = useReminderContext();
-  const { openAddTransactionModal, openManageGroupModal, addTransactionModalOpen, closeAddTransactionModal } = useModalContext();
+  const { openAddTransactionModal, openManageGroupModal, addTransactionModalOpen } = useModalContext();
   const path = '?page=0&size=5&sort=createdDtm';
   const {
     data: incm,
@@ -49,7 +49,7 @@ function Dashboard() {
     incm && setIncomes(incm.data.content);
   }, [exp, incm]);
 
-  useEffect(() => {}, [reminder]);
+  useEffect(() => { }, [reminder]);
 
 
   return (
@@ -58,7 +58,9 @@ function Dashboard() {
         {expenses?.length || incomes?.length ? (
           <Container sx={{ paddingBottom: '60px' }}>
             <AmountDisplay />
-            <ActionButtons onAdd={openAddTransactionModal} onManage={openManageGroupModal} />
+            <Box sx={{ width: { sm: '100%', md: '50%', lg: '35%' } }}>
+              <ActionButtons onAdd={openAddTransactionModal} onManage={openManageGroupModal} />
+            </Box>
             {!!incomes.length && (
               <Box my={2}>
                 <TableDisplay data={incomes} error={incmError} type={TransactionType.Income} />
@@ -71,7 +73,7 @@ function Dashboard() {
             )}
           </Container>
         ) : (
-            <GetStartedCard onClick={openAddTransactionModal} />
+          <GetStartedCard handleAddTransactions={openAddTransactionModal} handleManageCategories={openManageGroupModal} />
         )}
       </Loader>
       {isPremium && <Reminder />}

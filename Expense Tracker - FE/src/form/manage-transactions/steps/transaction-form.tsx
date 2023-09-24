@@ -6,13 +6,13 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import { _void } from '../../../models/common';
-import CurrencyInput from './currency-input';
+import CurrencyInput from '../currency-input';
 import { Box, FormHelperText } from '@mui/material';
 import ModalButtons from '../../../common/modal/modal-buttons';
 import TransactionService from '../../../services/transaction.service';
 import useFetch from '../../../hooks/useFetch';
 import Loader from '../../../common/loader';
-import Notice from '../../steps/notice';
+import Notice from '../../common-steps/notice';
 import { Outcome } from '../../../values/enums/form-steps';
 import { Transaction, TransactionGroup } from '../../../models/transactions';
 import { TransactionType } from '../../../values/enums/transactions';
@@ -72,9 +72,9 @@ function TransactionForm({
   useEffect(() => {
     setNotChanged(
       type === transactionType &&
-        groupId?.includes(groupID) &&
-        name === transactionToEditName &&
-        amount === transactionToEditAmount
+      groupId?.includes(groupID) &&
+      name === transactionToEditName &&
+      amount === transactionToEditAmount
     );
   }, [amount, groupId, transactionType, name]);
 

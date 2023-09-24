@@ -1,31 +1,21 @@
 import { Box, Button, Slider, Tooltip } from '@mui/material';
 import BasicDateRangePicker from './datepciker';
-import { DateRange } from '@mui/x-date-pickers-pro';
-import { Dayjs } from 'dayjs';
 
-interface FilterBoxProps {
-  priceRange: { from: number, to: number }
-  handleAmountChange: (event: Event, value: number | number[], activeThumb: number) => void;
-  dateRange: DateRange<Dayjs>;
-  setDateRange: (dateRange: DateRange<Dayjs>) => void;
-  handleSubmit: () => void;
-  minMax: number[];
-}
 export function FilterBox({
+  maxFilterAmount,
   params,
   setParams,
-  handleSubmit,
-}: any) {
+  handleSubmit
 
-  const handleAmountChange = (event: any, newValue: any) => {
+}: { maxFilterAmount: number; params: any; setParams: any, handleSubmit: any }) {
+
+  const handleAmountChange = (_: any, newValue: any) => {
     setParams({ ...params, priceRange: { from: newValue[0], to: newValue[1] } });
   };
 
   const handleSetDateRange = (dateValues: any) => {
-    console.log(dateValues)
     setParams({
-      ...params, dateRange: dateValues.map((value: any) => value ? value.
-        format('YYYY-MM-DD') : value)
+      ...params, dateRange: dateValues.map((value: any) => value ? value.format('YYYY-MM-DD') : null)
     });
   };
 
@@ -51,17 +41,17 @@ export function FilterBox({
         <Box display="flex" justifyContent="space-between" gap={{ xs: 3, md: 2 }} width="100%" flexWrap="wrap-reverse">
           <Tooltip title="Filter by amount">
             <Box display="flex" alignItems="center" width={{ xs: '100%', md: '48%' }} gap={2}>
-              <span>${params.minMax[0]}</span>
+              <span>${0}</span>
               <Slider
                 value={[params.priceRange.from, params.priceRange.to]}
                 onChange={handleAmountChange}
-                min={params.minMax[0]}
-                max={params.minMax[1]}
+                min={0}
+                max={maxFilterAmount}
                 size="small"
                 valueLabelDisplay="auto"
                 aria-labelledby="range-slider"
               />
-              <span>${params.minMax[1]}</span>
+              <span>${maxFilterAmount}</span>
             </Box>
           </Tooltip>
           <Box

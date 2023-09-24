@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useFetch from '../../hooks/useFetch';
 import ReminderService from '../../services/reminder.service';
 import { AddReminderSteps, Outcome } from '../../values/enums/form-steps';
-import Notice from '../steps/notice';
+import Notice from '../common-steps/notice';
 import { _void } from '../../models/common';
 import { AddReminderForm } from './add-reminder-form';
 import Loader from '../../common/loader';

@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Login from './pages/auth/login';
-import Dashboard from './pages/layout/dashboard/dashboard';
-import Transactions from './pages/layout/transactions/transactions';
+import Dashboard from './pages/content/dashboard/dashboard';
+import Transactions from './pages/content/transactions/transactions';
 import NavigationBar from './common/navigation/navigation-bar';
 import Register from './pages/auth/register';
 import { useUserContext } from './contexts/user.context';
@@ -10,13 +10,13 @@ import AuthRoutes from './routes/auth-routes';
 import ProtectedRoutes from './routes/protected-routes';
 import { UserRole } from './values/enums/user';
 import PremiumRoutes from './routes/premium-routes';
-import Blogs from './pages/layout/blog/blogs';
-import BlogPage from './pages/layout/blog/blog';
-import TransactionsContainer from './pages/layout/transactions/transactions-container';
-import AddTransactionModal from './form/manage-transactions/add-transaction/add-transaction-modal';
-import ManageCategoriesModal from './form/manage-categories/manage-categories-modal';
-import EditTransactionModal from './form/manage-transactions/edit-transaction/edit-transaction-modal';
-import DeleteTransactionModal from './form/steps/delete-transaction-modal';
+import Blogs from './pages/content/blog/blogs';
+import BlogPage from './pages/content/blog/blog';
+import TransactionsContainer from './pages/content/transactions/transactions-container';
+import AddTransactionModal from './modals/add-transaction-modal';
+import ManageCategoriesModal from './modals/manage-categories-modal';
+import EditTransactionModal from './modals/edit-transaction-modal';
+import DeleteTransactionModal from './modals/delete-transaction-modal';
 
 
 function App() {

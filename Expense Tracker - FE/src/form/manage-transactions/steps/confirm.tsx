@@ -1,8 +1,8 @@
 import { Paper, Typography, Table, TableBody, TableCell, TableContainer, TableRow, Box } from '@mui/material';
-import { _void } from '../../models/common';
-import ModalButtons from '../../common/modal/modal-buttons';
-import { TransactionFormData } from '../../models/transactions';
-import CategoryIcon from '../../common/category-icon';
+import { _void } from '../../../models/common';
+import ModalButtons from '../../../common/modal/modal-buttons';
+import { TransactionFormData } from '../../../models/transactions';
+import CategoryIcon from '../../../common/category-icon';
 
 function Confirm({
   text,

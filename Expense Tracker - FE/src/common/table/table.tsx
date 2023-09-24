@@ -8,7 +8,6 @@ import CategoryIcon from '../category-icon';
 import { TransactionType } from '../../values/enums/transactions';
 import { formatDate } from '../../helpers/date-formatter';
 import TableButtonCell from './table-button';
-import { useModalContext } from '../../contexts/modals.context';
 
 const DataTable = ({
   disableSort,
@@ -17,19 +16,23 @@ const DataTable = ({
   type,
   params,
   setParams,
+  onEdit,
+  onDelete
 }: {
   disableSort?: boolean;
   hideButtons?: boolean;
     data: Transaction[];
-  type?: TransactionType;
+    type?: TransactionType;
     params?: any;
     setParams?: any;
+    onEdit?: any;
+    onDelete?: any;
 }) => {
-  const { openEditTransactionModal, openDeleteTransactionModal } = useModalContext();
+
   const handleSort = (property: keyof DataEntry) => {
-    const isAscending = params?.orderBy === property && params?.order === 'asc';
-    setParams((prevVal: any) => {
-      return { ...prevVal, order: isAscending ? 'desc' : 'asc', orderBy: property };
+    const isAscending = params?.sort === property && params?.order === 'asc';
+    setParams({
+      ...params, order: isAscending ? 'desc' : 'asc', sort: property 
     });
   };
 
@@ -41,12 +44,12 @@ const DataTable = ({
     return 0;
   });
 
-  const handleEdit = (transaction: any) => {
-    openEditTransactionModal(transaction);
+  const handleEdit = (transaction: Transaction & { type?: TransactionType }) => {
+    onEdit(transaction);
   };
 
-  const handleDelete = (transaction: any) => {
-    openDeleteTransactionModal(transaction);
+  const handleDelete = (transaction: (Transaction & { type?: TransactionType })) => {
+    onDelete(transaction);
   };
 
   return (
@@ -58,7 +61,7 @@ const DataTable = ({
               <SmallTableCell color="primary.main" content="No." width='10%' />
               {TABLE_HEADERS.map(({ title, property }, i) => (
                 <SmallTableCell
-                  width='20%'
+                  width={title === 'Category' ? '30%' : '20%'}
                   key={`${title}_${i}`}
                   content={
                     <SortLabel
@@ -67,7 +70,7 @@ const DataTable = ({
                       title={title}
                       handleSort={handleSort}
                       order={params?.order}
-                      orderBy={params?.orderBy}
+                      orderBy={params?.sort}
                     />
                   }
                 />
