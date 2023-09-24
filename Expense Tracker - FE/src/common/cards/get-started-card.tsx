@@ -1,4 +1,4 @@
-import { useUserContext } from '../../contexts/userContext'
+import { useUserContext } from '../../contexts/user.context'
 import NoticeCard from './notice-card';
 import { _void } from '../../models/common';
 

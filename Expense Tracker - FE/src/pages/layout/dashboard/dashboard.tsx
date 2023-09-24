@@ -9,7 +9,12 @@ import Reminder from '../../../reminder/reminder';
 import { TransactionType } from '../../../values/enums/transactions';
 import { TableDisplay } from '../../../common/table/table-display';
 import { Transaction, TransactionsDTO } from '../../../models/transactions';
+<<<<<<< HEAD
 import { useUserContext } from '../../../contexts/userContext';
+=======
+import ManageCategories from '../../../form/manage-categories/manage-categories';
+import { useUserContext } from '../../../contexts/user.context';
+>>>>>>> bc3c985 (added token expiration check)
 import ActionButtons from './action-buttons';
 import useReminderContext from '../../../contexts/reminder.context';
 import GetStartedCard from '../../../common/cards/get-started-card';

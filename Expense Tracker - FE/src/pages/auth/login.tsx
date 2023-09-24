@@ -6,7 +6,7 @@ import PasswordVisibility from '../../form/passwordVisibility';
 import { ThemeContext } from '@emotion/react';
 import { getInputLabelColor } from '../../theme/overrides';
 import useFetch from '../../hooks/useFetch';
-import { useUserContext } from '../../contexts/userContext';
+import { useUserContext } from '../../contexts/user.context';
 import Loader from '../../common/loader';
 import { Link, useNavigate } from 'react-router-dom';
 import UserService from '../../services/user.service';
