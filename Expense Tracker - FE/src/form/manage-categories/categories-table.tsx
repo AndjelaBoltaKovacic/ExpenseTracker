@@ -7,12 +7,12 @@ import TableButtonCell from '../../common/table/table-button';
 
 const CategoriesTable = ({
   data,
-  onEditClick,
-  onDeleteClick,
+  onEditClick = () => {},
+  onDeleteClick = () => {},
 }: {
   data: TransactionGroup[];
-  onEditClick?: any;
-  onDeleteClick?: any;
+  onEditClick?: _void;
+  onDeleteClick?: _void;
 }) => {
   return (
     <>
@@ -20,8 +20,8 @@ const CategoriesTable = ({
         <Table>
           <TableHead>
             <TableRow>
-              <SmallTableCell content="No." />
-              <SmallTableCell content="Category Name" color="primary.main" />
+              <SmallTableCell content='No.' />
+              <SmallTableCell content='Category Name' color='primary.main' />
               <>
                 <SmallTableCell />
                 <SmallTableCell />
@@ -32,10 +32,10 @@ const CategoriesTable = ({
             {data.map((row, i) => (
               <Tooltip title={row.type === 'PREDEFINED' ? 'You can only change user-defined categories' : ''}>
                 <TableRow key={row.id}>
-                  <SmallTableCell color="primary.main" content={i + 1} />
+                  <SmallTableCell color='primary.main' content={i + 1} />
                   <SmallTableCell
                     content={
-                      <Box display="flex" alignItems="center">
+                      <Box display='flex' alignItems='center' gap={1}>
                         <CategoryIcon name={row.name} />
                         {row.name}
                       </Box>
@@ -44,16 +44,16 @@ const CategoriesTable = ({
                   <>
                     <>
                       <TableButtonCell
-                        color="primary"
+                        color='primary'
                         onClick={() => onEditClick(row)}
                         disabled={row.type === 'PREDEFINED'}
-                        text="Edit"
+                        text='Edit'
                       />
                       <TableButtonCell
-                        color="secondary"
+                        color='secondary'
                         onClick={onDeleteClick && (() => onDeleteClick(row, 'delete'))}
                         disabled={row.type === 'PREDEFINED'}
-                        text="Delete"
+                        text='Delete'
                       />
                     </>
                   </>

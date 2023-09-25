@@ -19,11 +19,11 @@ function Confirm({
 
   return (
     <>
-      <Typography fontSize={20} textAlign="center" padding={2}>
+      <Typography fontSize={20} textAlign='center' paddingBottom={4}>
         {text}
       </Typography>
       <TableContainer component={Paper} elevation={3} sx={{ maxWidth: '350px', margin: 'auto' }}>
-        <Table aria-label="Key Values Table">
+        <Table aria-label='Key Values Table'>
           <TableBody>
             <TableRow>
               <TableCell>
@@ -36,7 +36,7 @@ function Confirm({
                 <b>Category:</b>
               </TableCell>
               <TableCell>
-                <Box display="flex" alignItems="center">
+                <Box display='flex' alignItems='center' gap={1}>
                   <CategoryIcon name={groupName} />
                   {groupName}
                 </Box>
@@ -52,7 +52,7 @@ function Confirm({
               <TableCell>
                 <b>Amount:</b>
               </TableCell>
-              <TableCell>${amount?.toFixed()}</TableCell>
+              <TableCell>${amount?.toFixed(2)}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

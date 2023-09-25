@@ -58,7 +58,7 @@ function Dashboard() {
         {expenses?.length || incomes?.length ? (
           <Container sx={{ paddingBottom: '60px' }}>
             <AmountDisplay />
-            <Box sx={{ width: { sm: '100%', md: '50%', lg: '35%' } }}>
+            <Box sx={{ width: { sm: '100%', md: '50%', lg: '40%' } }}>
               <ActionButtons onAdd={openAddTransactionModal} onManage={openManageGroupModal} />
             </Box>
             {!!incomes.length && (
@@ -73,7 +73,10 @@ function Dashboard() {
             )}
           </Container>
         ) : (
-          <GetStartedCard handleAddTransactions={openAddTransactionModal} handleManageCategories={openManageGroupModal} />
+          <GetStartedCard
+            handleAddTransactions={openAddTransactionModal}
+            handleManageCategories={openManageGroupModal}
+          />
         )}
       </Loader>
       {isPremium && <Reminder />}

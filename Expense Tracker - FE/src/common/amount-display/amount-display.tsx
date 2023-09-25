@@ -17,14 +17,14 @@ const AmountDisplay = () => {
     error: incmError,
     loading: incmLoading,
     fetchData: fetchIncomes,
-  } = useFetch<any>(TransactionService.getIncomeAmount);
+  } = useFetch<{ totalAmount: number }>(TransactionService.getIncomeAmount);
 
   const {
     data: exp,
     error: expError,
     loading: expLoading,
     fetchData: fetchExpenses,
-  } = useFetch<any>(TransactionService.getExpenseAmount);
+  } = useFetch<{ totalAmount: number }>(TransactionService.getExpenseAmount);
 
   useEffect(() => {
     fetchIncomes();
@@ -35,10 +35,8 @@ const AmountDisplay = () => {
     if (incm && exp) {
       setTotalIncome(incm.totalAmount);
       setTotalExpense(exp.totalAmount);
-      // setTotalAmount(incm.totalAmount - exp.totalAmount);
     }
   }, [incm, exp]);
-
 
   return (
     <Box>

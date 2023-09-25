@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { User } from '../models/user';
 import { Transaction, TransactionGroup } from '../models/transactions';
 

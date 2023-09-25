@@ -17,7 +17,6 @@ import { Outcome } from '../../../values/enums/form-steps';
 import { Transaction, TransactionGroup } from '../../../models/transactions';
 import { TransactionType } from '../../../values/enums/transactions';
 import CategoryIcon from '../../../common/category-icon';
-import { Settings } from '@mui/icons-material';
 
 function TransactionForm({
   transactionToEdit,
@@ -72,9 +71,9 @@ function TransactionForm({
   useEffect(() => {
     setNotChanged(
       type === transactionType &&
-      groupId?.includes(groupID) &&
-      name === transactionToEditName &&
-      amount === transactionToEditAmount
+        groupId?.includes(groupID) &&
+        name === transactionToEditName &&
+        amount === transactionToEditAmount
     );
   }, [amount, groupId, transactionType, name]);
 
@@ -86,22 +85,22 @@ function TransactionForm({
   return error ? (
     <Notice
       outcome={Outcome.Fail}
-      text="Oops! Something went wrong. Please try again later"
+      text='Oops! Something went wrong. Please try again later'
       handleClose={handleClose}
     />
   ) : (
     <Loader isLoading={loading}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl fullWidth variant="outlined" error={!!errors.type} margin="normal" disabled={disableType}>
+        <FormControl fullWidth variant='outlined' error={!!errors.type} margin='normal' disabled={disableType}>
           <InputLabel>Transaction Type</InputLabel>
           <Controller
-            name="type"
+            name='type'
             control={control}
             defaultValue={type || undefined}
             rules={{ required: 'This field is required' }}
             render={({ field }) => (
               <>
-                <Select {...field} label="Transaction Type">
+                <Select {...field} label='Transaction Type'>
                   {transactionTypes.map((type, index) => (
                     <MenuItem key={index} value={type}>
                       {type}
@@ -113,24 +112,24 @@ function TransactionForm({
             )}
           />
         </FormControl>
-        <FormControl fullWidth variant="outlined" error={!!errors.groupId} margin="normal">
+        <FormControl fullWidth variant='outlined' error={!!errors.groupId} margin='normal' disabled={!transactionType}>
           <InputLabel>Transaction Category</InputLabel>
           <Controller
-            name="groupId"
+            name='groupId'
             control={control}
             defaultValue={groupID || undefined}
             rules={{ required: 'This field is required' }}
             render={({ field }) => (
               <>
-                <Select {...field} label="Transaction Category">
+                <Select {...field} label='Transaction Category'>
                   {transactionGroups?.map(({ name, id }) => (
                     <MenuItem key={id} value={id}>
-                      <Box display="flex" alignItems="end">
-                        <CategoryIcon name={name} /> &nbsp;{name}
+                      <Box display='flex' alignItems='center' gap={1}>
+                        <CategoryIcon name={name} />
+                        {name}
                       </Box>
                     </MenuItem>
                   ))}
-
                 </Select>
                 {errors?.groupId && <FormHelperText>{errors?.groupId?.message as string}</FormHelperText>}
               </>
@@ -139,11 +138,11 @@ function TransactionForm({
         </FormControl>
 
         <TextField
-          label="Transaction Description"
+          label='Transaction Description'
           fullWidth
           defaultValue={transactionToEditName || undefined}
-          variant="outlined"
-          margin="normal"
+          variant='outlined'
+          margin='normal'
           {...register('name', {
             required: 'This field is required',
             minLength: { value: 5, message: 'Description must have at least 5 characters' },
@@ -151,17 +150,17 @@ function TransactionForm({
           error={!!errors.name}
           helperText={errors?.name?.message as ReactNode}
         />
-        <FormControl fullWidth variant="outlined" error={!!errors.amount} margin="normal">
+        <FormControl fullWidth variant='outlined' error={!!errors.amount} margin='normal'>
           <Controller
             defaultValue={transactionToEditAmount || undefined}
-            name="amount"
+            name='amount'
             control={control}
             rules={{
               required: 'This field is required',
             }}
             render={({ field }) => (
               <>
-                <CurrencyInput {...field} label="Amount" name="amount" fullWidth />
+                <CurrencyInput {...field} label='Amount' name='amount' fullWidth />
                 {errors?.amount && <FormHelperText>{errors?.amount?.message as string}</FormHelperText>}
               </>
             )}

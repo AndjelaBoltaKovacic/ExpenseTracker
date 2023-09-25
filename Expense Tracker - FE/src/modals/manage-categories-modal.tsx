@@ -27,7 +27,7 @@ function ManageCategoriesModal() {
   const isEdit = method === Action.Edit;
   const { data, error, loading, fetchData } = useFetch(
     getApiCall(isExpense, method),
-    method !== Action.Add ? `${group.id}` : ''
+    method !== Action.Add ? `/${group.id}` : ''
   );
 
   const categoryType = isExpense ? TransactionType.Expense : TransactionType.Income;

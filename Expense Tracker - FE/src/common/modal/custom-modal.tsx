@@ -17,8 +17,8 @@ const CustomModal = ({
   children: ReactNode;
 }) => {
   return (
-    <Modal open={isOpen} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
-      <Box paddingTop="5vw">
+    <Modal open={isOpen} aria-labelledby='simple-modal-title' aria-describedby='simple-modal-description'>
+      <Box paddingTop='4vw'>
         <Box
           sx={{
             margin: 'auto',
@@ -31,14 +31,14 @@ const CustomModal = ({
             maxWidth: '600px',
           }}
         >
-          <Box textAlign="end" sx={{ cursor: 'pointer' }}>
+          <Box textAlign='end' sx={{ cursor: 'pointer' }}>
             <CloseIcon onClick={handleClose} />
           </Box>
           {title && (
             <Typography
-              mb={6}
-              variant="h5"
-              textAlign="center"
+              pb={4}
+              variant='h5'
+              textAlign='center'
               sx={{ fontSize: '2rem', '@media (min-width:600px)': { fontSize: '2.5rem' } }}
             >
               {title}

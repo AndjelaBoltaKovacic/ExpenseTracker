@@ -55,11 +55,11 @@ const TransactionService = {
     return axiosApiCall<TransactionsDTO<T>>(HttpMethod.POST, incomeGroupUrl, body);
   },
   editIncomeGroup<T>({ body, path }: { body: any; path: string }) {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.PUT, `${incomeGroupUrl + path}`, body);
+    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.PUT, `${incomeGroupUrl}/${path}`, body);
   },
 
   deleteIncomeGroup<T>({ path }: { path: string }) {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.DELETE, `${incomeGroupUrl + path}`);
+    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.DELETE, `${incomeGroupUrl}/${path}`);
   },
   //EXPENSE GROUP
   getExpenseGroups<T>() {

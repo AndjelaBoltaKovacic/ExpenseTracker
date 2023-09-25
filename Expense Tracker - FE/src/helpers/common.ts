@@ -1,4 +1,4 @@
-import { TransactionGroup } from '../models/transactions';
+import { Transaction, TransactionGroup } from '../models/transactions';
 import TransactionService from '../services/transaction.service';
 import { DAYS_OF_WEEK } from '../values/constants/menu';
 import { ReminderType } from '../values/enums/reminder';
@@ -56,3 +56,13 @@ export const getType = (pathname: string) => {
 export const getService = (pathname: string) => {
   return getType(pathname) === TransactionType.Income ? TransactionService.getIncomes : TransactionService.getExpenses;
 };
+
+export const getSortedData = (data: Transaction[], params: any) => {
+  return data?.slice().sort((a, b) => {
+    const aValue = a[params?.orderBy as keyof Transaction];
+    const bValue = b[params?.orderBy as keyof Transaction];
+    if (aValue < bValue) return params?.order === 'asc' ? -1 : 1;
+    if (aValue > bValue) return params?.order === 'asc' ? 1 : -1;
+    return 0;
+  });
+}

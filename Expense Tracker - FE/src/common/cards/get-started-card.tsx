@@ -33,46 +33,42 @@ function GetStartedCard({
     }
 
     return (
-        <>
-            {
-                {
-                    [GetStartedSteps.Start]: (
-                        <NoticeCard
-                            title={`${isWelcomeCard ? 'Welcome' : 'Hi'}, ${user?.firstname}!`}
-                            text={`It seems like you don't have any ${type?.toLowerCase() + 's' || 'transactions'} yet.`}
-                            buttonText={isWelcomeCard ? 'Get Started' : 'Add Transaction'}
-                            onButtonClick={() => handleClick()}
-                        />
-                    ),
-                    [GetStartedSteps.Select]: (
-                        <>
-
-                            <Box
-                                border={1}
-                                borderColor="primary.main"
-                                borderRadius="7px"
-                                boxShadow={2}
-                                p={3}
-                                margin="auto"
-                                marginTop="10vw"
-                                textAlign="center"
-                                sx={{ width: { xs: '85%', md: '60%' } }}
-                            >
-                                <Typography variant="h4" component="div" mb={2}>
-                                    What would you like to do?
-                                </Typography>
-                                <Box display='flex' width='100%'>
-                                    <ActionButtons onAdd={handleAddTransactions} onManage={handleManageCategories as _void} />
-                                </Box>
-
-
-                            </Box>
-
-                        </>
-                    ),
-                }[step]
-            }
-        </>
+      <>
+        {
+          {
+            [GetStartedSteps.Start]: (
+              <NoticeCard
+                title={`${isWelcomeCard ? 'Welcome' : 'Hi'}, ${user?.firstname}!`}
+                text={`It seems like you don't have any ${type ? type.toLowerCase() + 's' : 'transactions'} yet.`}
+                buttonText={isWelcomeCard ? 'Get Started' : 'Add Transaction'}
+                onButtonClick={() => handleClick()}
+              />
+            ),
+            [GetStartedSteps.Select]: (
+              <>
+                <Box
+                  border={1}
+                  borderColor='primary.main'
+                  borderRadius='7px'
+                  boxShadow={2}
+                  p={3}
+                  margin='auto'
+                  marginTop='10vw'
+                  textAlign='center'
+                  sx={{ width: { xs: '85%', md: '60%' } }}
+                >
+                  <Typography variant='h4' component='div' mb={2}>
+                    What would you like to do?
+                  </Typography>
+                  <Box display='flex' width='100%'>
+                    <ActionButtons onAdd={handleAddTransactions} onManage={handleManageCategories as _void} />
+                  </Box>
+                </Box>
+              </>
+            ),
+          }[step]
+        }
+      </>
     );
 }
 

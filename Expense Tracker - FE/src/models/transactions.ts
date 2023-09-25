@@ -60,3 +60,13 @@ export type TransactionGroup = {
   name: string,
   type: TransactionGroupType
 }
+
+export type TransactionParams = {
+  sort: string;
+  order: 'asc' | 'desc';
+  priceRange: {
+    from: number;
+    to: number;
+  };
+  dateRange: [null | Date, null | Date];
+}

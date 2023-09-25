@@ -6,6 +6,6 @@ export type MenuItem = {
   isPremium?: boolean;
 };
 
-export type _void = (arg?: any) => void;
+export type _void = (...args: any) => void;
 
 export type DataEntry = Array<Transaction>[number];
