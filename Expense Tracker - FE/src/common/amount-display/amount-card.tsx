@@ -19,7 +19,7 @@ function AmountCard({ totalAmount }: { totalAmount: number }) {
         $ {totalAmount.toFixed(2)}
       </Typography>
       <Typography variant='body1' mx={5} borderTop={1} borderColor='primary.main'>
-        All-time Ballance
+        All-time Balance
       </Typography>
     </Box>
   );

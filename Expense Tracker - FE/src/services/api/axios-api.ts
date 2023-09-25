@@ -13,6 +13,6 @@ export const axiosApiCall = <T>(method: HttpMethod, url: string, data?: any): Pr
         resolve(response.data);
       })
       .catch((error) => {
-        reject(error?.response?.data || 'Error!');
+        reject(error?.response?.data || error.message || 'Newtwork Error!');
       });
   });

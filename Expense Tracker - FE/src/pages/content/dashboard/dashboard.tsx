@@ -14,6 +14,7 @@ import ActionButtons from './action-buttons';
 import useReminderContext from '../../../contexts/reminder.context';
 import GetStartedCard from '../../../common/cards/get-started-card';
 import { useModalContext } from '../../../contexts/modals.context';
+import NoticeCard from '../../../common/cards/notice-card';
 
 function Dashboard() {
   const { isPremium, user } = useUserContext();
@@ -51,33 +52,34 @@ function Dashboard() {
 
   useEffect(() => { }, [reminder]);
 
+  console.log(expError)
 
   return (
     <>
       <Loader isLoading={incmLoading || expLoading}>
-        {expenses?.length || incomes?.length ? (
-          <Container sx={{ paddingBottom: '60px' }}>
-            <AmountDisplay />
-            <Box sx={{ width: { sm: '100%', md: '50%', lg: '40%' } }}>
-              <ActionButtons onAdd={openAddTransactionModal} onManage={openManageGroupModal} />
-            </Box>
-            {!!incomes.length && (
+        {!!incmError || !!expError && !incomes.length && !expenses.length ?
+          <NoticeCard
+            title={`Oops, an error occured`}
+            text={'Please try again later'}
+          /> : <>  {expenses?.length || incomes?.length ? (
+            <Container sx={{ paddingBottom: '60px' }}>
+              <AmountDisplay />
+              <Box sx={{ width: { sm: '100%', md: '50%', lg: '40%' } }}>
+                <ActionButtons onAdd={openAddTransactionModal} onManage={openManageGroupModal} />
+              </Box>
               <Box my={2}>
                 <TableDisplay data={incomes} error={incmError} type={TransactionType.Income} />
               </Box>
-            )}
-            {!!expenses.length && (
               <Box my={2}>
                 <TableDisplay data={expenses} error={expError} type={TransactionType.Expense} />
               </Box>
-            )}
-          </Container>
-        ) : (
-          <GetStartedCard
-            handleAddTransactions={openAddTransactionModal}
-            handleManageCategories={openManageGroupModal}
-          />
-        )}
+            </Container>
+          ) : (
+            <GetStartedCard
+              handleAddTransactions={openAddTransactionModal}
+              handleManageCategories={openManageGroupModal}
+            />
+          )}</>}
       </Loader>
       {isPremium && <Reminder />}
     </>

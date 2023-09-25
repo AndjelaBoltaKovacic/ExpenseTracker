@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { Box } from '@mui/material';
 import useFetch from '../../../hooks/useFetch';
 import BlogService from '../../../services/blog.service';
 import Loader from '../../../common/loader';
 import { BlogDTO, Article } from '../../../models/blog';
 import BlogCard from './blog-card';
-import { Box } from '@mui/material';
 import useInfiniteScroll from '../../../hooks/useInfiniteScroll';
 import ErrorCard from '../../../common/cards/error-card';
 
@@ -13,14 +13,15 @@ function Blogs() {
   const [blogs, setBlogs] = useState<Article[]>([] as Article[]);
   const { data, error, loading, fetchData } = useFetch<BlogDTO>(BlogService.getBlogs, `?page=${page}&size=10`);
   const intersectionObserver = useRef<React.MutableRefObject<HTMLDivElement>>();
+
   const { infiniteScrollTrigger } = useInfiniteScroll(
     intersectionObserver,
     loading,
     useCallback(() => {
-      if (data && data.data.length <= data?.meta?.total) {
+      if (data && blogs.length < data?.meta?.total) {
         setPage((prev) => prev + 10);
       }
-    }, [])
+    }, [data])
   );
   useEffect(() => {
     fetchData();
@@ -33,7 +34,7 @@ function Blogs() {
 
   return (
     <Box mt={5}>
-      <Loader isLoading={loading}>
+      <Loader isLoading={loading && !blogs.length}>
         {error ? (
           <ErrorCard
             onClick={fetchData}
@@ -43,9 +44,9 @@ function Blogs() {
             {[...blogs].map((blog, i) => (
               <BlogCard blog={blog} key={i} />
             ))}
-            <div ref={infiniteScrollTrigger}>bla</div>
           </>
         )}
+        <div ref={infiniteScrollTrigger} />
       </Loader>
     </Box>
   );
