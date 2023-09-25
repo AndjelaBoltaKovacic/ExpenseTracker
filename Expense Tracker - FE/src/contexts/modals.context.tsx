@@ -1,84 +1,95 @@
-import { ReactNode, createContext, useContext, useMemo, useState } from 'react';
-import { TransactionType } from '../values/enums/transactions';
-import React from 'react';
+import React, { ReactNode, createContext, useContext, useMemo, useState } from 'react';
+import { Transaction, TransactionFormData } from '../models/transactions';
 
-const ModalContext = createContext({} as any);
+type ModalContextType = {
+  addTransactionModalOpen: boolean;
+  editTransactionModalOpen: boolean;
+  deleteTransactionModalOpen: boolean;
+  manageGroupModalOpen: boolean;
+  transactionToModify: TransactionFormData | null;
+  openAddTransactionModal: () => void;
+  closeAddTransactionModal: () => void;
+  openEditTransactionModal: (transaction: TransactionFormData) => void;
+  closeEditTransactionModal: () => void;
+  openDeleteTransactionModal: (transaction: TransactionFormData) => void;
+  closeDeleteTransactionModal: () => void;
+  openManageGroupModal: () => void;
+  closeManageGroupModal: () => void;
+};
+
+const ModalContext = createContext({} as ModalContextType);
 
 export function useModalContext() {
-    return useContext(ModalContext);
+  return useContext(ModalContext);
 }
 
 function ModalProvider({ children }: { children: ReactNode }) {
-    const [addTransactionModalOpen, setAddTransactionModalOpen] = useState(false);
-    const [editTransactionModalOpen, setEditTransactionModalOpen] = useState(false);
-    const [deleteTransactionModalOpen, setDeleteTransactionModalOpen] = useState(false);
-    const [manageGroupModalOpen, setManageGroupModalOpen] = useState(false);
-    const [transactionToModify, setTransactionToModify] = useState(null);
+  const [addTransactionModalOpen, setAddTransactionModalOpen] = useState<boolean>(false);
+  const [editTransactionModalOpen, setEditTransactionModalOpen] = useState<boolean>(false);
+  const [deleteTransactionModalOpen, setDeleteTransactionModalOpen] = useState<boolean>(false);
+  const [manageGroupModalOpen, setManageGroupModalOpen] = useState<boolean>(false);
+  const [transactionToModify, setTransactionToModify] = useState<TransactionFormData | null>(null);
 
-    const openAddTransactionModal = (callback: any) => {
-        setAddTransactionModalOpen(true);
+  const openAddTransactionModal = () => {
+    setAddTransactionModalOpen(true);
+  };
+
+  const closeAddTransactionModal = () => {
+    setAddTransactionModalOpen(false);
+  };
+
+  const openEditTransactionModal = (transaction: TransactionFormData) => {
+    setTransactionToModify(transaction);
+    setEditTransactionModalOpen(true);
+  };
+
+  const closeEditTransactionModal = () => {
+    setEditTransactionModalOpen(false);
+    setTransactionToModify(null);
+  };
+
+  const openDeleteTransactionModal = (transaction: TransactionFormData) => {
+    setTransactionToModify(transaction);
+    setDeleteTransactionModalOpen(true);
+  };
+
+  const closeDeleteTransactionModal = () => {
+    setDeleteTransactionModalOpen(false);
+    setTransactionToModify(null);
+  };
+
+  const openManageGroupModal = () => {
+    setManageGroupModalOpen(true);
+  };
+
+  const closeManageGroupModal = () => {
+    setManageGroupModalOpen(false);
+  };
+
+  const modalValues = useMemo(() => {
+    return {
+      addTransactionModalOpen,
+      editTransactionModalOpen,
+      deleteTransactionModalOpen,
+      manageGroupModalOpen,
+      transactionToModify,
+      openAddTransactionModal,
+      closeAddTransactionModal,
+      openEditTransactionModal,
+      closeEditTransactionModal,
+      openDeleteTransactionModal,
+      closeDeleteTransactionModal,
+      openManageGroupModal,
+      closeManageGroupModal,
     };
-
-    const closeAddTransactionModal = (type: TransactionType) => {
-        setAddTransactionModalOpen(false);
-    };
-
-    const openEditTransactionModal = (transaction: any) => {
-        setTransactionToModify(transaction);
-        setEditTransactionModalOpen(true);
-    };
-
-    const closeEditTransactionModal = () => {
-        setEditTransactionModalOpen(false);
-        setTransactionToModify(null);
-    };
-
-    const openDeleteTransactionModal = (transaction: any) => {
-        setTransactionToModify(transaction);
-        setDeleteTransactionModalOpen(true);
-    };
-
-    const closeDeleteTransactionModal = () => {
-        setDeleteTransactionModalOpen(false);
-        setTransactionToModify(null);
-    };
-
-    const openManageGroupModal = () => {
-        setManageGroupModalOpen(true);
-    };
-
-    const closeManageGroupModal = () => {
-        setManageGroupModalOpen(false);
-    };
-
-    const modalValues = useMemo(() => {
-        return {
-            addTransactionModalOpen,
-            editTransactionModalOpen,
-            deleteTransactionModalOpen,
-            manageGroupModalOpen,
-            transactionToModify,
-            openAddTransactionModal,
-            closeAddTransactionModal,
-            openEditTransactionModal,
-            closeEditTransactionModal,
-            openDeleteTransactionModal,
-            closeDeleteTransactionModal,
-            openManageGroupModal,
-            closeManageGroupModal,
-        }
-    }, [addTransactionModalOpen,
-        editTransactionModalOpen,
-        deleteTransactionModalOpen,
-        manageGroupModalOpen,
-        transactionToModify])
-    return (
-        <ModalContext.Provider
-            value={modalValues}
-        >
-            {children}
-        </ModalContext.Provider>
-    );
+  }, [
+    addTransactionModalOpen,
+    editTransactionModalOpen,
+    deleteTransactionModalOpen,
+    manageGroupModalOpen,
+    transactionToModify,
+  ]);
+  return <ModalContext.Provider value={modalValues}>{children}</ModalContext.Provider>;
 }
 
 export default React.memo(ModalProvider);

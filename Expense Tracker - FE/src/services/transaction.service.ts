@@ -1,7 +1,7 @@
 import { baseUrl } from '../values/urls';
 import { axiosApiCall } from './api/axios-api';
 import { HttpMethod } from '../values/enums/service';
-import { TransactionsDTO } from '../models/transactions';
+import { Transaction, TransactionGroup, TransactionsDTO } from '../models/transactions';
 
 const transactionApiUrl = `${baseUrl}/transaction/`;
 const incomeUrl = `${transactionApiUrl}income`;
@@ -15,77 +15,77 @@ const totalExpenseUrl = `${transactionApiUrl}total-expense-amount`;
 
 const TransactionService = {
   //INCOMES
-  getIncomes<T>({ path }: { path: string }) {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.GET, `${incomeUrl + path}`);
+  getIncomes({ path }: { path: string }) {
+    return axiosApiCall<TransactionsDTO<Transaction[]>>(HttpMethod.GET, `${incomeUrl + path}`);
   },
 
-  addIncome<T>({ body }: { body: any }) {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.POST, incomeUrl, body);
+  addIncome({ body }: { body: Transaction }) {
+    return axiosApiCall<TransactionsDTO<Transaction>>(HttpMethod.POST, incomeUrl, body);
   },
-  editIncome<T>({ body, path }: { body: any; path: string }) {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.PUT, `${incomeUrl}/${path}`, body);
+  editIncome({ body, path }: { body: Transaction; path: string }) {
+    return axiosApiCall<TransactionsDTO<Transaction>>(HttpMethod.PUT, `${incomeUrl}/${path}`, body);
   },
 
-  deleteIncome<T>({ path }: { path: string }) {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.DELETE, `${incomeUrl}/${path}`);
+  deleteIncome({ path }: { path: string }) {
+    return axiosApiCall<TransactionsDTO<Transaction>>(HttpMethod.DELETE, `${incomeUrl}/${path}`);
   },
 
   //EXPENSES
-  getExpenses<T>({ path }: { path: string }) {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.GET, `${expenseUrl + path}`);
+  getExpenses({ path }: { path: string }) {
+    return axiosApiCall<TransactionsDTO<Transaction[]>>(HttpMethod.GET, `${expenseUrl + path}`);
   },
 
-  addExpense<T>({ body }: { body: any }) {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.POST, expenseUrl, body);
+  addExpense({ body }: { body: any }) {
+    return axiosApiCall<TransactionsDTO<Transaction>>(HttpMethod.POST, expenseUrl, body);
   },
-  editExpense<T>({ body, path }: { body: any; path: string }) {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.PUT, `${expenseUrl}/${path}`, body);
+  editExpense({ body, path }: { body: any; path: string }) {
+    return axiosApiCall<TransactionsDTO<Transaction>>(HttpMethod.PUT, `${expenseUrl}/${path}`, body);
   },
 
-  deleteExpense<T>({ path }: { path: string }) {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.DELETE, `${expenseUrl}/${path}`);
+  deleteExpense({ path }: { path: string }) {
+    return axiosApiCall<TransactionsDTO<Transaction>>(HttpMethod.DELETE, `${expenseUrl}/${path}`);
   },
 
   //INCOME GROUPS
-  getIncomeGroups<T>() {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.GET, `${incomeGroupUrl}`);
+  getIncomeGroups() {
+    return axiosApiCall<TransactionsDTO<TransactionGroup>>(HttpMethod.GET, `${incomeGroupUrl}`);
   },
 
-  addIncomeGroup<T>({ body }: { body: any }) {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.POST, incomeGroupUrl, body);
+  addIncomeGroup({ body }: { body: TransactionGroup }) {
+    return axiosApiCall<TransactionsDTO<TransactionGroup>>(HttpMethod.POST, incomeGroupUrl, body);
   },
-  editIncomeGroup<T>({ body, path }: { body: any; path: string }) {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.PUT, `${incomeGroupUrl}/${path}`, body);
+  editIncomeGroup({ body, path }: { body: TransactionGroup; path: string }) {
+    return axiosApiCall<TransactionsDTO<TransactionGroup>>(HttpMethod.PUT, `${incomeGroupUrl}/${path}`, body);
   },
 
-  deleteIncomeGroup<T>({ path }: { path: string }) {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.DELETE, `${incomeGroupUrl}/${path}`);
+  deleteIncomeGroup({ path }: { path: string }) {
+    return axiosApiCall<TransactionsDTO<TransactionGroup>>(HttpMethod.DELETE, `${incomeGroupUrl}/${path}`);
   },
   //EXPENSE GROUP
-  getExpenseGroups<T>() {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.GET, expenseGroupUrl);
+  getExpenseGroups() {
+    return axiosApiCall<TransactionsDTO<TransactionGroup>>(HttpMethod.GET, expenseGroupUrl);
   },
 
-  addExpenseGroup<T>({ body }: { body: any }) {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.POST, expenseGroupUrl, body);
+  addExpenseGroup({ body }: { body: TransactionGroup }) {
+    return axiosApiCall<TransactionsDTO<TransactionGroup>>(HttpMethod.POST, expenseGroupUrl, body);
   },
-  editExpenseGroup<T>({ body, path }: { body: any; path: string }) {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.PUT, `${expenseGroupUrl}/${path}`, body);
+  editExpenseGroup({ body, path }: { body: TransactionGroup; path: string }) {
+    return axiosApiCall<TransactionsDTO<TransactionGroup>>(HttpMethod.PUT, `${expenseGroupUrl}/${path}`, body);
   },
 
-  deleteExpenseGroup<T>({ path }: { path: string }) {
-    return axiosApiCall<TransactionsDTO<T>>(HttpMethod.DELETE, `${expenseGroupUrl}/${path}`);
+  deleteExpenseGroup({ path }: { path: string }) {
+    return axiosApiCall<TransactionsDTO<TransactionGroup>>(HttpMethod.DELETE, `${expenseGroupUrl}/${path}`);
   },
 
   //TOTAL AMOUNT
-  getTotalAmount<T>() {
+  getTotalAmount() {
     return axiosApiCall<{ totalAmount: number }>(HttpMethod.GET, totalAmountUrl);
   },
-  getIncomeAmount<T>() {
+  getIncomeAmount() {
     return axiosApiCall<{ totalAmount: number }>(HttpMethod.GET, totalIncomeUrl);
   },
 
-  getExpenseAmount<T>() {
+  getExpenseAmount() {
     return axiosApiCall<{ totalAmount: number }>(HttpMethod.GET, totalExpenseUrl);
   },
 };

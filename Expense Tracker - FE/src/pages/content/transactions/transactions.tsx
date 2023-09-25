@@ -97,7 +97,7 @@ export const Transactions = () => {
         ) : (
           isGettingStarted && <GetStartedCard handleAddTransactions={openAddTransactionModal} type={type} />
         )}
-        {error && <ErrorCard onClick={fetchData} />}
+        {error && !data && <ErrorCard onClick={fetchData} />}
       </Loader>
     </Container>
   );

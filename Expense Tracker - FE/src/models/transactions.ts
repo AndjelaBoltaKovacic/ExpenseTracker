@@ -1,3 +1,4 @@
+import { DateRange } from "@mui/x-date-pickers-pro";
 import { TransactionGroupType, TransactionType } from "../values/enums/transactions";
 
 export type TransactionsDTO<T> = {
@@ -34,7 +35,7 @@ export type TransactionsDTO<T> = {
 };
 
 export interface Transaction {
-  id: string | number;
+  id: string;
   name: string;
   amount: number;
   createdDtm: string,
@@ -68,5 +69,5 @@ export type TransactionParams = {
     from: number;
     to: number;
   };
-  dateRange: [null | Date, null | Date];
+  dateRange: DateRange<string>;
 }

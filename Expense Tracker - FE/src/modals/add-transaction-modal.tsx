@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { AddTransactionSteps, Outcome } from '../values/enums/form-steps';
 import TransactionForm from '../form/manage-transactions/steps/transaction-form';
 import { Transaction, TransactionFormData } from '../models/transactions';
-import { _void } from '../models/common';
 import Confirm from '../form/manage-transactions/steps/confirm';
 
 import Loader from '../common/loader';

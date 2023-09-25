@@ -1,6 +1,7 @@
 import { Box, Button, Slider, Tooltip } from '@mui/material';
 import BasicDateRangePicker from './datepicker';
 import { _void } from '../../models/common';
+import { TransactionParams } from '../../models/transactions';
 
 export function FilterBox({
   maxFilterAmount,
@@ -9,11 +10,11 @@ export function FilterBox({
   handleSubmit,
 }: {
   maxFilterAmount: number;
-  params: any;
+  params: TransactionParams;
   handleChangeParams: _void;
-  handleSubmit: any;
+  handleSubmit: _void;
 }) {
-  const handleAmountChange = (_: any, newValue: any) => {
+  const handleAmountChange = (_: Event, newValue: any) => {
     handleChangeParams({ ...params, priceRange: { from: newValue[0], to: newValue[1] } });
   };
 
