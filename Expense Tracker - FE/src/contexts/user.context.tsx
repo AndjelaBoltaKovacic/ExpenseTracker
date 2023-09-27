@@ -14,7 +14,7 @@ export const useUserContext = () => {
 };
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User>({} as User);
   const isPremium = user?.role === UserRole.Premium;
 
   const login = useCallback(({ access_token }: UserTokens) => {
@@ -24,7 +24,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const logout = useCallback(() => {
-    setUser(null);
+    setUser({} as User);
     localStorage.removeItem('token');
   }, []);
 

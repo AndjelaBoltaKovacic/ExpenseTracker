@@ -17,6 +17,7 @@ import AddTransactionModal from './modals/add-transaction-modal';
 import ManageCategoriesModal from './modals/manage-categories-modal';
 import EditTransactionModal from './modals/edit-transaction-modal';
 import DeleteTransactionModal from './modals/delete-transaction-modal';
+import { TransactionType } from './values/enums/transactions';
 
 
 function App() {
@@ -27,21 +28,21 @@ function App() {
       <NavigationBar />
       <Routes>
         <Route element={<AuthRoutes isAuthenticated={!!user} />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
         </Route>
         <Route element={<ProtectedRoutes isAuthenticated={!!user} />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/transactions" element={<TransactionsContainer />}>
-            <Route path="incomes" element={<Transactions />} />
-            <Route path="expenses" element={<Transactions />} />
+          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/transactions' element={<TransactionsContainer />}>
+            <Route path='incomes' element={<Transactions type={TransactionType.Income} />} />
+            <Route path='expenses' element={<Transactions type={TransactionType.Expense} />} />
           </Route>
         </Route>
         <Route element={<PremiumRoutes isPremium={user?.role === UserRole.Premium} />}>
-          <Route path="/blog" element={<Blogs />} />
-          <Route path="/blog/:id" element={<BlogPage />} />
+          <Route path='/blog' element={<Blogs />} />
+          <Route path='/blog/:id' element={<BlogPage />} />
         </Route>
-        <Route path="/*" element={<Navigate to={!!user ? '/dashboard' : '/login'} />} />
+        <Route path='/*' element={<Navigate to={!!user ? '/dashboard' : '/login'} />} />
       </Routes>
 
       <AddTransactionModal />
