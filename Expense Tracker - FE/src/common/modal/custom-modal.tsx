@@ -24,7 +24,7 @@ const CustomModal = ({
             margin: 'auto',
             backgroundColor: 'background.default',
             borderRadius: '7px',
-            padding: '20px',
+            padding: '30px',
             outline: 'none',
             boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
             width: { xs: '95%', sm: '80%', md: '60%' },

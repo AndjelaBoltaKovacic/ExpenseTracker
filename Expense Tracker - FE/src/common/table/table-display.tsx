@@ -9,7 +9,7 @@ export const TableDisplay = ({ type, data, error }: { type: TransactionType; dat
     <>
       {error ? (
         <NoticeCard
-          title={`Opps, there has been an error getting your ${type.toLowerCase()}s`}
+          title={`Oops, there has been an error getting your ${type.toLowerCase()}s`}
           text={'Please try again later'}
         />
       ) : (

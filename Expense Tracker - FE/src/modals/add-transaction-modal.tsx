@@ -63,6 +63,7 @@ function AddTransactionModal() {
             ),
             [AddTransactionSteps.Success]: (
               <Notice
+                playAudio
                 outcome={Outcome.Success}
                 text="Your transaction has been added successfully"
                 handleClose={() => handleClose()}

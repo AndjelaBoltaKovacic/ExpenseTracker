@@ -17,6 +17,7 @@ import { Outcome } from '../../../values/enums/form-steps';
 import { Transaction, TransactionGroup } from '../../../models/transactions';
 import { TransactionType } from '../../../values/enums/transactions';
 import CategoryIcon from '../../../common/category-icon';
+import { useLocation } from 'react-router-dom';
 
 function TransactionForm({
   transactionToEdit,
@@ -30,6 +31,7 @@ function TransactionForm({
   disableType?: boolean;
 }) {
   const [transactionGroups, setTransactionGroups] = useState<TransactionGroup[]>([] as TransactionGroup[]);
+  const [notChanged, setNotChanged] = useState<boolean>(true);
   const transactionTypes = ['Income', 'Expense'];
   //FORM VALUES
   const {
@@ -40,11 +42,11 @@ function TransactionForm({
     formState: { errors },
   } = useForm();
 
+  const location = useLocation();
   const transactionType = watch('type');
   const groupId = watch('groupId');
   const name = watch('name');
   const amount = watch('amount');
-  const [notChanged, setNotChanged] = useState<boolean>(true);
 
   const { data, error, loading, fetchData } = useFetch<any>(
     transactionType === TransactionType.Income
@@ -82,6 +84,10 @@ function TransactionForm({
     handleConfirm({ ...data, groupName });
   };
 
+  const getDefault = (pathname: string) => {
+    return pathname?.includes('incomes') ? 'Income' : pathname.includes('expenses') ? 'Expense' : null
+  }
+
   return error ? (
     <Notice
       outcome={Outcome.Fail}
@@ -91,12 +97,12 @@ function TransactionForm({
   ) : (
     <Loader isLoading={loading}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl fullWidth variant='outlined' error={!!errors.type} margin='normal' disabled={disableType}>
+          <FormControl fullWidth variant='outlined' error={!!errors.type} margin='normal' disabled={!!getDefault(location.pathname) || disableType}>
           <InputLabel>Transaction Type</InputLabel>
           <Controller
             name='type'
             control={control}
-            defaultValue={type || undefined}
+            defaultValue={type || getDefault(location.pathname) || undefined}
             rules={{ required: 'This field is required' }}
             render={({ field }) => (
               <>
@@ -112,7 +118,7 @@ function TransactionForm({
             )}
           />
         </FormControl>
-        <FormControl fullWidth variant='outlined' error={!!errors.groupId} margin='normal' disabled={!transactionType}>
+          <FormControl fullWidth variant='outlined' error={!!errors.groupId} margin='normal' disabled={!transactionType || disableType}>
           <InputLabel>Transaction Category</InputLabel>
           <Controller
             name='groupId'

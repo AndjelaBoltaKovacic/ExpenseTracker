@@ -13,19 +13,21 @@ function Notice({
   text,
   details,
   btnText = 'Close',
+  playAudio,
 }: {
   outcome?: Outcome;
   text?: string;
   details?: string;
   handleClose: _void;
   btnText?: string;
+  playAudio?: boolean;
 }) {
 
   const audio = new Audio(cashRegisterSound);
 
 
   useEffect(() => {
-    if (outcome === Outcome.Success) {
+    if (outcome === Outcome.Success && playAudio) {
       audio.play();
     }
   }, [outcome])

@@ -62,7 +62,7 @@ export const Transactions = ({ type }: any) => {
   return (
     <Container sx={{ marginTop: '5vw' }}>
       <Loader isLoading={loading}>
-        {!isGettingStarted ? (
+        {error ? <ErrorCard onClick={fetchData} /> : <> {!isGettingStarted ? (
           <>
             <Box flexGrow={1} mb='3vw'>
               <FilterBox
@@ -93,8 +93,7 @@ export const Transactions = ({ type }: any) => {
           </>
         ) : (
           isGettingStarted && <GetStartedCard handleAddTransactions={openAddTransactionModal} type={type} />
-        )}
-        {error && !data && <ErrorCard onClick={fetchData} />}
+        )}</>}
       </Loader>
     </Container>
   );
