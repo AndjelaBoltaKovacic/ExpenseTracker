@@ -14,7 +14,7 @@ import ActionButtons from './action-buttons';
 import useReminderContext from '../../../contexts/reminder.context';
 import GetStartedCard from '../../../common/cards/get-started-card';
 import { useModalContext } from '../../../contexts/modals.context';
-import NoticeCard from '../../../common/cards/notice-card';
+import ErrorCard from '../../../common/cards/error-card';
 
 function Dashboard() {
   const { isPremium, user } = useUserContext();
@@ -44,42 +44,47 @@ function Dashboard() {
     }
   }, [user, addTransactionModalOpen]);
 
-
   useEffect(() => {
     exp && setExpenses(exp.data.content);
     incm && setIncomes(incm.data.content);
   }, [exp, incm]);
 
-  useEffect(() => { }, [reminder]);
-
-  console.log(expError)
+  useEffect(() => {}, [reminder]);
 
   return (
     <>
       <Loader isLoading={incmLoading || expLoading}>
-        {!!incmError || !!expError && !incomes.length && !expenses.length ?
-          <NoticeCard
-            title={`Oops, an error occured`}
-            text={'Please try again later'}
-          /> : <>  {expenses?.length || incomes?.length ? (
-            <Container sx={{ paddingBottom: '60px' }}>
-              <AmountDisplay />
-              <Box sx={{ width: { sm: '100%', md: '50%', lg: '40%' } }}>
-                <ActionButtons onAdd={openAddTransactionModal} onManage={openManageGroupModal} />
-              </Box>
-              <Box my={2}>
-                <TableDisplay data={incomes} error={incmError} type={TransactionType.Income} />
-              </Box>
-              <Box my={2}>
-                <TableDisplay data={expenses} error={expError} type={TransactionType.Expense} />
-              </Box>
-            </Container>
-          ) : (
-            <GetStartedCard
-              handleAddTransactions={openAddTransactionModal}
-              handleManageCategories={openManageGroupModal}
-            />
-          )}</>}
+        {!!incmError || (!!expError && !incomes.length && !expenses.length) ? (
+          <ErrorCard
+            onClick={() => {
+              fetchIncomes();
+              fetchExpenses();
+            }}
+          />
+        ) : (
+          <>
+            {' '}
+            {expenses?.length || incomes?.length ? (
+              <Container sx={{ paddingBottom: '60px' }}>
+                <AmountDisplay />
+                <Box sx={{ width: { sm: '100%', md: '50%', lg: '40%' } }}>
+                  <ActionButtons onAdd={openAddTransactionModal} onManage={openManageGroupModal} />
+                </Box>
+                <Box my={2}>
+                  <TableDisplay data={incomes} error={incmError} type={TransactionType.Income} />
+                </Box>
+                <Box my={2}>
+                  <TableDisplay data={expenses} error={expError} type={TransactionType.Expense} />
+                </Box>
+              </Container>
+            ) : (
+              <GetStartedCard
+                handleAddTransactions={openAddTransactionModal}
+                handleManageCategories={openManageGroupModal}
+              />
+            )}
+          </>
+        )}
       </Loader>
       {isPremium && <Reminder />}
     </>
