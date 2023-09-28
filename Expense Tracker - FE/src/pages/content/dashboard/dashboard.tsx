@@ -63,19 +63,22 @@ function Dashboard() {
           />
         ) : (
           <>
-            {' '}
             {expenses?.length || incomes?.length ? (
               <Container sx={{ paddingBottom: '60px' }}>
                 <AmountDisplay />
                 <Box sx={{ width: { sm: '100%', md: '50%', lg: '40%' } }}>
                   <ActionButtons onAdd={openAddTransactionModal} onManage={openManageGroupModal} />
                 </Box>
-                <Box my={2}>
-                  <TableDisplay data={incomes} error={incmError} type={TransactionType.Income} />
-                </Box>
-                <Box my={2}>
-                  <TableDisplay data={expenses} error={expError} type={TransactionType.Expense} />
-                </Box>
+                {incomes.length && (
+                  <Box my={2}>
+                    <TableDisplay data={incomes} error={incmError} type={TransactionType.Income} />
+                  </Box>
+                )}
+                {expenses.length && (
+                  <Box my={2}>
+                    <TableDisplay data={expenses} error={expError} type={TransactionType.Expense} />
+                  </Box>
+                )}
               </Container>
             ) : (
               <GetStartedCard
